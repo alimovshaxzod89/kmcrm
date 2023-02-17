@@ -17,6 +17,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/example'
+    },
+    {
+        id   : 'unit',
+        title: 'Units123',
+        type : 'basic',
+        icon : 'heroicons_outline:view-list',
+        link : '/units'
     }
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
