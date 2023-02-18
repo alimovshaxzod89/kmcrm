@@ -24,6 +24,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:view-list',
         link : '/units'
+    },
+    {
+        id   : 'good-categories',
+        title: 'Категории Сырья',
+        type : 'basic',
+        icon : 'heroicons_outline:view-list',
+        link : '/good-categories'
     }
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [

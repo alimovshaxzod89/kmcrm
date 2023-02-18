@@ -851,7 +851,7 @@ export const material = [
     'insert_photo',
     'insights',
     'integration_instructions',
-    'inventory',
+    'category',
     'inventory_2',
     'invert_colors',
     'invert_colors_off',
