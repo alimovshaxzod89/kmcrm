@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
-import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduct, InventoryTag, InventoryVendor } from 'app/modules/goods/category/category.types';
+import { InventoryPagination, Category, Unit } from 'app/modules/goods/category/category.types';
 
 @Injectable({
     providedIn: 'root'
@@ -9,13 +9,11 @@ import { InventoryBrand, InventoryCategory, InventoryPagination, InventoryProduc
 export class CategoryService
 {
     // Private
-    private _brands: BehaviorSubject<InventoryBrand[] | null> = new BehaviorSubject(null);
-    private _categories: BehaviorSubject<InventoryCategory[] | null> = new BehaviorSubject(null);
     private _pagination: BehaviorSubject<InventoryPagination | null> = new BehaviorSubject(null);
-    private _product: BehaviorSubject<InventoryProduct | null> = new BehaviorSubject(null);
-    private _products: BehaviorSubject<InventoryProduct[] | null> = new BehaviorSubject(null);
-    private _tags: BehaviorSubject<InventoryTag[] | null> = new BehaviorSubject(null);
-    private _vendors: BehaviorSubject<InventoryVendor[] | null> = new BehaviorSubject(null);
+    private _category: BehaviorSubject<Category | null> = new BehaviorSubject(null);
+    private _categories: BehaviorSubject<Category[] | null> = new BehaviorSubject(null);
+
+    private _units: BehaviorSubject<Unit[] | null> = new BehaviorSubject(null);
 
     /**
      * Constructor
@@ -24,24 +22,12 @@ export class CategoryService
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
     /**
      * Getter for brands
      */
-    get brands$(): Observable<InventoryBrand[]>
+    get units$(): Observable<Unit[]>
     {
-        return this._brands.asObservable();
-    }
-
-    /**
-     * Getter for categories
-     */
-    get categories$(): Observable<InventoryCategory[]>
-    {
-        return this._categories.asObservable();
+        return this._units.asObservable();
     }
 
     /**
@@ -53,67 +39,23 @@ export class CategoryService
     }
 
     /**
-     * Getter for product
+     * Getter for category
      */
-    get product$(): Observable<InventoryProduct>
+    get category$(): Observable<Category>
     {
-        return this._product.asObservable();
+        return this._category.asObservable();
     }
 
     /**
-     * Getter for products
+     * Getter for categories
      */
-    get products$(): Observable<InventoryProduct[]>
+    get categories$(): Observable<Category[]>
     {
-        return this._products.asObservable();
-    }
-
-    /**
-     * Getter for tags
-     */
-    get tags$(): Observable<InventoryTag[]>
-    {
-        return this._tags.asObservable();
-    }
-
-    /**
-     * Getter for vendors
-     */
-    get vendors$(): Observable<InventoryVendor[]>
-    {
-        return this._vendors.asObservable();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Get brands
-     */
-    getBrands(): Observable<InventoryBrand[]>
-    {
-        return this._httpClient.get<InventoryBrand[]>('api/apps/ecommerce/inventory/brands').pipe(
-            tap((brands) => {
-                this._brands.next(brands);
-            })
-        );
+        return this._categories.asObservable();
     }
 
     /**
      * Get categories
-     */
-    getCategories(): Observable<InventoryCategory[]>
-    {
-        return this._httpClient.get<InventoryCategory[]>('api/apps/ecommerce/inventory/categories').pipe(
-            tap((categories) => {
-                this._categories.next(categories);
-            })
-        );
-    }
-
-    /**
-     * Get products
      *
      *
      * @param page
@@ -122,113 +64,125 @@ export class CategoryService
      * @param order
      * @param search
      */
-    getProducts(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
-        Observable<{ pagination: InventoryPagination; products: InventoryProduct[] }>
+    getCategories(page: number = 0, size: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
+        Observable<{ pagination: InventoryPagination; data: Category[] }>
     {
-        return this._httpClient.get<{ pagination: InventoryPagination; products: InventoryProduct[] }>('api/apps/ecommerce/inventory/products', {
+        return this._httpClient.get<{ pagination: InventoryPagination; data: Category[] }>('http://localhost:8091/api/good-categories', {
             params: {
-                page: '' + page,
+                page: '' + (page+1),
                 size: '' + size,
-                sort,
-                order,
+                orderBy: sort,
+                sortedBy: order,
                 search
             }
         }).pipe(
             tap((response) => {
                 this._pagination.next(response.pagination);
-                this._products.next(response.products);
+                this._categories.next(response.data);
             })
         );
     }
-
     /**
-     * Get product by id
+     * Get category by id
      */
-    getProductById(id: string): Observable<InventoryProduct>
+    getCategoryById(id: number): Observable<Category>
     {
-        return this._products.pipe(
+        return this._categories.pipe(
             take(1),
-            map((products) => {
+            map((categories) => {
 
-                // Find the product
-                const product = products.find(item => item.id === id) || null;
+                // Find the category
+                const category = categories.find(item => item.id === id) || null;
 
-                // Update the product
-                this._product.next(product);
+                // Update the category
+                this._category.next(category);
 
-                // Return the product
-                return product;
+                // Return the category
+                return category;
             }),
-            switchMap((product) => {
+            switchMap((category) => {
 
-                if ( !product )
+                if ( !category )
                 {
-                    return throwError('Could not found product with id of ' + id + '!');
+                    return throwError('Could not found category with id of ' + id + '!');
                 }
 
-                return of(product);
+                return of(category);
+            })
+        );
+    }
+
+
+    /**
+     * Get brands
+     */
+    getUnits(): Observable<Unit[]>
+    {
+        return this._httpClient.get<Unit[]>('http://localhost:8091/api/units-all').pipe(
+            tap((units) => {
+                this._units.next(units);
             })
         );
     }
 
     /**
-     * Create product
+     * Create category
      */
-    createProduct(): Observable<InventoryProduct>
+    createCategory(): Observable<Category>
     {
-        return this.products$.pipe(
+        return this.categories$.pipe(
             take(1),
-            switchMap(products => this._httpClient.post<InventoryProduct>('api/apps/ecommerce/inventory/product', {}).pipe(
-                map((newProduct) => {
+            switchMap(categories => this._httpClient.post<Category>('api/apps/ecommerce/inventory/category', {}).pipe(
+                map((newCategory) => {
 
-                    // Update the products with the new product
-                    this._products.next([newProduct, ...products]);
+                    // Update the categories with the new category
+                    this._categories.next([newCategory, ...categories]);
 
-                    // Return the new product
-                    return newProduct;
+                    // Return the new category
+                    return newCategory;
                 })
             ))
         );
     }
 
     /**
-     * Update product
+     * Update category
      *
      * @param id
-     * @param product
+     * @param category
      */
-    updateProduct(id: string, product: InventoryProduct): Observable<InventoryProduct>
+    updateCategory(id: number, category: Category): Observable<Category>
     {
-        return this.products$.pipe(
+        return this.categories$.pipe(
             take(1),
-            switchMap(products => this._httpClient.patch<InventoryProduct>('api/apps/ecommerce/inventory/product', {
+            switchMap(categories => this._httpClient.patch<Category>('api/apps/ecommerce/inventory/category', {
                 id,
-                product
+                category
             }).pipe(
-                map((updatedProduct) => {
+                map((updatedCategory) => {
 
-                    // Find the index of the updated product
-                    const index = products.findIndex(item => item.id === id);
+                    // Find the index of the updated category
+                    const index = categories.findIndex(item => item.id === id);
 
-                    // Update the product
-                    products[index] = updatedProduct;
+                    // Update the category
+                    categories[index] = updatedCategory;
 
-                    // Update the products
-                    this._products.next(products);
+                    // Update the categories
+                    this._categories.next(categories);
 
-                    // Return the updated product
-                    return updatedProduct;
+                    // Return the updated category
+                    return updatedCategory;
                 }),
-                switchMap(updatedProduct => this.product$.pipe(
+                switchMap(updatedCategory => this.category$.pipe(
                     take(1),
                     filter(item => item && item.id === id),
                     tap(() => {
 
-                        // Update the product if it's selected
-                        this._product.next(updatedProduct);
+                        // Update the category if it's selected
+                        this._category.next(updatedCategory);
 
-                        // Return the updated product
-                        return updatedProduct;
+                        // Return the updated category
+                        return updatedCategory;
                     })
                 ))
             ))
@@ -236,25 +190,25 @@ export class CategoryService
     }
 
     /**
-     * Delete the product
+     * Delete the category
      *
      * @param id
      */
-    deleteProduct(id: string): Observable<boolean>
+    deleteCategory(id: number): Observable<boolean>
     {
-        return this.products$.pipe(
+        return this.categories$.pipe(
             take(1),
-            switchMap(products => this._httpClient.delete('api/apps/ecommerce/inventory/product', {params: {id}}).pipe(
+            switchMap(categories => this._httpClient.delete('api/apps/ecommerce/inventory/category', {params: {id}}).pipe(
                 map((isDeleted: boolean) => {
 
-                    // Find the index of the deleted product
-                    const index = products.findIndex(item => item.id === id);
+                    // Find the index of the deleted category
+                    const index = categories.findIndex(item => item.id === id);
 
-                    // Delete the product
-                    products.splice(index, 1);
+                    // Delete the category
+                    categories.splice(index, 1);
 
-                    // Update the products
-                    this._products.next(products);
+                    // Update the categories
+                    this._categories.next(categories);
 
                     // Return the deleted status
                     return isDeleted;
@@ -262,179 +216,4 @@ export class CategoryService
             ))
         );
     }
-
-    /**
-     * Get tags
-     */
-    getTags(): Observable<InventoryTag[]>
-    {
-        return this._httpClient.get<InventoryTag[]>('api/apps/ecommerce/inventory/tags').pipe(
-            tap((tags) => {
-                this._tags.next(tags);
-            })
-        );
-    }
-
-    /**
-     * Create tag
-     *
-     * @param tag
-     */
-    createTag(tag: InventoryTag): Observable<InventoryTag>
-    {
-        return this.tags$.pipe(
-            take(1),
-            switchMap(tags => this._httpClient.post<InventoryTag>('api/apps/ecommerce/inventory/tag', {tag}).pipe(
-                map((newTag) => {
-
-                    // Update the tags with the new tag
-                    this._tags.next([...tags, newTag]);
-
-                    // Return new tag from observable
-                    return newTag;
-                })
-            ))
-        );
-    }
-
-    /**
-     * Update the tag
-     *
-     * @param id
-     * @param tag
-     */
-    updateTag(id: string, tag: InventoryTag): Observable<InventoryTag>
-    {
-        return this.tags$.pipe(
-            take(1),
-            switchMap(tags => this._httpClient.patch<InventoryTag>('api/apps/ecommerce/inventory/tag', {
-                id,
-                tag
-            }).pipe(
-                map((updatedTag) => {
-
-                    // Find the index of the updated tag
-                    const index = tags.findIndex(item => item.id === id);
-
-                    // Update the tag
-                    tags[index] = updatedTag;
-
-                    // Update the tags
-                    this._tags.next(tags);
-
-                    // Return the updated tag
-                    return updatedTag;
-                })
-            ))
-        );
-    }
-
-    /**
-     * Delete the tag
-     *
-     * @param id
-     */
-    deleteTag(id: string): Observable<boolean>
-    {
-        return this.tags$.pipe(
-            take(1),
-            switchMap(tags => this._httpClient.delete('api/apps/ecommerce/inventory/tag', {params: {id}}).pipe(
-                map((isDeleted: boolean) => {
-
-                    // Find the index of the deleted tag
-                    const index = tags.findIndex(item => item.id === id);
-
-                    // Delete the tag
-                    tags.splice(index, 1);
-
-                    // Update the tags
-                    this._tags.next(tags);
-
-                    // Return the deleted status
-                    return isDeleted;
-                }),
-                filter(isDeleted => isDeleted),
-                switchMap(isDeleted => this.products$.pipe(
-                    take(1),
-                    map((products) => {
-
-                        // Iterate through the contacts
-                        products.forEach((product) => {
-
-                            const tagIndex = product.tags.findIndex(tag => tag === id);
-
-                            // If the contact has the tag, remove it
-                            if ( tagIndex > -1 )
-                            {
-                                product.tags.splice(tagIndex, 1);
-                            }
-                        });
-
-                        // Return the deleted status
-                        return isDeleted;
-                    })
-                ))
-            ))
-        );
-    }
-
-    /**
-     * Get vendors
-     */
-    getVendors(): Observable<InventoryVendor[]>
-    {
-        return this._httpClient.get<InventoryVendor[]>('api/apps/ecommerce/inventory/vendors').pipe(
-            tap((vendors) => {
-                this._vendors.next(vendors);
-            })
-        );
-    }
-
-    /**
-     * Update the avatar of the given contact
-     *
-     * @param id
-     * @param avatar
-     */
-    /*uploadAvatar(id: string, avatar: File): Observable<Contact>
-    {
-        return this.contacts$.pipe(
-            take(1),
-            switchMap(contacts => this._httpClient.post<Contact>('api/apps/contacts/avatar', {
-                id,
-                avatar
-            }, {
-                headers: {
-                    'Content-Type': avatar.type
-                }
-            }).pipe(
-                map((updatedContact) => {
-
-                    // Find the index of the updated contact
-                    const index = contacts.findIndex(item => item.id === id);
-
-                    // Update the contact
-                    contacts[index] = updatedContact;
-
-                    // Update the contacts
-                    this._contacts.next(contacts);
-
-                    // Return the updated contact
-                    return updatedContact;
-                }),
-                switchMap(updatedContact => this.contact$.pipe(
-                    take(1),
-                    filter(item => item && item.id === id),
-                    tap(() => {
-
-                        // Update the contact if it's selected
-                        this._contact.next(updatedContact);
-
-                        // Return the updated contact
-                        return updatedContact;
-                    })
-                ))
-            ))
-        );
-    }*/
 }
