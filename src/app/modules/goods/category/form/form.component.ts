@@ -14,13 +14,6 @@ export class CategoryFormComponent implements OnInit
         cc : false,
         bcc: false
     };
-    quillModules: any = {
-        toolbar: [
-            ['bold', 'italic', 'underline'],
-            [{align: []}, {list: 'ordered'}, {list: 'bullet'}],
-            ['clean']
-        ]
-    };
 
     /**
      * Constructor
