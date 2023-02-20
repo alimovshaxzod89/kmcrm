@@ -13,6 +13,7 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginator } from 'app/custom/CustomPaginatorConfiguration';
+import { FormsModule } from '@angular/forms';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -37,7 +38,9 @@ const routerConfig: ExtraOptions = {
         CoreModule,
 
         // Layout module of your application
-        LayoutModule
+        LayoutModule,
+
+        FormsModule
     ],
     bootstrap   : [
         AppComponent

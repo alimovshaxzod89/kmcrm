@@ -26,6 +26,9 @@ import {CategoryFormComponent} from "./category/form/form.component";
         CategoryListComponent,
         CategoryFormComponent,
     ],
+    exports: [
+        CategoryListComponent
+    ],
     imports: [
         RouterModule.forChild(ecommerceRoutes),
         MatButtonModule,

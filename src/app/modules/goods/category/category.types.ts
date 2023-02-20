@@ -3,10 +3,11 @@ export interface Category
     id: number;
     // category?: string;
     name: string;
-    note: string;
 
     purchase_unit_id: number;
     unit_id: number;
+
+    note: string;
 
     // description?: string;
     // tags?: string[];
