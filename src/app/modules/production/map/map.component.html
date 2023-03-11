@@ -1,0 +1,67 @@
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+
+    <!-- Header -->
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+        <!-- Loader -->
+        <div
+            class="absolute inset-x-0 bottom-0"
+            *ngIf="isLoading">
+            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+        </div>
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">Mebel qismlari sehlarda harakatlanish xaritasi</div>
+        <!-- Actions -->
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex gap-4 justify-around px-4 pt-4">
+
+        <div class="flex-1">
+            <mat-form-field [style.width.%]="100"
+                [ngClass]="formFieldHelpers"
+                class="flex-auto gt-xs:pr-3">
+                <mat-label>Kategoriya</mat-label>
+                <mat-select [ngModel]="category_id$ | async"
+                            (ngModelChange)="category_id$.next($event)">
+                    <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+                        {{category.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="flex-1">
+            <mat-form-field [style.width.%]="100"
+                [ngClass]="formFieldHelpers"
+                class="flex-auto gt-xs:pr-3">
+                <mat-label>Komplekt</mat-label>
+                <input type="text" matInput [formControl]="komplekt_search" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let komplekt of filteredKomplekts$ | async" [value]="komplekt">
+                        {{komplekt.name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div class="flex-1">
+            <mat-form-field [style.width.%]="100"
+                            [ngClass]="formFieldHelpers"
+                            class="flex-auto gt-xs:pr-3">
+                <mat-label>Mebel</mat-label>
+                <input type="text" matInput [formControl]="furniture_search" [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let furniture of furnitures$ | async" [value]="furniture">
+                        {{furniture.name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+</div>

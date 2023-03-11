@@ -46,7 +46,11 @@ const routerConfig: ExtraOptions = {
         AppComponent
     ],
     providers: [
-        { provide: MatPaginatorIntl, useValue: CustomPaginator() }
+        { provide: MatPaginatorIntl, useValue: CustomPaginator() },
+        {
+            provide: "BASE_API_URL",
+            useValue: 'http://localhost:8093/'
+        }
     ],
 })
 export class AppModule

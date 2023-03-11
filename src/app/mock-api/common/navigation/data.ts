@@ -18,27 +18,34 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:view-list',
         link : '/seh'
     },
-    // {
-    //     id   : 'example',
-    //     title: 'Example',
-    //     type : 'basic',
-    //     icon : 'heroicons_outline:chart-pie',
-    //     link : '/example'
-    // },
-    // {
-    //     id   : 'unit',
-    //     title: 'Units123',
-    //     type : 'basic',
-    //     icon : 'heroicons_outline:view-list',
-    //     link : '/units'
-    // },
-    // {
-    //     id   : 'good-categories',
-    //     title: 'Категории Сырья',
-    //     type : 'basic',
-    //     icon : 'heroicons_outline:view-list',
-    //     link : '/good-categories'
-    // }
+    {
+        id   : 'furniture-map',
+        title: 'Harakat Xarita',
+        type : 'basic',
+        icon : 'heroicons_outline:view-list',
+        link : '/production/map'
+    },
+    {
+        id   : 'example',
+        title: 'Example',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/example'
+    },
+    {
+        id   : 'unit',
+        title: 'Units123',
+        type : 'basic',
+        icon : 'heroicons_outline:view-list',
+        link : '/units'
+    },
+    {
+        id   : 'good-categories',
+        title: 'Категории Сырья',
+        type : 'basic',
+        icon : 'heroicons_outline:view-list',
+        link : '/good-categories'
+    }
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
