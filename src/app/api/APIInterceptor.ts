@@ -16,6 +16,8 @@ export class APIInterceptor implements HttpInterceptor {
             requestUrl = requestUrl.replace('@bu/', this.baseUrl);
         }
 
+        console.log({requestUrl})
+
         const apiReq = req.clone({ url: requestUrl });
         return next.handle(apiReq);
     }

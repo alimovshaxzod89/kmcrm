@@ -50,6 +50,7 @@
                             ]
                         },
                         "styles": [
+                            "node_modules/@progress/kendo-theme-material/dist/all.scss",
                             "src/@fuse/styles/tailwind.scss",
                             "src/@fuse/styles/themes.scss",
                             "src/styles/vendors.scss",
@@ -119,6 +120,7 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "node_modules/@progress/kendo-theme-material/dist/all.scss",
                             "src/styles/styles.scss"
                         ],
                         "scripts": []

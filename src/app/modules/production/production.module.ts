@@ -15,6 +15,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatSelectModule} from "@angular/material/select";
 import {SharedModule} from 'app/shared/shared.module';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
         MatTableModule,
         MatSelectModule,
         SharedModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        NgxMatSelectSearchModule
     ]
 })
 export class ProductionModule {

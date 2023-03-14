@@ -29,8 +29,7 @@ export class MapComponent implements OnInit {
 
     komplekt$: BehaviorSubject<Komplekt> = new BehaviorSubject(null);
     komplekt_id$: BehaviorSubject<number> = new BehaviorSubject(null);
-    furniture_search = new FormControl<string | Furniture>('');
-    furnitures$: Observable<Furniture[]>;
+
 
     constructor(private _productionService: CategoryService, private _furnitureService: FurnitureService) {
     }
@@ -57,16 +56,9 @@ export class MapComponent implements OnInit {
             }
         )
 
-        this.category_id$.subscribe(() => {
-            this.filterFurnitures()
-        })
-        this.komplekt_search.valueChanges.subscribe(komplekt => {
-            if(typeof komplekt !== 'string' && komplekt?.id)
-                this.komplekt_id$.next(komplekt?.id)
-            else
-                this.komplekt_id$.next(null)
-        })
-        this.komplekt_id$.subscribe(() => this.filterFurnitures())
+        this.watchingForFurniture()
+
+        this.watchingForFurnitureSearch()
     }
 
     filterKomplekts() {
@@ -92,12 +84,74 @@ export class MapComponent implements OnInit {
         }))
     }
 
-    filterFurnitures() {
-        if (this.category_id$.value || this.komplekt_id$.value)
+
+    furnitures$: Observable<Furniture[]>;
+
+    loadFurnitures() {
+        if (this.category_id$.value || this.komplekt_id$.value){
+            console.log(this.category_id$.value)
             this.furnitures$ = this._furnitureService.getFurnitures(this.category_id$.value, this.komplekt_id$.value);
+        }
         else
             this.furnitures$ = new Observable<Furniture[]>()
     }
+
+    private watchingForFurniture() {
+
+        //category_id changes
+        this.category_id$.subscribe(() => {
+            console.log('category_id changes')
+            this.loadFurnitures()
+        })
+
+        //komplekt_search to kompekt_id
+        this.komplekt_search.valueChanges.subscribe(komplekt => {
+            if (typeof komplekt !== 'string' && komplekt?.id)
+                this.komplekt_id$.next(komplekt?.id)
+            else
+                this.komplekt_id$.next(null)
+        })
+
+        //komplekt_id changes
+        this.komplekt_id$.subscribe(() => this.loadFurnitures())
+    }
+
+    furniture_search = new FormControl<string | Furniture>('');
+    furnitureCtrl = new FormControl<Furniture>(null);
+    _filteredFurnitures: BehaviorSubject<Furniture[]> = new BehaviorSubject(null);
+
+    get filteredFurnitures$(): Observable<Furniture[]> {
+        return this._filteredFurnitures.asObservable()
+    }
+
+    private watchingForFurnitureSearch() {
+
+        this.furniture_search.valueChanges.subscribe(value => {
+            if (typeof value === 'string') {
+                this.filterFurnitures(value)
+            } else {
+                this.filterFurnitures('')
+            }
+        })
+    }
+
+    private filterFurnitures(search: string) {
+        let items = []
+        this.furnitures$.subscribe(_items => items = _items)
+
+        this._filteredFurnitures.next(items.filter(item => {
+
+            let valid: boolean = true;
+
+            if (search.length) {
+                if (!item.name.toLowerCase().includes(search.toLowerCase()))
+                    valid = false
+            }
+
+            return valid
+        }))
+    }
+
 
     displayFn(item: Komplekt | Category): string {
         return item?.name;

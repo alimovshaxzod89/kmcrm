@@ -14,6 +14,8 @@ import { appRoutes } from 'app/app.routing';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginator } from 'app/custom/CustomPaginatorConfiguration';
 import { FormsModule } from '@angular/forms';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -40,7 +42,9 @@ const routerConfig: ExtraOptions = {
         // Layout module of your application
         LayoutModule,
 
-        FormsModule
+        FormsModule,
+
+        DateInputsModule
     ],
     bootstrap   : [
         AppComponent

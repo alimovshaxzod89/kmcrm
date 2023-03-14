@@ -49,16 +49,16 @@
         </div>
 
         <div class="flex-1">
-            <mat-form-field [style.width.%]="100"
-                            [ngClass]="formFieldHelpers"
-                            class="flex-auto gt-xs:pr-3">
+            <mat-form-field [style.width.%]="100">
                 <mat-label>Mebel</mat-label>
-                <input type="text" matInput [formControl]="furniture_search" [matAutocomplete]="auto2">
-                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let furniture of furnitures$ | async" [value]="furniture">
+                <mat-select [formControl]="furnitureCtrl" placeholder="" #singleSelect>
+                    <mat-option>
+                        <ngx-mat-select-search [formControl]="furniture_search" placeholderLabel="Qidirish"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let furniture of filteredFurnitures$ | async" [value]="furniture">
                         {{furniture.name}}
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
             </mat-form-field>
         </div>
 

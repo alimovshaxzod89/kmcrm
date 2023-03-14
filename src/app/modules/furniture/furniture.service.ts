@@ -79,8 +79,13 @@ export class FurnitureService {
         if (search.length)
             url += `?search=${search}`
 
+        console.log(url)
+
         return this._httpClient.get<{ data: Furniture[] }>(url).pipe(
-            map(response => response.data)
+            map(response => {
+                console.log(response)
+                return response.data
+            })
         );
     }
 
