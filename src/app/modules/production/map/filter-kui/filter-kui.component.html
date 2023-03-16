@@ -1,0 +1,50 @@
+<div class="flex mt-2 mx-4 gap-4">
+    <div class="flex-1">
+        <div class="form-group">
+            <kendo-label text="Kategoriya">
+                <kendo-dropdownlist
+                    [data]="categories$ | async"
+                    [ngModel]="category_id$ | async"
+                    (ngModelChange)="category_id$.next($event)"
+                    textField="name"
+                    valueField="id"
+                    [valuePrimitive]="true"
+                    [kendoDropDownFilter]="filterSettings"
+                >
+                </kendo-dropdownlist>
+            </kendo-label>
+        </div>
+    </div>
+    <div class="flex-1">
+        <div class="form-group">
+            <kendo-label text="Komplekt">
+                <kendo-dropdownlist
+                    [data]="komplekts"
+                    [ngModel]="komplekt_id$ | async"
+                    (ngModelChange)="komplekt_id$.next($event)"
+                    textField="name"
+                    valueField="id"
+                    [valuePrimitive]="true"
+                    [kendoDropDownFilter]="filterSettings"
+                >
+                </kendo-dropdownlist>
+            </kendo-label>
+        </div>
+    </div>
+    <div class="flex-1">
+        <div class="form-group">
+            <kendo-label text="Mebel">
+                <kendo-dropdownlist
+                    [data]="furnitures$ | async"
+                    [ngModel]="furniture_id$ | async"
+                    (ngModelChange)="furniture_id$.next($event)"
+                    textField="name"
+                    valueField="id"
+                    [valuePrimitive]="true"
+                    [kendoDropDownFilter]="filterSettings"
+                >
+                </kendo-dropdownlist>
+            </kendo-label>
+        </div>
+    </div>
+</div>

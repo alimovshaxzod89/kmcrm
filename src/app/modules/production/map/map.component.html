@@ -18,50 +18,9 @@
     </div>
 
     <!-- Main -->
-    <div class="flex gap-4 justify-around px-4 pt-4">
 
-        <div class="flex-1">
-            <mat-form-field [style.width.%]="100"
-                [ngClass]="formFieldHelpers"
-                class="flex-auto gt-xs:pr-3">
-                <mat-label>Kategoriya</mat-label>
-                <mat-select [ngModel]="category_id$ | async"
-                            (ngModelChange)="category_id$.next($event)">
-                    <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
-                        {{category.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+    <map-filter-mui></map-filter-mui>
 
-        <div class="flex-1">
-            <mat-form-field [style.width.%]="100"
-                [ngClass]="formFieldHelpers"
-                class="flex-auto gt-xs:pr-3">
-                <mat-label>Komplekt</mat-label>
-                <input type="text" matInput [formControl]="komplekt_search" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let komplekt of filteredKomplekts$ | async" [value]="komplekt">
-                        {{komplekt.name}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </div>
-
-        <div class="flex-1">
-            <mat-form-field [style.width.%]="100">
-                <mat-label>Mebel</mat-label>
-                <mat-select [formControl]="furnitureCtrl" placeholder="" #singleSelect>
-                    <mat-option>
-                        <ngx-mat-select-search [formControl]="furniture_search" placeholderLabel="Qidirish"></ngx-mat-select-search>
-                    </mat-option>
-                    <mat-option *ngFor="let furniture of filteredFurnitures$ | async" [value]="furniture">
-                        {{furniture.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-    </div>
+    <map-filter-kui></map-filter-kui>
 
 </div>
