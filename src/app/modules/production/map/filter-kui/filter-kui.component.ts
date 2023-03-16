@@ -3,15 +3,15 @@ import {BehaviorSubject, Observable, take} from "rxjs";
 import {Category, Furniture, Komplekt} from "../../../furniture/furniture.types";
 import {DropDownFilterSettings} from "@progress/kendo-angular-dropdowns";
 import {FurnitureService} from "../../../furniture/furniture.service";
+import {IMap} from "../map.types";
+import {MapService} from "../map.service";
 
 @Component({
-  selector: 'map-filter-kui',
-  templateUrl: './filter-kui.component.html',
-  styleUrls: ['./filter-kui.component.scss']
+    selector: 'map-filter-kui',
+    templateUrl: './filter-kui.component.html',
+    styleUrls: ['./filter-kui.component.scss']
 })
 export class FilterKuiComponent implements OnInit {
-
-    isLoading: boolean = false;
 
     //category
     categories$: Observable<Category[]>;
@@ -25,21 +25,26 @@ export class FilterKuiComponent implements OnInit {
     //furniture
     furnitures$: Observable<Furniture[]>;
     furniture_id$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+    furniture_work_cost$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+
+    //map is version
+    maps$: Observable<IMap[]>;
+    map$: BehaviorSubject<IMap> = new BehaviorSubject<IMap>(null)
 
     public filterSettings: DropDownFilterSettings = {
         caseSensitive: false,
         operator: 'contains'
     };
 
-    constructor(private _furnitureService: FurnitureService) {
+    constructor(private _furnitureService: FurnitureService, private _mapService: MapService) {
     }
 
 
     ngOnInit() {
-        // this.isLoading = true;
 
         this.categories$ = this._furnitureService.categories$;
         this.komplekts$ = this._furnitureService.komplekts$;
+        this.maps$ = this._mapService.getMaps(this.furniture_id$.value);
 
         //for filteredKomplekts$
         this._furnitureService.komplekts$
@@ -48,13 +53,31 @@ export class FilterKuiComponent implements OnInit {
             })
 
         this.category_id$.subscribe((value) => {
+            this.komplekt_id$.next(null);
             this.komplekts = this.getKomplekts(value)
 
             this.loadFurnitures()
         })
+
+        this.komplekt_id$.subscribe(() => {
+            this.furniture_id$.next(null);
+            this.loadFurnitures()
+        })
+
+        this.furniture_id$.subscribe(() => {
+            this.map$.next(null);
+            this.loadMaps();
+            this.loadFurnitures()
+        })
+
+        this.map$.subscribe(value => {
+            console.log({map: value}, value?.furniture_id, value?.cost)
+            this.furniture_work_cost$.next(value?.cost)
+        })
+
     }
 
-    getKomplekts(category_id) {
+    getKomplekts(category_id): Komplekt[] {
         let komplekts = []
 
         this.komplekts$.pipe(take(1)).subscribe(value => komplekts = value)
@@ -68,9 +91,22 @@ export class FilterKuiComponent implements OnInit {
 
     loadFurnitures() {
         if (this.category_id$.value || this.komplekt_id$.value) {
-            console.log(this.category_id$.value, this.komplekt_id$.value)
             this.furnitures$ = this._furnitureService.getFurnitures(this.category_id$.value, this.komplekt_id$.value);
         } else
             this.furnitures$ = new Observable<Furniture[]>()
+    }
+
+    loadMaps(): void {
+        if (this.furniture_id$.value) {
+            this.maps$ = this._mapService.getMaps(this.furniture_id$.value);
+
+            this.maps$.subscribe((value: IMap[]) => {
+                if (value.length === 1) {
+                    this.map$.next(value[0])
+                }
+            })
+
+        } else
+            this.maps$ = new Observable<IMap[]>()
     }
 }

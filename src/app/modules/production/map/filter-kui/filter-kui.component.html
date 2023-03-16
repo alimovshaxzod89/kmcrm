@@ -47,4 +47,35 @@
             </kendo-label>
         </div>
     </div>
+
+    <div class="w-12"></div>
+
+    <div class="flex-1">
+        <kendo-label text="Versiya">
+            <kendo-dropdownlist
+                [data]="maps$ | async"
+                [ngModel]="map$ | async"
+                (ngModelChange)="map$.next($event)"
+                textField="version"
+                valueField="id"
+            >
+            </kendo-dropdownlist>
+        </kendo-label>
+    </div>
+
+    <div class="flex-1">
+        <div class="form-group">
+            <kendo-label text="Ish haqqi, sum">
+                <kendo-numerictextbox
+                    [ngModel]="furniture_work_cost$ | async"
+                    (ngModelChange)="furniture_work_cost$.next($event)"
+                    [min]="0"
+                    format="#,0"
+                    [autoCorrect]="true"
+                >
+                </kendo-numerictextbox>
+            </kendo-label>
+        </div>
+    </div>
+
 </div>
