@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {BehaviorSubject, Observable, take} from "rxjs";
 import {Category, Furniture, Komplekt} from "../../../furniture/furniture.types";
 import {DropDownFilterSettings} from "@progress/kendo-angular-dropdowns";
@@ -12,6 +12,8 @@ import {MapService} from "../map.service";
     styleUrls: ['./filter-kui.component.scss']
 })
 export class FilterKuiComponent implements OnInit {
+
+    @Output() mapIdChange = new EventEmitter<number>();
 
     //category
     categories$: Observable<Category[]>;
@@ -73,6 +75,8 @@ export class FilterKuiComponent implements OnInit {
         this.map$.subscribe(value => {
             console.log({map: value}, value?.furniture_id, value?.cost)
             this.furniture_work_cost$.next(value?.cost)
+
+            this.mapIdChange.emit(value?.id)
         })
 
     }

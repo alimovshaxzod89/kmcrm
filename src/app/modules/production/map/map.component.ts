@@ -9,6 +9,7 @@ import {FurnitureService} from "../../furniture/furniture.service";
 export class MapComponent implements OnInit {
 
     isLoading: boolean = false;
+    map_id: number = null;
 
     constructor(private _furnitureService: FurnitureService) {
     }
