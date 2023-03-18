@@ -15,6 +15,7 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomPaginator} from 'app/custom/CustomPaginatorConfiguration';
 import {FormsModule} from '@angular/forms';
 
+
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled'
