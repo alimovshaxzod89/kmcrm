@@ -2,3 +2,20 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+
+.table-bordered {
+    border: 1px solid rgb(0, 0, 0, 0.12) !important;
+}
+
+table-small {
+    border-spacing: 0 !important; /* Removes the cell spacing via CSS */
+    border-collapse: collapse !important; /* Optional - if you don't want to have double border where cells touch */
+}
+
+.table-small .mdc-data-table__row {
+    height: 35px !important;
+}
+
+.table-small .mat-mdc-header-row {
+    height: 35px !important;
+}

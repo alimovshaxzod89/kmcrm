@@ -14,6 +14,10 @@ export class UnitsComponent implements OnInit, OnChanges {
 
     units$: Observable<IUnit[]>;
 
+    displayedColumns: string[] = [
+        'del', 'tip', 'percent', 'more'
+    ];
+
     constructor(private _unitService: UnitService) {
     }
 
@@ -31,5 +35,4 @@ export class UnitsComponent implements OnInit, OnChanges {
             this.units$ = this._unitService.getUnits(changes.map_id.currentValue)
         }
     }
-
 }

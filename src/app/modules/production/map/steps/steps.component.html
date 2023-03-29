@@ -1,0 +1,11 @@
+<div *ngFor="let unit of units; let i = index">
+
+    <h3>{{unit.name}} {{i}}</h3>
+
+    <map-unit-steps
+        [steps]="stepsByUnitId[unit.id] ?? []"
+        [sehs]="sehs"
+    >
+    </map-unit-steps>
+
+</div>

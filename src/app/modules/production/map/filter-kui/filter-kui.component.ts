@@ -79,6 +79,21 @@ export class FilterKuiComponent implements OnInit {
             this.mapIdChange.emit(value?.id)
         })
 
+
+        //temporary
+        {
+            setTimeout(() => {
+                this.category_id$.next(1);
+            }, 500)
+
+            setTimeout(() => {
+                this.komplekt_id$.next(3);
+            }, 1500)
+
+            setTimeout(() => {
+                this.furniture_id$.next(12);
+            }, 2000)
+        }
     }
 
     getKomplekts(category_id): Komplekt[] {

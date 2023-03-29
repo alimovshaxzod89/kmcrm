@@ -28,6 +28,9 @@ import {MapComponent} from './map/map.component';
 import {FilterMuiComponent} from './map/filter-mui/filter-mui.component';
 import {FilterKuiComponent} from './map/filter-kui/filter-kui.component';
 import {UnitsComponent} from './map/units/units.component';
+import {StepsComponent} from './map/steps/steps.component';
+import {UnitStepsComponent} from "./map/unit-steps/unit-steps.component";
+
 
 
 @NgModule({
@@ -36,6 +39,8 @@ import {UnitsComponent} from './map/units/units.component';
         FilterMuiComponent,
         FilterKuiComponent,
         UnitsComponent,
+        StepsComponent,
+        UnitStepsComponent,
     ],
     imports: [
         CommonModule,

@@ -1,9 +1,35 @@
-<kendo-grid [data]="units$ | async">
-    <kendo-grid-column field="id" title=""></kendo-grid-column>
-    <kendo-grid-column field="tip_id" title="Tip"></kendo-grid-column>
-    <kendo-grid-column field="amount" title="%">
-    </kendo-grid-column>
-    <kendo-grid-column field="name" title=""></kendo-grid-column>
-</kendo-grid>
+<h1>Qismlar</h1>
 
-<h1>{{ map_id | json}}</h1>
+<table mat-table [dataSource]="units$ | async" class="table-bordered table-small">
+
+    <!-- Delete Column -->
+    <ng-container matColumnDef="del">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element"> delete</td>
+    </ng-container>
+
+    <!-- Tip Column -->
+    <ng-container matColumnDef="tip">
+        <th mat-header-cell *matHeaderCellDef> Tip </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Tip Column -->
+    <ng-container matColumnDef="percent">
+        <th mat-header-cell *matHeaderCellDef> % </th>
+        <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+    <!-- Tip Column -->
+    <ng-container matColumnDef="more">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="accent" aria-label="yuklash">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
