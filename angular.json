@@ -4,6 +4,9 @@
     "newProjectRoot": "projects",
     "projects": {
         "fuse": {
+            "i18n": {
+                "sourceLocale": "uz-Cyrl"
+            },
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -18,6 +21,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "localize": ["uz-Cyrl"],
                         "outputPath": "dist/fuse",
                         "index": "src/index.html",
                         "main": "src/main.ts",
