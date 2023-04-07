@@ -56,7 +56,7 @@ const routerConfig: ExtraOptions = {
         {provide: DEFAULT_CURRENCY_CODE, useValue: 'UZS'},
         {
             provide: "BASE_API_URL",
-            useValue: 'http://localhost:8093/'
+            useValue: 'http://localhost:8092/'
         }
     ],
 })
