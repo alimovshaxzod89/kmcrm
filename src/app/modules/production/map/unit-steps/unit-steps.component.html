@@ -1,48 +1,96 @@
-<table mat-table [dataSource]="steps" class="table-bordered table-small">
-
-    <!-- Index Column -->
-    <ng-container matColumnDef="#">
-        <th mat-header-cell *matHeaderCellDef>№</th>
-        <td mat-cell *matCellDef="let step; let i = index">{{i + 1}}</td>
-    </ng-container>
-
-    <!-- Tip Column -->
-    <ng-container matColumnDef="seh">
-        <th mat-header-cell *matHeaderCellDef> Цех</th>
-        <td mat-cell *matCellDef="let step"> {{getSehName(step.seh_id)}}</td>
-    </ng-container>
-
-    <!-- Tip Column -->
-    <ng-container matColumnDef="percent">
-        <th mat-header-cell *matHeaderCellDef> %</th>
-        <td mat-cell *matCellDef="let step" class="text-right">{{step.percent/100 | percent:'1.0-2'}}</td>
-    </ng-container>
-
-    <!-- Tip Column -->
-    <ng-container matColumnDef="cost">
-        <th mat-header-cell *matHeaderCellDef>Цена</th>
-        <td mat-cell *matCellDef="let step" class="text-right">{{step.cost | currency:'UZS':'':'1.0-0'}}</td>
-    </ng-container>
-
-    <!-- Tip Column -->
-    <ng-container matColumnDef="duration">
-        <th mat-header-cell *matHeaderCellDef>Время</th>
-        <td mat-cell *matCellDef="let step">{{step.duration}}</td>
-    </ng-container>
-
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Описания</th>
-        <td mat-cell *matCellDef="let step">{{step.description}}</td>
-    </ng-container>
-
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let step"></td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
+<p-table [value]="steps" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }" class="table-bordered table-small">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 10%">№</th>
+            <th style="width: 16%">Цех</th>
+            <th style="width: 16%" class="text-right">%</th>
+            <th style="width: 16%" class="text-right">Цена</th>
+            <th style="width: 16%" class="text-right">Время</th>
+            <th style="width: 16%">Описания</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-step let-editing="editing" let-rowIndex="rowIndex">
+        <tr>
+            <td>
+                {{rowIndex + 1}}
+            </td>
+            <td [pEditableColumn]="step.name" pEditableColumnField="seh">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+<!--                        fix z-index-->
+                        <p-dropdown
+                            [options]="sehs"
+                            [(ngModel)]="step.seh_id"
+                            optionLabel="name"
+                            optionValue="id"
+                            filter="true"
+                            filterBy="name"
+                            [style]="{'width':'100%'}"
+                            class="small-input"
+                            [appendTo]="'body'"
+                            overlayOptions="{ 'style': {'z-index': '9999'}, 'class': 'asdasdasdasd' }"
+                        />
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{getSehName(step.seh_id)}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td [pEditableColumn]="step.percent" pEditableColumnField="percent" class="text-right w-24">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber
+                            mode="decimal"
+                            [(ngModel)]="step.percent"
+                            [minFractionDigits]="2" [maxFractionDigits]="5"
+                            [min]="0" [max]="100"
+                            locale="ru"
+                            class="small-input"
+                        />
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{step.percent / 100 | percent:'1.0-2'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td [pEditableColumn]="step.cost" pEditableColumnField="cost" class="text-right">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber
+                            mode="decimal"
+                            [(ngModel)]="step.cost"
+                            [minFractionDigits]="0" [maxFractionDigits]="0"
+                            [min]="0"
+                            locale="ru"
+                            class="small-input"
+                        />
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{step.cost | currency:'UZS':'':'1.0-0'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td [pEditableColumn]="step.duration" pEditableColumnField="duration" class="text-right">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="step.duration"/>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{step.duration}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td [pEditableColumn]="step.description" pEditableColumnField="description">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="step.description"/>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{step.description}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
