@@ -3,19 +3,43 @@
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
 
-.table-bordered {
+// for mui
+table.table-bordered {
     border: 1px solid rgb(0, 0, 0, 0.12) !important;
 }
 
-table-small {
+table.table-small {
     border-spacing: 0 !important; /* Removes the cell spacing via CSS */
     border-collapse: collapse !important; /* Optional - if you don't want to have double border where cells touch */
 }
 
-.table-small .mdc-data-table__row {
-    height: 35px !important;
+table.table-small {
+    .mdc-data-table__row, .mat-mdc-header-row {
+        height: 35px !important;
+        padding: 0 8px !important;
+    }
 }
 
-.table-small .mat-mdc-header-row {
-    height: 35px !important;
+// for p-table
+.table-bordered table.p-datatable-table {
+    border: 1px solid rgb(0, 0, 0, 0.12) !important;
+}
+
+.table-small table.p-datatable-table {
+    border-spacing: 0 !important; /* Removes the cell spacing via CSS */
+    border-collapse: collapse !important; /* Optional - if you don't want to have double border where cells touch */
+}
+
+.table-small {
+    .p-datatable-thead, .p-datatable-tbody {
+        th, td {
+            height: 35px !important;
+            padding: 0 8px !important;
+        }
+    }
+}
+
+.small-input .p-inputtext {
+    padding: 0 !important;
+    width: 100% !important;
 }

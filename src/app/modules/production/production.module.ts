@@ -29,8 +29,14 @@ import {FilterMuiComponent} from './map/filter-mui/filter-mui.component';
 import {FilterKuiComponent} from './map/filter-kui/filter-kui.component';
 import {UnitsComponent} from './map/units/units.component';
 import {StepsComponent} from './map/steps/steps.component';
+import {UnitStepsComponentMui} from "./map/unit-steps-mui/unit-steps-component-mui.component";
 import {UnitStepsComponent} from "./map/unit-steps/unit-steps.component";
 
+import {ButtonModule} from 'primeng/button';
+import {TableModule} from 'primeng/table';
+import {InputTextModule} from "primeng/inputtext";
+import {InputNumberModule} from 'primeng/inputnumber';
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -40,7 +46,8 @@ import {UnitStepsComponent} from "./map/unit-steps/unit-steps.component";
         FilterKuiComponent,
         UnitsComponent,
         StepsComponent,
-        UnitStepsComponent,
+        UnitStepsComponentMui,
+        UnitStepsComponent
     ],
     imports: [
         CommonModule,
@@ -65,6 +72,12 @@ import {UnitStepsComponent} from "./map/unit-steps/unit-steps.component";
         InputsModule,
         ButtonsModule,
         DateInputsModule,
+
+        ButtonModule,
+        TableModule,
+        InputTextModule,
+        InputNumberModule,
+        DropdownModule
     ]
 })
 export class ProductionModule {
