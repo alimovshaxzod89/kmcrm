@@ -17,6 +17,7 @@ import {FormsModule} from '@angular/forms';
 
 import { IntlModule } from "@progress/kendo-angular-intl";
 import "../../node_modules/@progress/kendo-angular-intl/locales/uz-Cyrl/all.js";
+import { StoreModule } from '@ngrx/store';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -56,7 +57,7 @@ const routerConfig: ExtraOptions = {
         {provide: DEFAULT_CURRENCY_CODE, useValue: 'UZS'},
         {
             provide: "BASE_API_URL",
-            useValue: 'http://localhost:8092/'
+            useValue: 'http://127.0.0.1:8000/'
         }
     ],
 })

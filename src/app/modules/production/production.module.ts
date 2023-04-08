@@ -39,6 +39,10 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {DropdownModule} from "primeng/dropdown";
 
 
+import { StoreModule } from '@ngrx/store';
+import { costReducer } from './map/store/cost.reducer';
+
+
 @NgModule({
     declarations: [
         MapComponent,
@@ -77,7 +81,9 @@ import {DropdownModule} from "primeng/dropdown";
         TableModule,
         InputTextModule,
         InputNumberModule,
-        DropdownModule
+        DropdownModule,
+
+        StoreModule.forRoot({cost: costReducer})
     ]
 })
 export class ProductionModule {

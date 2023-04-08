@@ -5,6 +5,7 @@ import {IUnit} from "./units/unit.type";
 import {UnitService} from "./units/unit.service";
 import {ISeh} from "../../seh/seh.types";
 import {SehService} from "../../seh/seh.service";
+import {Store} from "@ngrx/store";
 
 @Component({
     selector: 'app-map',
@@ -21,7 +22,13 @@ export class MapComponent implements OnInit {
 
     units$: BehaviorSubject<IUnit[]> = new BehaviorSubject<IUnit[]>([]);
 
-    constructor(private _furnitureService: FurnitureService, private _unitService: UnitService, private _sehService: SehService) {
+    cost$: Observable<number>;
+
+    constructor(private _furnitureService: FurnitureService,
+                private _unitService: UnitService,
+                private _sehService: SehService,
+                private store: Store<{ cost: number }>) {
+        this.cost$ = store.select('cost');
     }
 
     ngOnInit() {

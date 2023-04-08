@@ -5,6 +5,8 @@ import {DropDownFilterSettings} from "@progress/kendo-angular-dropdowns";
 import {FurnitureService} from "../../../furniture/furniture.service";
 import {IMap} from "../map.types";
 import {MapService} from "../map.service";
+import {Store} from "@ngrx/store";
+import {setCost} from "../store/cost.actions";
 
 @Component({
     selector: 'map-filter-kui',
@@ -33,12 +35,18 @@ export class FilterKuiComponent implements OnInit {
     maps$: Observable<IMap[]>;
     map$: BehaviorSubject<IMap> = new BehaviorSubject<IMap>(null)
 
+    cost$: Observable<number>;
+
     public filterSettings: DropDownFilterSettings = {
         caseSensitive: false,
         operator: 'contains'
     };
 
-    constructor(private _furnitureService: FurnitureService, private _mapService: MapService) {
+    constructor(private _furnitureService: FurnitureService,
+                private _mapService: MapService,
+                private store: Store<{ cost: number }>) {
+
+        this.cost$ = store.select('cost');
     }
 
 
@@ -75,6 +83,8 @@ export class FilterKuiComponent implements OnInit {
         this.map$.subscribe(value => {
             console.log({map: value}, value?.furniture_id, value?.cost)
             this.furniture_work_cost$.next(value?.cost)
+
+            this.store.dispatch(setCost({cost: value?.cost}))
 
             this.mapIdChange.emit(value?.id)
         })

@@ -1,4 +1,4 @@
-<p-table [value]="steps" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }" class="table-bordered table-small">
+<p-table [value]="steps" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }" class="table-bordered table-small" (onEditComplete)="onEditComplete($event)">
     <ng-template pTemplate="header">
         <tr>
             <th style="width: 10%">№</th>
@@ -15,7 +15,7 @@
             <td>
                 {{rowIndex + 1}}
             </td>
-            <td [pEditableColumn]="step.name" pEditableColumnField="seh">
+            <td [pEditableColumn]="step.name" pEditableColumnField="seh" [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
 <!--                        fix z-index-->
@@ -29,7 +29,6 @@
                             [style]="{'width':'100%'}"
                             class="small-input"
                             [appendTo]="'body'"
-                            overlayOptions="{ 'style': {'z-index': '9999'}, 'class': 'asdasdasdasd' }"
                         />
                     </ng-template>
                     <ng-template pTemplate="output">
@@ -37,7 +36,7 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.percent" pEditableColumnField="percent" class="text-right w-24">
+            <td [pEditableColumn]="step.percent" pEditableColumnField="percent" class="text-right w-24" [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-inputNumber
