@@ -26,7 +26,6 @@ export class UnitsComponent implements OnInit, OnChanges {
         this.units$ = this._unitService.getUnits(this.map_id)
 
         this.units$.subscribe(value => {
-            console.log(this.map_id, value)
         });
     }
 

@@ -52,7 +52,6 @@ export class MapComponent implements OnInit {
 
         //load sehs
         this._sehService.getSehs().subscribe(values => {
-            console.log('sehlar yuklandi')
         });
         this.sehs$ = this._sehService.sehs$;
     }

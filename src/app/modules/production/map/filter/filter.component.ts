@@ -1,20 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {BehaviorSubject, Observable, take} from "rxjs";
 import {Category, Furniture, Komplekt} from "../../../furniture/furniture.types";
+import {IMap} from "../map.types";
 import {DropDownFilterSettings} from "@progress/kendo-angular-dropdowns";
 import {FurnitureService} from "../../../furniture/furniture.service";
-import {IMap} from "../map.types";
 import {MapService} from "../map.service";
 import {Store} from "@ngrx/store";
 import {setCost} from "../store/cost.actions";
 
 @Component({
-    selector: 'map-filter-kui',
-    templateUrl: './filter-kui.component.html',
-    styleUrls: ['./filter-kui.component.scss']
+    selector: 'map-filter',
+    templateUrl: './filter.component.html',
+    styleUrls: ['./filter.component.scss']
 })
-export class FilterKuiComponent implements OnInit {
-
+export class FilterComponent {
     @Output() mapIdChange = new EventEmitter<number>();
 
     //category
@@ -29,18 +28,12 @@ export class FilterKuiComponent implements OnInit {
     //furniture
     furnitures$: Observable<Furniture[]>;
     furniture_id$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
-    furniture_work_cost$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
 
     //map is version
     maps$: Observable<IMap[]>;
     map$: BehaviorSubject<IMap> = new BehaviorSubject<IMap>(null)
 
     cost$: Observable<number>;
-
-    public filterSettings: DropDownFilterSettings = {
-        caseSensitive: false,
-        operator: 'contains'
-    };
 
     constructor(private _furnitureService: FurnitureService,
                 private _mapService: MapService,
@@ -80,7 +73,6 @@ export class FilterKuiComponent implements OnInit {
         })
 
         this.map$.subscribe(value => {
-            this.furniture_work_cost$.next(value?.cost)
 
             this.store.dispatch(setCost({cost: value?.cost}))
 

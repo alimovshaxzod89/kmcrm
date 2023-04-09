@@ -41,6 +41,7 @@ import {DropdownModule} from "primeng/dropdown";
 
 import { StoreModule } from '@ngrx/store';
 import { costReducer } from './map/store/cost.reducer';
+import { FilterComponent } from './map/filter/filter.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { costReducer } from './map/store/cost.reducer';
         UnitsComponent,
         StepsComponent,
         UnitStepsComponentMui,
-        UnitStepsComponent
+        UnitStepsComponent,
+        FilterComponent
     ],
     imports: [
         CommonModule,

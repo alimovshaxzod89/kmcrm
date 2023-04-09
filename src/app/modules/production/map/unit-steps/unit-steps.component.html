@@ -18,16 +18,19 @@
             <td [pEditableColumn]="step.name" pEditableColumnField="seh" [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-<!--                        fix z-index-->
+<!--                        <select [(ngModel)]="step.seh_id" matNativeControl>-->
+<!--                            <option *ngFor="let seh of sehs" [value]="seh.id">-->
+<!--                                {{seh.name}}-->
+<!--                            </option>-->
+<!--                        </select>-->
                         <p-dropdown
                             [options]="sehs"
                             [(ngModel)]="step.seh_id"
                             optionLabel="name"
                             optionValue="id"
-                            filter="true"
-                            filterBy="name"
                             [style]="{'width':'100%'}"
                             class="small-input"
+                            scrollHeight="300px"
                             [appendTo]="'body'"
                         />
                     </ng-template>
