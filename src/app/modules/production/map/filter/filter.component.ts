@@ -2,7 +2,6 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {BehaviorSubject, Observable, take} from "rxjs";
 import {Category, Furniture, Komplekt} from "../../../furniture/furniture.types";
 import {IMap} from "../map.types";
-import {DropDownFilterSettings} from "@progress/kendo-angular-dropdowns";
 import {FurnitureService} from "../../../furniture/furniture.service";
 import {MapService} from "../map.service";
 import {Store} from "@ngrx/store";

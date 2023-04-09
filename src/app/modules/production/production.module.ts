@@ -15,18 +15,10 @@ import {SharedModule} from 'app/shared/shared.module';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 
-import {GridModule} from '@progress/kendo-angular-grid';
-import {DropDownsModule} from "@progress/kendo-angular-dropdowns";
-import {LabelModule} from "@progress/kendo-angular-label";
-import {InputsModule} from "@progress/kendo-angular-inputs";
-import {ButtonsModule} from "@progress/kendo-angular-buttons";
-import {DateInputsModule} from '@progress/kendo-angular-dateinputs';
-
 import {productionRoutes} from "./production.routing";
 import {MapComponent} from './map/map.component';
 
 import {FilterMuiComponent} from './map/filter-mui/filter-mui.component';
-import {FilterKuiComponent} from './map/filter-kui/filter-kui.component';
 import {UnitsComponent} from './map/units/units.component';
 import {StepsComponent} from './map/steps/steps.component';
 import {UnitStepsComponentMui} from "./map/unit-steps-mui/unit-steps-component-mui.component";
@@ -48,7 +40,6 @@ import { FilterComponent } from './map/filter/filter.component';
     declarations: [
         MapComponent,
         FilterMuiComponent,
-        FilterKuiComponent,
         UnitsComponent,
         StepsComponent,
         UnitStepsComponentMui,
@@ -71,13 +62,6 @@ import { FilterComponent } from './map/filter/filter.component';
         SharedModule,
         MatAutocompleteModule,
         NgxMatSelectSearchModule,
-
-        GridModule,
-        DropDownsModule,
-        LabelModule,
-        InputsModule,
-        ButtonsModule,
-        DateInputsModule,
 
         ButtonModule,
         TableModule,

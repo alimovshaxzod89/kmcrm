@@ -15,9 +15,7 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomPaginator} from 'app/custom/CustomPaginatorConfiguration';
 import {FormsModule} from '@angular/forms';
 
-import { IntlModule } from "@progress/kendo-angular-intl";
-import "../../node_modules/@progress/kendo-angular-intl/locales/uz-Cyrl/all.js";
-import { StoreModule } from '@ngrx/store';
+// import { StoreModule } from '@ngrx/store';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -46,7 +44,6 @@ const routerConfig: ExtraOptions = {
 
         FormsModule,
 
-        IntlModule,
     ],
     bootstrap: [
         AppComponent

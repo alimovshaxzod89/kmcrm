@@ -55,11 +55,10 @@
                             ]
                         },
                         "styles": [
-                            "node_modules/@progress/kendo-theme-material/dist/all.css",
                             "node_modules/primeicons/primeicons.css",
                             "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
                             "node_modules/primeng/resources/primeng.min.css",
-                            
+
                             "src/@fuse/styles/tailwind.scss",
                             "src/@fuse/styles/themes.scss",
                             "src/styles/vendors.scss",
@@ -129,7 +128,6 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "node_modules/@progress/kendo-theme-material/dist/all.css",
                             "src/styles/styles.scss"
                         ],
                         "scripts": []

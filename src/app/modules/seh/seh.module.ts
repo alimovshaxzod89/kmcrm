@@ -6,7 +6,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {TodoTableComponent} from './tablo/todo-table/todo-table.component';
-import {CalendarModule} from "@progress/kendo-angular-dateinputs";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import {CalendarModule} from "@progress/kendo-angular-dateinputs";
         MatTableModule,
         MatIconModule,
         MatCheckboxModule,
-        CalendarModule
+        MatButtonModule
     ],
 })
 export class SehModule {
