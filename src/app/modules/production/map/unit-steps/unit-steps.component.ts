@@ -77,4 +77,19 @@ export class UnitStepsComponent {
     handlePercentChange(index: number, percent: number, step_id: number) {
         this.stepPercentsById[step_id] = percent
     }
+
+    logEvent($event: any, asd: any) {
+        console.log({$event, asd})
+    }
+
+    doNothing($event: any) {
+        $event.stopPropagation();
+        return;
+    }
+
+    stopIncreaseDecrease($event: any) {
+        $event.stopPropagation();
+        $event.preventDefault();
+        return false;
+    }
 }

@@ -1,4 +1,8 @@
-<p-table [value]="steps" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }" class="table-bordered table-small" (onEditComplete)="onEditComplete($event)">
+<p-table
+    [value]="steps" dataKey="id"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    class="table-bordered table-small"
+    (onEditComplete)="onEditComplete($event)">
     <ng-template pTemplate="header">
         <tr>
             <th style="width: 10%">№</th>
@@ -18,14 +22,15 @@
             <td [pEditableColumn]="step.name" pEditableColumnField="seh" [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-<!--                        <select [(ngModel)]="step.seh_id" matNativeControl>-->
-<!--                            <option *ngFor="let seh of sehs" [value]="seh.id">-->
-<!--                                {{seh.name}}-->
-<!--                            </option>-->
-<!--                        </select>-->
+                        <!--                        <select [(ngModel)]="step.seh_id" matNativeControl>-->
+                        <!--                            <option *ngFor="let seh of sehs" [value]="seh.id">-->
+                        <!--                                {{seh.name}}-->
+                        <!--                            </option>-->
+                        <!--                        </select>-->
                         <p-dropdown
                             [options]="sehs"
                             [(ngModel)]="step.seh_id"
+                            BlockLateralArrowNavigation
                             optionLabel="name"
                             optionValue="id"
                             [style]="{'width':'100%'}"
@@ -39,11 +44,13 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.percent" pEditableColumnField="percent" class="text-right w-24" [pEditableColumnRowIndex]="rowIndex">
+            <td [pEditableColumn]="step.percent" pEditableColumnField="percent" class="text-right w-24"
+                [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-inputNumber
                             mode="decimal"
+                            BlockLateralArrowNavigation
                             [ngModel]="step.percent"
                             (ngModelChange)="handlePercentChange(rowIndex, $event, step.id)"
                             [minFractionDigits]="2" [maxFractionDigits]="5"
@@ -63,6 +70,7 @@
                         <p-inputNumber
                             mode="decimal"
                             [(ngModel)]="step.cost"
+                            BlockLateralArrowNavigation
                             [minFractionDigits]="0" [maxFractionDigits]="0"
                             [min]="0"
                             locale="ru"
@@ -77,7 +85,9 @@
             <td [pEditableColumn]="step.duration" pEditableColumnField="duration" class="text-right">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="step.duration"/>
+                        <input pInputText type="text"
+                               [(ngModel)]="step.duration"
+                               BlockLateralArrowNavigation/>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{step.duration}}
@@ -87,7 +97,9 @@
             <td [pEditableColumn]="step.description" pEditableColumnField="description">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="step.description"/>
+                        <input pInputText type="text"
+                               [(ngModel)]="step.description"
+                               BlockLateralArrowNavigation/>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{step.description}}

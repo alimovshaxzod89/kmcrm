@@ -35,7 +35,7 @@ import {StoreModule} from '@ngrx/store';
 import {costReducer} from './map/store/cost.reducer';
 import {stepsReducer} from "./map/store/steps.reducer";
 import {unitsReducer} from "./map/store/units.reducer";
-
+import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
 
 @NgModule({
     declarations: [
@@ -44,7 +44,9 @@ import {unitsReducer} from "./map/store/units.reducer";
         StepsComponent,
         UnitStepsComponentMui,
         UnitStepsComponent,
-        FilterComponent
+        FilterComponent,
+
+        BlockLateralArrowNavigationDirective,
     ],
     imports: [
         CommonModule,
