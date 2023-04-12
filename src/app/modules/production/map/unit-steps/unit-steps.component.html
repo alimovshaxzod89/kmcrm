@@ -44,7 +44,8 @@
                     <ng-template pTemplate="input">
                         <p-inputNumber
                             mode="decimal"
-                            [(ngModel)]="step.percent"
+                            [ngModel]="step.percent"
+                            (ngModelChange)="handlePercentChange(rowIndex, $event, step.id)"
                             [minFractionDigits]="2" [maxFractionDigits]="5"
                             [min]="0" [max]="100"
                             locale="ru"

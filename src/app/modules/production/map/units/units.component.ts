@@ -1,16 +1,15 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {IUnit} from "./unit.type";
 import {UnitService} from "./unit.service";
+import {Store} from "@ngrx/store";
 
 @Component({
     selector: 'map-units',
     templateUrl: './units.component.html',
     styleUrls: ['./units.component.scss']
 })
-export class UnitsComponent implements OnInit, OnChanges {
-
-    @Input() map_id: number;
+export class UnitsComponent implements OnInit {
 
     units$: Observable<IUnit[]>;
 
@@ -18,20 +17,12 @@ export class UnitsComponent implements OnInit, OnChanges {
         'del', 'tip', 'percent', 'more'
     ];
 
-    constructor(private _unitService: UnitService) {
+    constructor(private _unitService: UnitService,
+                private store: Store<{ units: IUnit[] }>) {
     }
 
     ngOnInit(): void {
 
-        this.units$ = this._unitService.getUnits(this.map_id)
-
-        this.units$.subscribe(value => {
-        });
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.map_id) {
-            this.units$ = this._unitService.getUnits(changes.map_id.currentValue)
-        }
+        this.units$ = this.store.select('units');
     }
 }

@@ -3,6 +3,7 @@ import {IStep} from "../steps/step.type";
 import {ISeh} from "../../../seh/seh.types";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
+import {setStep} from "../store/steps.actions";
 
 @Component({
     selector: 'map-unit-steps',
@@ -15,6 +16,8 @@ export class UnitStepsComponent {
     @Input() sehs: ISeh[];
 
     cost$: Observable<number>;
+
+    stepPercentsById: number[] = []
 
     constructor(private store: Store<{ cost: number }>) {
         this.cost$ = store.select('cost');
@@ -30,14 +33,48 @@ export class UnitStepsComponent {
             field, data, index
         } = event
 
-        console.log(field, data, index)
+        console.log({field, data, index})
 
         if (field === 'percent') {
-
-            this.cost$.subscribe(value => {
-                // console.log({newCost: this.steps[index].percent * value / 100}, {value}, {percent: this.steps[index].percent})
-                this.steps[index].cost = this.steps[index].percent * value / 100
-            })
+            const step_id = this.getStepIdByIndex(index)
+            const percent: number = this.getHandledPercentByIndex(index)
+            this.savePercent(index, percent, step_id)
         }
+    }
+
+    private getHandledPercentByIndex(index: number): number {
+        const step_id = this.getStepIdByIndex(index)
+        return this.stepPercentsById[step_id]
+    }
+
+    private getStepIdByIndex(index: number): number {
+        return this.steps[index].id
+    }
+
+    private getStepByIndex(index: number): IStep {
+        return this.steps[index]
+    }
+
+    private savePercent(index: number, percent: number, step_id: number) {
+
+        if (percent === undefined) {
+            percent = 0
+        }
+
+        const step = JSON.parse(JSON.stringify(this.getStepByIndex(index)))
+
+        //calculate cost
+        let cost = 0;
+        this.cost$.subscribe(value => cost = value / 100 * percent)
+
+        //set percent and cost
+        step.percent = percent
+        step.cost = cost
+
+        this.store.dispatch(setStep({step_id, step}))
+    }
+
+    handlePercentChange(index: number, percent: number, step_id: number) {
+        this.stepPercentsById[step_id] = percent
     }
 }

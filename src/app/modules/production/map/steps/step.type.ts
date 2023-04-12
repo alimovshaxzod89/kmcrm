@@ -1,4 +1,5 @@
 export interface IStep {
+    id?: number,
     unit_id: number,
     category_seh_id: number,
 

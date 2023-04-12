@@ -18,7 +18,7 @@ import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import {productionRoutes} from "./production.routing";
 import {MapComponent} from './map/map.component';
 
-import {FilterMuiComponent} from './map/filter-mui/filter-mui.component';
+import {FilterComponent} from './map/filter/filter.component';
 import {UnitsComponent} from './map/units/units.component';
 import {StepsComponent} from './map/steps/steps.component';
 import {UnitStepsComponentMui} from "./map/unit-steps-mui/unit-steps-component-mui.component";
@@ -31,15 +31,15 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {DropdownModule} from "primeng/dropdown";
 
 
-import { StoreModule } from '@ngrx/store';
-import { costReducer } from './map/store/cost.reducer';
-import { FilterComponent } from './map/filter/filter.component';
+import {StoreModule} from '@ngrx/store';
+import {costReducer} from './map/store/cost.reducer';
+import {stepsReducer} from "./map/store/steps.reducer";
+import {unitsReducer} from "./map/store/units.reducer";
 
 
 @NgModule({
     declarations: [
         MapComponent,
-        FilterMuiComponent,
         UnitsComponent,
         StepsComponent,
         UnitStepsComponentMui,
@@ -69,7 +69,7 @@ import { FilterComponent } from './map/filter/filter.component';
         InputNumberModule,
         DropdownModule,
 
-        StoreModule.forRoot({cost: costReducer})
+        StoreModule.forRoot({cost: costReducer, steps: stepsReducer, units: unitsReducer})
     ]
 })
 export class ProductionModule {

@@ -6,6 +6,10 @@ import {UnitService} from "./units/unit.service";
 import {ISeh} from "../../seh/seh.types";
 import {SehService} from "../../seh/seh.service";
 import {Store} from "@ngrx/store";
+import {IStep} from "./steps/step.type";
+import {setUnits} from "./store/units.actions";
+import {StepService} from "./steps/step.service";
+import {setSteps} from "./store/steps.actions";
 
 @Component({
     selector: 'app-map',
@@ -20,40 +24,63 @@ export class MapComponent implements OnInit {
 
     sehs$: Observable<ISeh[]>;
 
-    units$: BehaviorSubject<IUnit[]> = new BehaviorSubject<IUnit[]>([]);
+    units$: Observable<IUnit[]>;
+    steps$: Observable<IStep[]>;
 
     cost$: Observable<number>;
 
     constructor(private _furnitureService: FurnitureService,
                 private _unitService: UnitService,
+                private _stepService: StepService,
                 private _sehService: SehService,
-                private store: Store<{ cost: number }>) {
+                private store: Store<{ cost: number, units: IUnit[], steps: IStep[] }>) {
         this.cost$ = store.select('cost');
+        this.units$ = store.select('units');
+        this.steps$ = store.select('steps');
     }
 
     ngOnInit() {
         // this.isLoading = true;
 
-        this.map_id$.subscribe(value => {
+        this.loadUnitsToStore()
 
-            if (value) {
-                this._unitService.getUnits(value).subscribe(units => {
-                    this.units$.next(units)
-                })
-            } else {
-                this.units$.next([])
-            }
-
-        })
-
-        this.units$.subscribe(value => {
-            console.error(this.map_id$.value, value)
-        })
+        this.loadStepsToStore()
 
         //load sehs
-        this._sehService.getSehs().subscribe(values => {
+        this._sehService.getSehs().subscribe(() => {
         });
         this.sehs$ = this._sehService.sehs$;
+    }
+
+    private loadUnitsToStore() {
+        this.map_id$.subscribe(map_id => {
+            if (map_id) {
+                this._unitService.getUnits(map_id).subscribe(units => {
+                    this.store.dispatch(setUnits({units: units}))
+                })
+            } else {
+                this.store.dispatch(setUnits({units: []}))
+            }
+        })
+    }
+
+    private loadStepsToStore() {
+        this.units$.subscribe(units => {
+            if (units.length) {
+
+                //make unit_ids array
+                let unit_ids = []
+                units.forEach(unit => {
+                    unit_ids.push(unit.id)
+                })
+
+                this._stepService.getSteps(unit_ids).subscribe(steps => {
+                    this.store.dispatch(setSteps({steps: steps}))
+                })
+            } else {
+                this.store.dispatch(setSteps({steps: []}))
+            }
+        })
     }
 
 }
