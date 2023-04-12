@@ -127,4 +127,8 @@ export class FilterComponent {
         } else
             this.maps$ = new Observable<IMap[]>()
     }
+
+    protected setCost(cost: number) {
+        this.store.dispatch(setCost({cost}))
+    };
 }

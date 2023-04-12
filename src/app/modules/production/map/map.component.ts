@@ -9,7 +9,7 @@ import {Store} from "@ngrx/store";
 import {IStep} from "./steps/step.type";
 import {setUnits} from "./store/units.actions";
 import {StepService} from "./steps/step.service";
-import {setSteps} from "./store/steps.actions";
+import {calcStepsCost, setSteps} from "./store/steps.actions";
 
 @Component({
     selector: 'app-map',
@@ -45,6 +45,11 @@ export class MapComponent implements OnInit {
         this.loadUnitsToStore()
 
         this.loadStepsToStore()
+
+        this.cost$.subscribe(cost => {
+            console.log('cost', cost)
+            this.store.dispatch(calcStepsCost({cost: cost}))
+        })
 
         //load sehs
         this._sehService.getSehs().subscribe(() => {

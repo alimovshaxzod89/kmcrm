@@ -36,7 +36,6 @@ export class StepService {
 
         return this._httpClient.get<{ data: IStep[] }>(url).pipe(
             map(response => {
-                console.log(response)
                 return response.data
             })
         );

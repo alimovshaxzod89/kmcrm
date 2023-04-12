@@ -37,7 +37,6 @@ export class UnitService {
 
         return this._httpClient.get<{ data: IUnit[] }>(url).pipe(
             map(response => {
-                console.log(response)
                 return response.data
             })
         );

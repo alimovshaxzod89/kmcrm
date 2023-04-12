@@ -79,8 +79,10 @@
     <div class="flex-1">
         <div class="form-group">
             <label for="filter-cost">Ish haqqi, sum</label>
+            <br>
             <p-inputNumber
                 [ngModel]="cost$ | async"
+                (ngModelChange)="setCost($event)"
                 mode="decimal"
                 locale="ru"
                 [min]="0"

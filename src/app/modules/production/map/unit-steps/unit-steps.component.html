@@ -1,7 +1,9 @@
-<p-table
+<p-table #dt
     [value]="steps" dataKey="id"
     [tableStyle]="{ 'min-width': '50rem' }"
     class="table-bordered table-small"
+    (onEditInit)="onEditInit($event)"
+    (onEditCancel)="onEditCancel($event)"
     (onEditComplete)="onEditComplete($event)">
     <ng-template pTemplate="header">
         <tr>
@@ -19,7 +21,7 @@
             <td>
                 {{rowIndex + 1}}
             </td>
-            <td [pEditableColumn]="step.name" pEditableColumnField="seh" [pEditableColumnRowIndex]="rowIndex">
+            <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <!--                        <select [(ngModel)]="step.seh_id" matNativeControl>-->
@@ -29,7 +31,8 @@
                         <!--                        </select>-->
                         <p-dropdown
                             [options]="sehs"
-                            [(ngModel)]="step.seh_id"
+                            [ngModel]="step.seh_id"
+                            (ngModelChange)="handleFieldChange(step.id, $event)"
                             BlockLateralArrowNavigation
                             optionLabel="name"
                             optionValue="id"
@@ -44,7 +47,9 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.percent" pEditableColumnField="percent" class="text-right w-24"
+            <td [pEditableColumn]="step.percent"
+                pEditableColumnField="percent"
+                class="text-right w-24"
                 [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
@@ -52,7 +57,7 @@
                             mode="decimal"
                             BlockLateralArrowNavigation
                             [ngModel]="step.percent"
-                            (ngModelChange)="handlePercentChange(rowIndex, $event, step.id)"
+                            (ngModelChange)="handleFieldChange(step.id, $event)"
                             [minFractionDigits]="2" [maxFractionDigits]="5"
                             [min]="0" [max]="100"
                             locale="ru"
@@ -64,12 +69,14 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.cost" pEditableColumnField="cost" class="text-right">
+            <td [pEditableColumn]="step.cost" pEditableColumnField="cost" class="text-right"
+                [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-inputNumber
                             mode="decimal"
-                            [(ngModel)]="step.cost"
+                            [ngModel]="step.cost"
+                            (ngModelChange)="handleFieldChange(step.id, $event)"
                             BlockLateralArrowNavigation
                             [minFractionDigits]="0" [maxFractionDigits]="0"
                             [min]="0"
@@ -82,11 +89,13 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.duration" pEditableColumnField="duration" class="text-right">
+            <td [pEditableColumn]="step.duration" pEditableColumnField="duration" class="text-right"
+                [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <input pInputText type="text"
-                               [(ngModel)]="step.duration"
+                               [ngModel]="step.duration"
+                               (ngModelChange)="handleFieldChange(step.id, $event)"
                                BlockLateralArrowNavigation/>
                     </ng-template>
                     <ng-template pTemplate="output">
@@ -94,11 +103,13 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.description" pEditableColumnField="description">
+            <td [pEditableColumn]="step.description" pEditableColumnField="description"
+                [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <input pInputText type="text"
-                               [(ngModel)]="step.description"
+                               [ngModel]="step.description"
+                               (ngModelChange)="handleFieldChange(step.id, $event)"
                                BlockLateralArrowNavigation/>
                     </ng-template>
                     <ng-template pTemplate="output">
