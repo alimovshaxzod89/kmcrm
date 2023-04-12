@@ -1,39 +1,39 @@
-<div class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+<div class="flex flex-col flex-auto w-full">
 
-    <!-- Header -->
-    <div
-        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
-        <!-- Loader -->
-        <div
-            class="absolute inset-x-0 bottom-0"
-            *ngIf="isLoading">
-            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
-        </div>
-        <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Mebel qismlari sehlarda harakatlanish xaritasi</div>
-        <!-- Actions -->
-        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+    <div class="flex flex-wrap w-full max-w-screen-2xl mx-auto p-6 md:p-8">
 
-        </div>
-    </div>
+        <!-- Title and action buttons -->
+        <div class="flex items-center justify-between w-full">
+            <div>
+                <h2 class="text-3xl font-semibold tracking-tight leading-8">Mebel seh xaritasi</h2>
+                <div class="font-medium tracking-tight text-secondary">Mebel qismlari sehlarda harakatlanish xaritasi
+                </div>
+            </div>
+            <div class="flex items-center ml-6">
 
-    <!-- Main -->
-
-    <!--    <map-filter-mui></map-filter-mui>-->
-
-    <map-filter (mapIdChange)="map_id$.next($event)"></map-filter>
-
-<!--    <map-filter-kui (mapIdChange)="map_id$.next($event)"></map-filter-kui>-->
-
-    <div class="grid grid-cols-8 mt-6 gap-12 mx-4">
-
-        <div class="col-span-3">
-            <map-units></map-units>
+            </div>
         </div>
 
-        <div class="col-span-5">
-            <map-steps [sehs]="sehs$ | async"></map-steps>
-        </div>
+        <!-- Main -->
+        <div class="w-full mt-8">
 
+            <!--    <map-filter-mui></map-filter-mui>-->
+
+            <map-filter (mapIdChange)="map_id$.next($event)"></map-filter>
+
+            <!--    <map-filter-kui (mapIdChange)="map_id$.next($event)"></map-filter-kui>-->
+
+            <div class="grid grid-cols-8 mt-6 gap-12">
+
+                <div class="col-span-3">
+                    <map-units></map-units>
+                </div>
+
+                <div class="col-span-5">
+                    <map-steps [sehs]="sehs$ | async"></map-steps>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
