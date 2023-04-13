@@ -12,7 +12,7 @@ import {IStep} from "../steps/step.type";
 })
 export class UnitsComponent implements OnInit {
 
-    math = Math;
+    protected readonly Math = Math;
 
     units$: Observable<IUnit[]>;
     steps$: Observable<IStep[]>;
@@ -81,6 +81,4 @@ export class UnitsComponent implements OnInit {
         })
         return percent
     }
-
-    protected readonly Math = Math;
 }
