@@ -12,8 +12,13 @@ import {IStep} from "../steps/step.type";
 })
 export class UnitsComponent implements OnInit {
 
+    math = Math;
+
     units$: Observable<IUnit[]>;
     steps$: Observable<IStep[]>;
+
+    cost$: Observable<number>;
+    cost: number;
 
     displayedColumns: string[] = [
         'del', 'tip', 'percent', 'cost',
@@ -21,10 +26,13 @@ export class UnitsComponent implements OnInit {
     ];
 
     constructor(private _unitService: UnitService,
-                private store: Store<{ units: IUnit[], steps: IStep[] }>) {
+                private store: Store<{ units: IUnit[], steps: IStep[], cost: number }>) {
+        this.cost$ = this.store.select('cost');
     }
 
     ngOnInit(): void {
+
+        this.cost$.subscribe(cost => this.cost = cost)
 
         this.units$ = this.store.select('units');
         this.steps$ = this.store.select('steps');
@@ -53,4 +61,26 @@ export class UnitsComponent implements OnInit {
         })
         return percent
     }
+
+    totalCost(): number {
+        let cost = 0;
+        this.steps$.subscribe(steps => {
+            steps.forEach(step => {
+                cost += step.cost
+            })
+        })
+        return cost
+    }
+
+    totalPercent(): number {
+        let percent = 0;
+        this.steps$.subscribe(steps => {
+            steps.forEach(step => {
+                percent += step.percent
+            })
+        })
+        return percent
+    }
+
+    protected readonly Math = Math;
 }
