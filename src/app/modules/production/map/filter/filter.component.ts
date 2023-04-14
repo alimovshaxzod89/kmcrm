@@ -13,7 +13,9 @@ import {setCost} from "../store/cost.actions";
     styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent {
+
     @Output() mapIdChange = new EventEmitter<number>();
+    @Output() onSave = new EventEmitter<void>();
 
     //category
     categories$: Observable<Category[]>;
@@ -33,12 +35,14 @@ export class FilterComponent {
     map$: BehaviorSubject<IMap> = new BehaviorSubject<IMap>(null)
 
     cost$: Observable<number>;
+    saved$: Observable<boolean>;
 
     constructor(private _furnitureService: FurnitureService,
                 private _mapService: MapService,
-                private store: Store<{ cost: number }>) {
+                private store: Store<{ cost: number, saved: boolean }>) {
 
         this.cost$ = store.select('cost');
+        this.saved$ = store.select('saved');
     }
 
 
@@ -131,4 +135,8 @@ export class FilterComponent {
     protected setCost(cost: number) {
         this.store.dispatch(setCost({cost}))
     };
+
+    save() {
+        this.onSave.emit()
+    }
 }

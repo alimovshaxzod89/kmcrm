@@ -30,12 +30,14 @@ import {InputTextModule} from "primeng/inputtext";
 import {InputNumberModule} from 'primeng/inputnumber';
 import {DropdownModule} from "primeng/dropdown";
 
+import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
 
 import {StoreModule} from '@ngrx/store';
+// import { EffectsModule } from '@ngrx/effects';
 import {costReducer} from './map/store/cost.reducer';
 import {stepsReducer} from "./map/store/steps.reducer";
 import {unitsReducer} from "./map/store/units.reducer";
-import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
+import {savedReducer} from "./map/store/saved.reducer";
 
 @NgModule({
     declarations: [
@@ -71,7 +73,8 @@ import {BlockLateralArrowNavigationDirective} from "../../directives/block-later
         InputNumberModule,
         DropdownModule,
 
-        StoreModule.forRoot({cost: costReducer, steps: stepsReducer, units: unitsReducer})
+        StoreModule.forRoot({cost: costReducer, steps: stepsReducer, units: unitsReducer, saved: savedReducer}),
+        // EffectsModule.forRoot([]),
     ]
 })
 export class ProductionModule {

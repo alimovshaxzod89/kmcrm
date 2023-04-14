@@ -38,6 +38,14 @@ export class MapService {
         );
     }
 
+    saveMapCost(map_id: number, cost: number): Observable<boolean> {
+        return this._httpClient.post<{ success: boolean }>('@bu/api/map/save', {map_id, cost}).pipe(
+            map(response => {
+                return response.success
+            })
+        );
+    }
+
     private makeSearchString(params: SearchField[]) {
         if (params.length) {
             return params.map(item => `${item.field}:${item.value}`).join(';')

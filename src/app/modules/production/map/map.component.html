@@ -19,11 +19,11 @@
 
             <!--    <map-filter-mui></map-filter-mui>-->
 
-            <map-filter (mapIdChange)="map_id$.next($event)"></map-filter>
+            <map-filter (mapIdChange)="map_id$.next($event)" (onSave)="save()"></map-filter>
 
             <!--    <map-filter-kui (mapIdChange)="map_id$.next($event)"></map-filter-kui>-->
 
-            <div class="grid grid-cols-8 mt-6 gap-12">
+            <div class="grid grid-cols-8 mt-6 gap-6">
 
                 <div class="col-span-3">
                     <map-units></map-units>

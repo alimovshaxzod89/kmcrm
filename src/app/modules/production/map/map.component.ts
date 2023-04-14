@@ -10,6 +10,8 @@ import {IStep} from "./steps/step.type";
 import {setUnits} from "./store/units.actions";
 import {StepService} from "./steps/step.service";
 import {calcStepsCost, setSteps} from "./store/steps.actions";
+import {MapService} from "./map.service";
+import {setSaved} from "./store/saved.actions";
 
 @Component({
     selector: 'app-map',
@@ -29,10 +31,13 @@ export class MapComponent implements OnInit {
 
     cost$: Observable<number>;
 
+    saved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
     constructor(private _furnitureService: FurnitureService,
                 private _unitService: UnitService,
                 private _stepService: StepService,
                 private _sehService: SehService,
+                private _mapService: MapService,
                 private store: Store<{ cost: number, units: IUnit[], steps: IStep[] }>) {
         this.cost$ = store.select('cost');
         this.units$ = store.select('units');
@@ -88,4 +93,13 @@ export class MapComponent implements OnInit {
         })
     }
 
+    save() {
+        console.log('save')
+        let map_id;
+        this.map_id$.subscribe(value => map_id = value)
+        let cost;
+        this.cost$.subscribe(value => cost = value)
+
+        this._mapService.saveMapCost(map_id, cost).subscribe(saved => this.store.dispatch(setSaved({saved})))
+    }
 }

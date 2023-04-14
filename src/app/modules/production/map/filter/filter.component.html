@@ -79,7 +79,6 @@
     <div class="flex-1">
         <div class="form-group">
             <label for="filter-cost">Ish haqqi, sum</label>
-            <br>
             <p-inputNumber
                 [ngModel]="cost$ | async"
                 (ngModelChange)="setCost($event)"
@@ -89,11 +88,21 @@
                 [min]="0"
                 [maxFractionDigits]="0"
                 [style]="{'width':'100%'}"
+
                 inputId="filter-cost"
             >
-<!--                (ngModelChange)="cost$.next($event)"-->
+                <!--                (ngModelChange)="cost$.next($event)"-->
 
             </p-inputNumber>
+        </div>
+    </div>
+
+    <div class="w-150">
+        <div class="pt-5">
+            <button mat-fab extended color="warn" (click)="save()" [disabled]="saved$ | async">
+                <mat-icon>save</mat-icon>
+                Saqlash
+            </button>
         </div>
     </div>
 </div>
