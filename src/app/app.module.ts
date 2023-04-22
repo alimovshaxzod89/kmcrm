@@ -15,7 +15,12 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomPaginator} from 'app/custom/CustomPaginatorConfiguration';
 import {FormsModule} from '@angular/forms';
 
-// import { StoreModule } from '@ngrx/store';
+import {EffectsModule} from "@ngrx/effects";
+import {MapEffects} from "./modules/production/map/store/map.effects";
+import {StoreModule} from "@ngrx/store";
+import {mapReducer} from "./modules/production/map/store/map.reducer";
+import {stepsReducer} from "./modules/production/map/store/steps.reducer";
+import {unitsReducer} from "./modules/production/map/store/units.reducer";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -44,6 +49,9 @@ const routerConfig: ExtraOptions = {
 
         FormsModule,
 
+        StoreModule.forRoot({cost: mapReducer, steps: stepsReducer, units: unitsReducer}),
+        EffectsModule.forRoot(MapEffects),
+
     ],
     bootstrap: [
         AppComponent
@@ -54,7 +62,8 @@ const routerConfig: ExtraOptions = {
         {provide: DEFAULT_CURRENCY_CODE, useValue: 'UZS'},
         {
             provide: "BASE_API_URL",
-            useValue: 'http://127.0.0.1:8000/'
+            // useValue: 'http://127.0.0.1:8000/',
+            useValue: 'http://192.168.1.2:8000/',
         }
     ],
 })

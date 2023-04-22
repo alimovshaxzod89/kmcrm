@@ -11,7 +11,10 @@ import {setUnits} from "./store/units.actions";
 import {StepService} from "./steps/step.service";
 import {calcStepsCost, setSteps} from "./store/steps.actions";
 import {MapService} from "./map.service";
-import {setSaved} from "./store/saved.actions";
+
+import {saveCost, changeCost} from "./store/map.actions";
+import {MapState} from "./store/map.reducer";
+import * as fromRoot from "./store/map.selectors";
 
 @Component({
     selector: 'app-map',
@@ -31,17 +34,20 @@ export class MapComponent implements OnInit {
 
     cost$: Observable<number>;
 
-    saved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    // saved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    saved$: Observable<boolean>;
 
     constructor(private _furnitureService: FurnitureService,
                 private _unitService: UnitService,
                 private _stepService: StepService,
                 private _sehService: SehService,
                 private _mapService: MapService,
-                private store: Store<{ cost: number, units: IUnit[], steps: IStep[] }>) {
-        this.cost$ = store.select('cost');
+                private store: Store<{ cost: MapState, units: IUnit[], steps: IStep[] }>) {
+        this.cost$ = store.select(store => store.cost.current);
         this.units$ = store.select('units');
         this.steps$ = store.select('steps');
+
+        this.saved$ = store.select(fromRoot.selectSaved);
     }
 
     ngOnInit() {
@@ -52,7 +58,6 @@ export class MapComponent implements OnInit {
         this.loadStepsToStore()
 
         this.cost$.subscribe(cost => {
-            console.log('cost', cost)
             this.store.dispatch(calcStepsCost({cost: cost}))
         })
 
@@ -93,6 +98,10 @@ export class MapComponent implements OnInit {
         })
     }
 
+    protected changeCost(cost: number) {
+        this.store.dispatch(changeCost(cost))
+    }
+
     save() {
         console.log('save')
         let map_id;
@@ -100,6 +109,6 @@ export class MapComponent implements OnInit {
         let cost;
         this.cost$.subscribe(value => cost = value)
 
-        this._mapService.saveMapCost(map_id, cost).subscribe(saved => this.store.dispatch(setSaved({saved})))
+        this.store.dispatch(saveCost({map_id: map_id, cost: cost}))
     }
 }

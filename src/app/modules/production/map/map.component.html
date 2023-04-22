@@ -19,7 +19,41 @@
 
             <!--    <map-filter-mui></map-filter-mui>-->
 
-            <map-filter (mapIdChange)="map_id$.next($event)" (onSave)="save()"></map-filter>
+            <div class="flex mt-2 gap-6 ">
+
+                <map-filter class="grow" (mapIdChange)="map_id$.next($event)"></map-filter>
+
+                <div class="w-12"></div>
+
+                <div class="w-48">
+                    <div class="form-group">
+                        <label for="filter-cost">Ish haqqi, sum</label>
+                        <p-inputNumber
+                            [ngModel]="cost$ | async"
+                            (ngModelChange)="changeCost($event)"
+                            [ngModelOptions]="{updateOn: 'blur'}"
+                            mode="decimal"
+                            locale="ru"
+                            [min]="0"
+                            [maxFractionDigits]="0"
+                            [style]="{'width':'100%'}"
+                            inputId="filter-cost"
+                        >
+                            <!--                (ngModelChange)="cost$.next($event)"-->
+
+                        </p-inputNumber>
+                    </div>
+                </div>
+
+                <div class="w-28">
+                    <div class="pt-5">
+                        <button mat-fab extended color="warn" (click)="save()" [disabled]="saved$ | async">
+                            <mat-icon>save</mat-icon>
+                            Saqlash
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <!--    <map-filter-kui (mapIdChange)="map_id$.next($event)"></map-filter-kui>-->
 

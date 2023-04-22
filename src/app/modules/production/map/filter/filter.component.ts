@@ -2,10 +2,13 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {BehaviorSubject, Observable, take} from "rxjs";
 import {Category, Furniture, Komplekt} from "../../../furniture/furniture.types";
 import {IMap} from "../map.types";
+
 import {FurnitureService} from "../../../furniture/furniture.service";
 import {MapService} from "../map.service";
+
 import {Store} from "@ngrx/store";
-import {setCost} from "../store/cost.actions";
+import {setMap} from "../store/map.actions";
+import {MapState} from "../store/map.reducer";
 
 @Component({
     selector: 'map-filter',
@@ -15,7 +18,6 @@ import {setCost} from "../store/cost.actions";
 export class FilterComponent {
 
     @Output() mapIdChange = new EventEmitter<number>();
-    @Output() onSave = new EventEmitter<void>();
 
     //category
     categories$: Observable<Category[]>;
@@ -34,17 +36,11 @@ export class FilterComponent {
     maps$: Observable<IMap[]>;
     map$: BehaviorSubject<IMap> = new BehaviorSubject<IMap>(null)
 
-    cost$: Observable<number>;
-    saved$: Observable<boolean>;
-
     constructor(private _furnitureService: FurnitureService,
                 private _mapService: MapService,
-                private store: Store<{ cost: number, saved: boolean }>) {
+                private store: Store<{ cost: MapState }>) {
 
-        this.cost$ = store.select('cost');
-        this.saved$ = store.select('saved');
     }
-
 
     ngOnInit() {
 
@@ -75,11 +71,11 @@ export class FilterComponent {
             this.loadMaps();
         })
 
-        this.map$.subscribe(value => {
+        this.map$.subscribe(map => {
 
-            this.store.dispatch(setCost({cost: value?.cost}))
+            this.store.dispatch(setMap(map))
 
-            this.mapIdChange.emit(value?.id)
+            this.mapIdChange.emit(map?.id)
         })
 
 
@@ -130,13 +126,5 @@ export class FilterComponent {
 
         } else
             this.maps$ = new Observable<IMap[]>()
-    }
-
-    protected setCost(cost: number) {
-        this.store.dispatch(setCost({cost}))
-    };
-
-    save() {
-        this.onSave.emit()
     }
 }

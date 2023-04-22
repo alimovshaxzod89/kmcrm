@@ -5,6 +5,7 @@ import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {setStep} from "../store/steps.actions";
 import {Table} from "primeng/table";
+import {MapState} from "../store/map.reducer";
 
 @Component({
     selector: 'map-unit-steps',
@@ -24,8 +25,8 @@ export class UnitStepsComponent {
     handledFieldById: Object = {}
     unTouchedHandledFieldById: Object = {}
 
-    constructor(private store: Store<{ cost: number }>) {
-        this.cost$ = store.select('cost');
+    constructor(private store: Store<{ cost: MapState }>) {
+        this.cost$ = store.select(store => store.cost.current);
     }
 
     getSehName(seh_id: number): string {

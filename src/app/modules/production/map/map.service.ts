@@ -38,10 +38,16 @@ export class MapService {
         );
     }
 
-    saveMapCost(map_id: number, cost: number): Observable<boolean> {
-        return this._httpClient.post<{ success: boolean }>('@bu/api/map/save', {map_id, cost}).pipe(
+    saveMapCost(map_id: number, cost: number): Observable<{ success: boolean, message: string }> {
+        return this._httpClient.put<{
+            success: boolean,
+            message: string
+        }>(`@bu/api/production/maps/${map_id}`, {cost}).pipe(
             map(response => {
-                return response.success
+                return {
+                    success: response.success,
+                    message: response.message
+                }
             })
         );
     }
