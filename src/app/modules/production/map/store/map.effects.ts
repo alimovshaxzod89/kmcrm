@@ -7,7 +7,7 @@ import {saveCost, savedMapCost} from "./map.actions";
 @Injectable()
 export class MapEffects {
 
-    setSaved$ = createEffect(() => this.actions$.pipe(
+    saveCost = createEffect(() => this.actions$.pipe(
         ofType(saveCost),
         exhaustMap(props => this.mapService.saveMapCost(props.map_id, props.cost)
             .pipe(
@@ -24,7 +24,7 @@ export class MapEffects {
                     return EMPTY
                 })
             )
-        )
+        ),
     ));
 
     // setNotSaved$ = createEffect(() => this.actions$.pipe(

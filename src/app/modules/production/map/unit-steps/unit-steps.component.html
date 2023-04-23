@@ -7,19 +7,24 @@
     (onEditComplete)="onEditComplete($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 10%">№</th>
+            <th style="width: 10%" class="text-center">№</th>
+            <th style="width: 10%"></th>
             <th style="width: 16%">Цех</th>
             <th style="width: 16%" class="text-right">%</th>
             <th style="width: 16%" class="text-right">Цена</th>
             <th style="width: 16%" class="text-right">Время</th>
             <th style="width: 16%">Описания</th>
-            <th style="width: 10%"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-step let-editing="editing" let-rowIndex="rowIndex">
         <tr>
-            <td>
+            <td class="text-center">
                 {{rowIndex + 1}}
+            </td>
+            <td class="text-center">
+                <button mat-icon-button *ngIf="checkForChanged(step)" (click)="save(step)" color="warn" aria-label="Example icon button with a vertical three dot icon">
+                    <mat-icon>save</mat-icon>
+                </button>
             </td>
             <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>

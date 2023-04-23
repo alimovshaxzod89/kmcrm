@@ -9,12 +9,12 @@ import {Store} from "@ngrx/store";
 import {IStep} from "./steps/step.type";
 import {setUnits} from "./store/units.actions";
 import {StepService} from "./steps/step.service";
-import {calcStepsCost, setSteps} from "./store/steps.actions";
+import {calcStepsCost, saveStep, setSteps} from "./store/steps.actions";
 import {MapService} from "./map.service";
 
-import {saveCost, changeCost} from "./store/map.actions";
+import {changeCost, saveCost} from "./store/map.actions";
 import {MapState} from "./store/map.reducer";
-import * as fromRoot from "./store/map.selectors";
+import * as mapSelects from "./store/map.selectors";
 
 @Component({
     selector: 'app-map',
@@ -47,7 +47,7 @@ export class MapComponent implements OnInit {
         this.units$ = store.select('units');
         this.steps$ = store.select('steps');
 
-        this.saved$ = store.select(fromRoot.selectSaved);
+        this.saved$ = store.select(mapSelects.selectSaved);
     }
 
     ngOnInit() {
@@ -103,12 +103,25 @@ export class MapComponent implements OnInit {
     }
 
     save() {
-        console.log('save')
+        console.log('saving')
+
         let map_id;
         this.map_id$.subscribe(value => map_id = value)
         let cost;
         this.cost$.subscribe(value => cost = value)
 
+        //save cost
         this.store.dispatch(saveCost({map_id: map_id, cost: cost}))
+
+        //save steps
+        let steps = [];
+        this.steps$.subscribe(value => {
+            steps = value
+        })
+        steps.forEach(step => {
+            console.log('saveStep', step)
+            this.store.dispatch(saveStep({step}))
+        })
+
     }
 }

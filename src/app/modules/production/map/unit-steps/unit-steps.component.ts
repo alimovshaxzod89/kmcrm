@@ -3,7 +3,7 @@ import {IStep} from "../steps/step.type";
 import {ISeh} from "../../../seh/seh.types";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {setStep} from "../store/steps.actions";
+import {saveStep, setStep} from "../store/steps.actions";
 import {Table} from "primeng/table";
 import {MapState} from "../store/map.reducer";
 
@@ -137,7 +137,14 @@ export class UnitStepsComponent {
         this.handledFieldById[step_id] = value
     }
 
-    log(event) {
-        console.log(event)
+    checkForChanged(step: IStep): boolean {
+        const item = {...step}
+        delete item._hash
+
+        return step._hash !== JSON.stringify(item)
+    }
+
+    save(step: IStep) {
+        this.store.dispatch(saveStep({step}))
     }
 }

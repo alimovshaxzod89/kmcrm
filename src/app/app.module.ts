@@ -21,6 +21,7 @@ import {StoreModule} from "@ngrx/store";
 import {mapReducer} from "./modules/production/map/store/map.reducer";
 import {stepsReducer} from "./modules/production/map/store/steps.reducer";
 import {unitsReducer} from "./modules/production/map/store/units.reducer";
+import {StepsEffects} from "./modules/production/map/store/steps.effects";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -50,7 +51,7 @@ const routerConfig: ExtraOptions = {
         FormsModule,
 
         StoreModule.forRoot({cost: mapReducer, steps: stepsReducer, units: unitsReducer}),
-        EffectsModule.forRoot(MapEffects),
+        EffectsModule.forRoot(MapEffects, StepsEffects),
 
     ],
     bootstrap: [
