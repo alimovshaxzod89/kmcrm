@@ -15,7 +15,7 @@ export class StepsEffects {
                     .pipe(
                         map(response => {
                             if (response.success) {
-                                return savedStep({step: props.step})
+                                return savedStep({step: response.data, step_id: props.step.id})
                             } else {
                                 alert(response.message)
                                 console.log(response.message)

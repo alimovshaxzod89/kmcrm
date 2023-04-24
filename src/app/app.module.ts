@@ -63,8 +63,8 @@ const routerConfig: ExtraOptions = {
         {provide: DEFAULT_CURRENCY_CODE, useValue: 'UZS'},
         {
             provide: "BASE_API_URL",
-            useValue: 'http://127.0.0.1:8000/',
-            // useValue: 'http://192.168.1.2:8000/',
+            // useValue: 'http://127.0.0.1:8000/',
+            useValue: 'http://192.168.1.2:8000/',
         }
     ],
 })

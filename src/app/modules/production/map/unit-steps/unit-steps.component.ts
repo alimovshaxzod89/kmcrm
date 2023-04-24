@@ -3,7 +3,7 @@ import {IStep} from "../steps/step.type";
 import {ISeh} from "../../../seh/seh.types";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {resetStep, saveStep, setStep} from "../store/steps.actions";
+import {addStep, resetStep, saveStep, setStep} from "../store/steps.actions";
 import {Table} from "primeng/table";
 import {MapState} from "../store/map.reducer";
 
@@ -14,6 +14,7 @@ import {MapState} from "../store/map.reducer";
 })
 export class UnitStepsComponent {
 
+    @Input() unit_id: number;
     @Input() steps: IStep[];
     @Input() sehs: ISeh[];
 
@@ -142,6 +143,10 @@ export class UnitStepsComponent {
         delete item._hash
 
         return step._hash !== JSON.stringify(item)
+    }
+
+    add(){
+        this.store.dispatch(addStep({unit_id: this.unit_id}))
     }
 
     save(step: IStep) {

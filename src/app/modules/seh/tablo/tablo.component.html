@@ -15,30 +15,33 @@
     <div class="flex-auto p-6 sm:p-10">
 
         <!-- CONTENT GOES HERE -->
-        <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
+        <!-- <div class="h-full border-2 border-dashed border-gray-300 rounded-2xl"> -->
 
-            <div class="flex gap-4 grid-flow-col grid-rows-2">
+            <!-- <div class=" flex gap-2 sm:flex-wrap sm:max-w-min lg:flex lg:max-w-5xl lg:mx-auto xl:flex xl:gap-4 xl:max-w-max xl:mx-auto  "> -->
+            <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- <div class=" flex gap-2 sm:flex-wrap lg:flex xl:flex"></div> -->
 
-                <div class="">
-                    <h1 class="text-2xl font-bold">Qabul qilib olish</h1>
+                <div class="lg:order-0 overflow-scroll">
+                    <h1 class="text-2xl font-bold ">Qabul qilib olish</h1>
                     <todo-table>
                     </todo-table>
                 </div>
 
-                <div class="">
+                <div class="order-first md:order-first lg:order-1 overflow-scroll">
                     <h1 class="text-2xl font-bold">Qilinish kerak</h1>
                     <todo-table>
                     </todo-table>
                 </div>
 
-                <div class="row-span-2">
+                <div class=" row-span-2 lg:order-2 overflow-scroll">
                     <h1 class="text-2xl font-bold">Bajarildi</h1>
                     <todo-table>
                     </todo-table>
                 </div>
+
             </div>
 
-        </div>
+        <!-- </div> -->
 
     </div>
 

@@ -1,5 +1,6 @@
 import {createReducer, on} from "@ngrx/store";
-import {calcStepsCost, resetStep, savedStep, savedSteps, setStep, setSteps} from "./steps.actions";
+import {addStep, calcStepsCost, resetStep, savedStep, setStep, setSteps} from "./steps.actions";
+import {IStep} from "../steps/step.type";
 
 export const initialState = []
 
@@ -12,6 +13,14 @@ export const stepsReducer = createReducer(
         })
 
         return state
+    }),
+
+    on(addStep, (state, {unit_id}) => {
+
+        const step: IStep = {} as IStep
+        step.unit_id = unit_id
+
+        return [...state, step]
     }),
 
     on(setStep, (state, {step_id, step}) => {
@@ -31,19 +40,19 @@ export const stepsReducer = createReducer(
 
     on(resetStep, (state, {step}) => {
 
-            console.log('resetStep', {step})
-            const index = state.findIndex(item => item.id === step.id)
+        console.log('resetStep', {step})
+        const index = state.findIndex(item => item.id === step.id)
 
-            if (index > -1) {
-                state = state.map((row, rowIndex) => {
-                    const item = JSON.parse(row._hash)
-                    item._hash = row._hash
-                    return rowIndex === index ? item : row
-                })
-            } else {
-                console.log('step not found', {step})
-            }
-            return state
+        if (index > -1) {
+            state = state.map((row, rowIndex) => {
+                const item = JSON.parse(row._hash)
+                item._hash = row._hash
+                return rowIndex === index ? item : row
+            })
+        } else {
+            console.log('step not found', {step})
+        }
+        return state
     }),
 
     on(calcStepsCost, (state, {cost}) => {
@@ -65,7 +74,7 @@ export const stepsReducer = createReducer(
     //     return state
     // }),
 
-    on(savedStep, (state, {step}) => {
+    on(savedStep, (state, {step, step_id}) => {
         console.log('savedStep', step)
 
         const rows = [];

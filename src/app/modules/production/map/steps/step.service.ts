@@ -40,15 +40,36 @@ export class StepService {
         );
     }
 
-    saveStep(step: IStep): Observable<{ success: boolean, message: string }> {
-        console.log('serviceSaveStep', step.id)
+    saveStep(step: IStep): Observable<{ success: boolean, message: string, data?: IStep }> {
+        if (!step.id) {
+            return this.addStep(step)
+        }
         return this._httpClient.put<{
             success: boolean,
-            message: string
+            message: string,
+            data?: IStep
         }>(`@bu/api/production/unit-steps/${step.id}`, {...step}).pipe(
             map(response => {
-                console.log('serviceSavedStep', step.id)
+                console.log('serviceSavedStep', response)
                 return {
+                    data: response?.data,
+                    success: response.success,
+                    message: response.message
+                }
+            })
+        );
+    }
+
+    addStep(step: IStep): Observable<{ success: boolean, message: string, data?: IStep }> {
+        return this._httpClient.post<{
+            success: boolean,
+            message: string,
+            data?: IStep
+        }>('@bu/api/production/unit-steps', {...step}).pipe(
+            map(response => {
+                console.log('serviceSavedStep', response)
+                return {
+                    data: response?.data,
                     success: response.success,
                     message: response.message
                 }
