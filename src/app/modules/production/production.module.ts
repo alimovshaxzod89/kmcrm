@@ -31,6 +31,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {DropdownModule} from "primeng/dropdown";
 
 import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
     declarations: [
@@ -65,6 +66,7 @@ import {BlockLateralArrowNavigationDirective} from "../../directives/block-later
         InputTextModule,
         InputNumberModule,
         DropdownModule,
+        MatMenuModule,
     ]
 })
 export class ProductionModule {

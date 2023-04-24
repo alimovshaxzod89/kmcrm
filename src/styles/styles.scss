@@ -31,7 +31,7 @@ table.table-small {
 }
 
 .table-small {
-    .p-datatable-thead, .p-datatable-tbody {
+    .p-datatable-thead, .p-datatable-tbody , .p-datatable-tfoot {
         th, td {
             height: 35px !important;
             padding: 0 8px !important;

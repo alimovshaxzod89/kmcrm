@@ -151,4 +151,6 @@ export class UnitStepsComponent {
     reset(step: IStep) {
         this.store.dispatch(resetStep({step}))
     }
+
+    protected readonly length = length;
 }

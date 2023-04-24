@@ -2,6 +2,7 @@
          [value]="steps" dataKey="id"
          [tableStyle]="{ 'min-width': '50rem' }"
          class="table-bordered table-small"
+         [styleClass]="'p-datatable-sm'"
          (onEditInit)="onEditInit($event)"
          (onEditCancel)="onEditCancel($event)"
          (onEditComplete)="onEditComplete($event)">
@@ -23,14 +24,33 @@
             </td>
             <td class="text-center">
                 <div class="flex">
-                    <button mat-icon-button *ngIf="checkForChanged(step)" (click)="reset(step)" color="warn"
-                            aria-label="Example icon button with a vertical three dot icon">
-                        <mat-icon>undo</mat-icon>
-                    </button>
                     <button mat-icon-button *ngIf="checkForChanged(step)" (click)="save(step)" color="warn"
                             aria-label="Example icon button with a vertical three dot icon">
                         <mat-icon>save</mat-icon>
                     </button>
+
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item *ngIf="checkForChanged(step)" (click)="reset(step)" color="warn"
+                                aria-label="Example icon button with a vertical three dot icon">
+                            <mat-icon>undo</mat-icon>
+                            <span>Bekor qilish</span>
+                        </button>
+                        <button mat-menu-item color="accent">
+                            <mat-icon>delete</mat-icon>
+                            <span>O'chirish</span>
+                        </button>
+                        <button mat-menu-item color="accent" [ngClass]="(rowIndex < steps.length-1) ? '' : 'hidden'">
+                            <mat-icon>arrow_downward</mat-icon>
+                            <span>Pastga tushirish</span>
+                        </button>
+                        <button mat-menu-item color="accent" [ngClass]="rowIndex !== 0 ? '' : 'hidden'">
+                            <mat-icon>arrow_upward</mat-icon>
+                            <span>Yuqoriga chiqarish</span>
+                        </button>
+                    </mat-menu>
                 </div>
             </td>
             <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
@@ -129,6 +149,16 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <tr>
+            <td class="text-center">
+                <button mat-icon-button color="primary">
+                    <mat-icon>add_box</mat-icon>
+                </button>
+            </td>
+            <td colspan="6"></td>
         </tr>
     </ng-template>
 </p-table>
