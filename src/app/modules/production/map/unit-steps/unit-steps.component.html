@@ -1,10 +1,10 @@
 <p-table #dt
-    [value]="steps" dataKey="id"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    class="table-bordered table-small"
-    (onEditInit)="onEditInit($event)"
-    (onEditCancel)="onEditCancel($event)"
-    (onEditComplete)="onEditComplete($event)">
+         [value]="steps" dataKey="id"
+         [tableStyle]="{ 'min-width': '50rem' }"
+         class="table-bordered table-small"
+         (onEditInit)="onEditInit($event)"
+         (onEditCancel)="onEditCancel($event)"
+         (onEditComplete)="onEditComplete($event)">
     <ng-template pTemplate="header">
         <tr>
             <th style="width: 10%" class="text-center">№</th>
@@ -22,9 +22,16 @@
                 {{rowIndex + 1}}
             </td>
             <td class="text-center">
-                <button mat-icon-button *ngIf="checkForChanged(step)" (click)="save(step)" color="warn" aria-label="Example icon button with a vertical three dot icon">
-                    <mat-icon>save</mat-icon>
-                </button>
+                <div class="flex">
+                    <button mat-icon-button *ngIf="checkForChanged(step)" (click)="reset(step)" color="warn"
+                            aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>undo</mat-icon>
+                    </button>
+                    <button mat-icon-button *ngIf="checkForChanged(step)" (click)="save(step)" color="warn"
+                            aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>save</mat-icon>
+                    </button>
+                </div>
             </td>
             <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor>

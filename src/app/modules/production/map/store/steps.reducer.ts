@@ -1,5 +1,5 @@
 import {createReducer, on} from "@ngrx/store";
-import {calcStepsCost, savedStep, savedSteps, setStep, setSteps} from "./steps.actions";
+import {calcStepsCost, resetStep, savedStep, savedSteps, setStep, setSteps} from "./steps.actions";
 
 export const initialState = []
 
@@ -27,6 +27,23 @@ export const stepsReducer = createReducer(
             console.log('step not found', {step_id}, {step})
         }
         return state
+    }),
+
+    on(resetStep, (state, {step}) => {
+
+            console.log('resetStep', {step})
+            const index = state.findIndex(item => item.id === step.id)
+
+            if (index > -1) {
+                state = state.map((row, rowIndex) => {
+                    const item = JSON.parse(row._hash)
+                    item._hash = row._hash
+                    return rowIndex === index ? item : row
+                })
+            } else {
+                console.log('step not found', {step})
+            }
+            return state
     }),
 
     on(calcStepsCost, (state, {cost}) => {
@@ -64,16 +81,6 @@ export const stepsReducer = createReducer(
                 rows.push(row)
             }
         })
-
-        // state = state.map((row, rowIndex) => {
-        //
-        //     let item = JSON.parse(JSON.stringify(row))
-        //     if (row.id === step.id) {
-        //         item = {...step}
-        //     }
-        //
-        //     return item
-        // })
 
         state = rows
 

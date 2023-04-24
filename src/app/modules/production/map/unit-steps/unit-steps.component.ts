@@ -3,7 +3,7 @@ import {IStep} from "../steps/step.type";
 import {ISeh} from "../../../seh/seh.types";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {saveStep, setStep} from "../store/steps.actions";
+import {resetStep, saveStep, setStep} from "../store/steps.actions";
 import {Table} from "primeng/table";
 import {MapState} from "../store/map.reducer";
 
@@ -146,5 +146,9 @@ export class UnitStepsComponent {
 
     save(step: IStep) {
         this.store.dispatch(saveStep({step}))
+    }
+
+    reset(step: IStep) {
+        this.store.dispatch(resetStep({step}))
     }
 }

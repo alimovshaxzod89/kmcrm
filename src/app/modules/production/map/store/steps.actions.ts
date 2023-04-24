@@ -6,6 +6,7 @@ export const calcStepsCost = createAction("[Steps] Calc Steps Cost", props<{ cos
 
 export const saveStep = createAction("[Steps] Save Step", props<{ step: IStep }>());
 export const savedStep = createAction("[Steps] Saved Step", props<{ step: IStep }>());
+export const resetStep = createAction("[Steps] Reset Step", props<{ step: IStep }>());
 
 export const saveSteps = createAction("[Steps] Save Steps", props<{ unit_id: number, steps: IStep[] }>());
 export const savedSteps = createAction("[Steps] Saved Steps", props<{ unit_id: number, steps: IStep[] }>());
