@@ -2,68 +2,96 @@
     <div class="p-3">
         <div class="mr-4 text-lg font-medium tracking-tight leading-6 truncate">Qismlar</div>
     </div>
-    <div class="overflow-x-auto mx-3">
+    <div class="overflow-x-auto mx-3 pb-3">
 
+        <p-table #dt
+                 [value]="units$ | async" dataKey="id"
+                 class="table-bordered table-small"
+                 [styleClass]="'p-datatable-sm'">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="text-center"></th>
+                    <th>Tip</th>
+                    <th class="text-right">%</th>
+                    <th class="text-right">Сумма</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-unit let-editing="editing" let-rowIndex="rowIndex">
+                <tr>
+                    <!-- Action Column-->
+                    <td class="text-center">
+                        <div class="flex">
+                            <button mat-icon-button *ngIf="true" color="warn"
+                                    aria-label="Example icon button with a vertical three dot icon">
+                                <mat-icon>save</mat-icon>
+                            </button>
+                            <button mat-icon-button *ngIf="true" color="accent"
+                                    aria-label="Example icon button with a vertical three dot icon">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
 
-        <table mat-table [dataSource]="units$ | async" class="table-small">
+                    <!-- Tip Column -->
+                    <td [pEditableColumn]="unit.name" pEditableColumnField="seh_id"
+                        [pEditableColumnRowIndex]="rowIndex">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <!--                        <select [(ngModel)]="unit.seh_id" matNativeControl>-->
+                                <!--                            <option *ngFor="let seh of sehs" [value]="seh.id">-->
+                                <!--                                {{seh.name}}-->
+                                <!--                            </option>-->
+                                <!--                        </select>-->
+                                <p-dropdown
+                                    [options]="tips"
+                                    [ngModel]="unit.tip_id"
+                                    (ngModelChange)="handleFieldChange(unit.id, $event)"
+                                    BlockLateralArrowNavigation
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    [style]="{'width':'100%'}"
+                                    class="small-input"
+                                    scrollHeight="300px"
+                                    [appendTo]="'body'"
+                                />
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <div style="cursor: pointer;">
+                                    {{getTipName(unit.tip_id)}}
+                                </div>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
 
-            <!-- Action Column -->
-            <ng-container matColumnDef="del">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button *ngIf="true" color="warn"
-                            aria-label="Example icon button with a vertical three dot icon">
-                        <mat-icon>save</mat-icon>
-                    </button>
-                    <button mat-icon-button *ngIf="true" color="accent"
-                            aria-label="Example icon button with a vertical three dot icon">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </td>
-                <td mat-footer-cell *matFooterCellDef>
-                    <button mat-icon-button color="primary">
-                        <mat-icon>add_box</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
+                    <!-- Percent Column -->
+                    <td class="text-right">
+                        {{calcRowPercent(unit.id) / 100 | percent:'1.0-2'}}
+                    </td>
 
-            <!-- Tip Column -->
-            <ng-container matColumnDef="tip">
-                <th mat-header-cell *matHeaderCellDef> Tip</th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                <td mat-footer-cell *matFooterCellDef> </td>
-            </ng-container>
-
-            <!-- Percent Column -->
-            <ng-container matColumnDef="percent">
-                <th mat-header-cell *matHeaderCellDef class="text-right"> %</th>
-                <td mat-cell *matCellDef="let element"
-                    class="text-right"> {{calcRowPercent(element.id) / 100 | percent:'1.0-2'}} </td>
-                <td mat-footer-cell *matFooterCellDef class="text-right font-semibold" [ngClass]="{'text-red-600' : Math.round(totalPercent()) > 100}"> {{totalPercent() / 100 | percent:'1.0-2' }} </td>
-            </ng-container>
-
-            <!-- Cost Column -->
-            <ng-container matColumnDef="cost">
-                <th mat-header-cell *matHeaderCellDef class="text-right"> Цена</th>
-                <td mat-cell *matCellDef="let element"
-                    class="text-right"> {{calcRowCost(element.id) | currency:'UZS':'':'1.0-0' }} </td>
-                <td mat-footer-cell *matFooterCellDef class="text-right font-semibold" [ngClass]="{'text-red-600' : Math.round(totalCost()) > cost}"> {{totalCost() | currency:'UZS':'':'1.0-0'}} </td>
-            </ng-container>
-
-            <!-- Tip Column -->
-            <!--    <ng-container matColumnDef="more">-->
-            <!--        <th mat-header-cell *matHeaderCellDef>  </th>-->
-            <!--        <td mat-cell *matCellDef="let element">-->
-            <!--            <button mat-icon-button color="accent" aria-label="yuklash">-->
-            <!--                <mat-icon>menu</mat-icon>-->
-            <!--            </button>-->
-            <!--        </td>-->
-            <!--    </ng-container>-->
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns" style="border-top: 1px solid #a9a9a9"></tr>
-        </table>
+                    <!-- Sum Column -->
+                    <td class="text-right">
+                        {{calcRowCost(unit.id) | currency:'UZS':'':'1.0-0' }}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <tr>
+                    <td class="text-center">
+                        <button mat-icon-button color="primary" (click)="add()">
+                            <mat-icon>add_box</mat-icon>
+                        </button>
+                    </td>
+                    <td colspan=""></td>
+                    <td class="text-right font-semibold"
+                        [ngClass]="{'text-red-600' : Math.round(totalPercent()) > 100}">
+                        {{totalPercent() / 100 | percent:'1.0-2' }}
+                    </td>
+                    <td class="text-right font-semibold" [ngClass]="{'text-red-600' : Math.round(totalCost()) > cost}">
+                        {{totalCost() | currency:'UZS':'':'1.0-0'}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
 
     </div>
 </div>

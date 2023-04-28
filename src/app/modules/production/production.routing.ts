@@ -2,6 +2,7 @@ import {Route} from '@angular/router';
 import {MapComponent} from 'app/modules/production/map/map.component';
 import {CategoriesResolver} from "../furniture/furniture.resolvers";
 import {KomplektsResolver} from "../furniture/furniture.resolvers";
+import {SehsResolver, TipsResolver} from "./production.resolvers.js";
 
 export const productionRoutes: Route[] = [
     {
@@ -15,6 +16,8 @@ export const productionRoutes: Route[] = [
         resolve: {
             categories: CategoriesResolver,
             komplekts: KomplektsResolver,
+            tips: TipsResolver,
+            sehs: SehsResolver,
         }
         // children : [
         //     {

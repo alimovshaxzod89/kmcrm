@@ -15,7 +15,7 @@ export class CategoriesResolver implements Resolve<any> {
     constructor(private _furnitureService: FurnitureService) {
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{ data: Category[] }> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category[]> {
         return this._furnitureService.getCategories();
     }
 }
@@ -28,9 +28,7 @@ export class KomplektsResolver implements Resolve<any> {
     constructor(private _furnitureService: FurnitureService) {
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{
-        data: Komplekt[]
-    }> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Komplekt[]> {
         return this._furnitureService.getKomplekts();
     }
 }

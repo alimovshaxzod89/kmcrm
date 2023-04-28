@@ -65,6 +65,27 @@ export const stepsReducer = createReducer(
         return state
     }),
 
+    on(savedStep, (state, {step, step_id}) => {
+
+        const rows = [];
+
+        state.forEach(row => {
+            if (row.id === step_id) {
+
+                let item = {...step}
+                delete item._hash
+
+                rows.push({...step, _hash: JSON.stringify(item)})
+            } else {
+                rows.push(row)
+            }
+        })
+
+        state = rows
+
+        return state
+    }),
+
     on(removeStep, (state, {step}) => {
         console.log('removeStep', {step})
 
@@ -95,32 +116,4 @@ export const stepsReducer = createReducer(
 
         return state
     }),
-
-    // on(savedSteps, (state, {unit_id, steps}) => {
-    //
-    //     state = steps
-    //
-    //     return state
-    // }),
-
-    on(savedStep, (state, {step, step_id}) => {
-
-        const rows = [];
-
-        state.forEach(row => {
-            if (row.id === step_id) {
-
-                let item = {...step}
-                delete item._hash
-
-                rows.push({...step, _hash: JSON.stringify(item)})
-            } else {
-                rows.push(row)
-            }
-        })
-
-        state = rows
-
-        return state
-    })
 );

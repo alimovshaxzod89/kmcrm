@@ -1,0 +1,69 @@
+<div class="xl:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+    <div class="p-3">
+        <div class="mr-4 text-lg font-medium tracking-tight leading-6 truncate">Qismlar</div>
+    </div>
+    <div class="overflow-x-auto mx-3">
+
+
+        <table mat-table [dataSource]="units$ | async" class="table-small">
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="del">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button *ngIf="true" color="warn"
+                            aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>save</mat-icon>
+                    </button>
+                    <button mat-icon-button *ngIf="true" color="accent"
+                            aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <button mat-icon-button color="primary">
+                        <mat-icon>add_box</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- Tip Column -->
+            <ng-container matColumnDef="tip">
+                <th mat-header-cell *matHeaderCellDef> Tip</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+
+            <!-- Percent Column -->
+            <ng-container matColumnDef="percent">
+                <th mat-header-cell *matHeaderCellDef class="text-right"> %</th>
+                <td mat-cell *matCellDef="let element"
+                    class="text-right"> {{calcRowPercent(element.id) / 100 | percent:'1.0-2'}} </td>
+                <td mat-footer-cell *matFooterCellDef class="text-right font-semibold" [ngClass]="{'text-red-600' : Math.round(totalPercent()) > 100}"> {{totalPercent() / 100 | percent:'1.0-2' }} </td>
+            </ng-container>
+
+            <!-- Cost Column -->
+            <ng-container matColumnDef="cost">
+                <th mat-header-cell *matHeaderCellDef class="text-right"> Цена</th>
+                <td mat-cell *matCellDef="let element"
+                    class="text-right"> {{calcRowCost(element.id) | currency:'UZS':'':'1.0-0' }} </td>
+                <td mat-footer-cell *matFooterCellDef class="text-right font-semibold" [ngClass]="{'text-red-600' : Math.round(totalCost()) > cost}"> {{totalCost() | currency:'UZS':'':'1.0-0'}} </td>
+            </ng-container>
+
+            <!-- Tip Column -->
+            <!--    <ng-container matColumnDef="more">-->
+            <!--        <th mat-header-cell *matHeaderCellDef>  </th>-->
+            <!--        <td mat-cell *matCellDef="let element">-->
+            <!--            <button mat-icon-button color="accent" aria-label="yuklash">-->
+            <!--                <mat-icon>menu</mat-icon>-->
+            <!--            </button>-->
+            <!--        </td>-->
+            <!--    </ng-container>-->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns" style="border-top: 1px solid #a9a9a9"></tr>
+        </table>
+
+    </div>
+</div>

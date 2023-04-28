@@ -5,6 +5,7 @@ import {IUnit} from "./units/unit.type";
 import {UnitService} from "./units/unit.service";
 import {ISeh} from "../../seh/seh.types";
 import {SehService} from "../../seh/seh.service";
+import {TipService} from "../services/tip.service";
 import {Store} from "@ngrx/store";
 import {IStep} from "./steps/step.type";
 import {setUnits} from "./store/units.actions";
@@ -15,6 +16,8 @@ import {MapService} from "./map.service";
 import {changeCost, saveCost} from "./store/map.actions";
 import {MapState} from "./store/map.reducer";
 import * as mapSelects from "./store/map.selectors";
+import {ActivatedRoute, Data} from "@angular/router";
+import {ITip} from "../types/tip.type";
 
 @Component({
     selector: 'app-map',
@@ -27,12 +30,15 @@ export class MapComponent implements OnInit {
     map_id$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
     unit_id: number = null;
 
-    sehs$: Observable<ISeh[]>;
+    sehs: ISeh[];
+    tips: ITip[];
 
     units$: Observable<IUnit[]>;
     steps$: Observable<IStep[]>;
 
     cost$: Observable<number>;
+
+    data: Data;
 
     // saved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     saved$: Observable<boolean>;
@@ -41,8 +47,10 @@ export class MapComponent implements OnInit {
                 private _unitService: UnitService,
                 private _stepService: StepService,
                 private _sehService: SehService,
+                private _tipService: TipService,
                 private _mapService: MapService,
-                private store: Store<{ cost: MapState, units: IUnit[], steps: IStep[] }>) {
+                private store: Store<{ cost: MapState, units: IUnit[], steps: IStep[] }>,
+                private route: ActivatedRoute) {
         this.cost$ = store.select(store => store.cost.current);
         this.units$ = store.select('units');
         this.steps$ = store.select('steps');
@@ -51,6 +59,10 @@ export class MapComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.tips = this.route.snapshot.data.tips
+        this.sehs = this.route.snapshot.data.sehs
+
         // this.isLoading = true;
 
         this.loadUnitsToStore()
@@ -60,17 +72,13 @@ export class MapComponent implements OnInit {
         this.cost$.subscribe(cost => {
             this.store.dispatch(calcStepsCost({cost: cost}))
         })
-
-        //load sehs
-        this._sehService.getSehs().subscribe(() => {
-        });
-        this.sehs$ = this._sehService.sehs$;
     }
 
     private loadUnitsToStore() {
         this.map_id$.subscribe(map_id => {
             if (map_id) {
                 this._unitService.getUnits(map_id).subscribe(units => {
+                    console.log('units', units)
                     this.store.dispatch(setUnits({units: units}))
                 })
             } else {

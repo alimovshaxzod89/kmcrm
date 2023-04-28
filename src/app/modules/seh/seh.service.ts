@@ -1,7 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable, tap} from "rxjs";
-import {Category} from "../furniture/furniture.types";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
 import {ISeh} from "./seh.types";
 
 @Injectable({
@@ -11,7 +10,7 @@ export class SehService {
 
     private _sehs: BehaviorSubject<ISeh[]> = new BehaviorSubject([])
 
-    get sehs$(): Observable<Category[]> {
+    get sehs$(): Observable<ISeh[]> {
         return this._sehs.asObservable();
     }
 
@@ -21,11 +20,15 @@ export class SehService {
     /**
      * Get sehs
      */
-    getSehs(): Observable<{ data: ISeh[] }> {
-        return this._httpClient.get<{ data: Category[] }>('@bu/api/production/sehs').pipe(
+    getSehs(): Observable<ISeh[]> {
+        return this._httpClient.get<{ data: ISeh[] }>('@bu/api/production/sehs').pipe(
             tap((response) => {
                 this._sehs.next(response.data);
-            })
+            }),
+            map(response => {
+                    return response.data
+                }
+            )
         );
     }
 }

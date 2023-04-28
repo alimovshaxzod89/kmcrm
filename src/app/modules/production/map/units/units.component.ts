@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {IUnit} from "./unit.type";
 import {UnitService} from "./unit.service";
@@ -17,6 +17,7 @@ export class UnitsComponent implements OnInit {
 
     units$: Observable<IUnit[]>;
     steps$: Observable<IStep[]>;
+    @Input() tips: { id: number, name: string }[];
 
     cost$: Observable<number>;
     cost: number;
@@ -81,5 +82,25 @@ export class UnitsComponent implements OnInit {
             })
         })
         return percent
+    }
+
+    add() {
+        //todo
+        this.store.dispatch({type: 'addUnit'})
+    }
+
+    getTipName(tip_id: number): string {
+
+        if (typeof this.tips !== 'object' || !this.tips.length) {
+            console.log('no tips', this.tips)
+            return ''
+        }
+
+        const tip = this.tips.find(tip => tip.id === tip_id)
+        return tip?.name
+    }
+
+    handleFieldChange(id, $event: any) {
+        //todo
     }
 }

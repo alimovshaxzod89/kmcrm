@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, map, Observable, tap} from "rxjs";
 import {Category, Furniture, Komplekt} from "./furniture.types";
 import {SearchField} from "../../api/query.types";
@@ -35,10 +35,13 @@ export class FurnitureService {
     /**
      * Get categories
      */
-    getCategories(): Observable<{ data: Category[] }> {
+    getCategories(): Observable<Category[]> {
         return this._httpClient.get<{ data: Category[] }>('@bu/api/furniture/categories').pipe(
             tap((response) => {
                 this._categories.next(response.data);
+            }),
+            map(response => {
+                return response.data
             })
         );
     }
@@ -46,10 +49,13 @@ export class FurnitureService {
     /**
      * Get komplekts
      */
-    getKomplekts(): Observable<{ data: Komplekt[] }> {
+    getKomplekts(): Observable<Komplekt[]> {
         return this._httpClient.get<{ data: Komplekt[] }>('@bu/api/furniture/komplekts').pipe(
             tap((response) => {
                 this._komplekts.next(response.data);
+            }),
+            map(response => {
+                return response.data
             })
         );
     }
