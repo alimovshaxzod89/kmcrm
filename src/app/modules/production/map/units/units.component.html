@@ -7,7 +7,7 @@
 
         <table mat-table [dataSource]="units$ | async" class="table-small">
 
-            <!-- Delete Column -->
+            <!-- Action Column -->
             <ng-container matColumnDef="del">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
@@ -34,7 +34,7 @@
                 <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
 
-            <!-- Tip Column -->
+            <!-- Percent Column -->
             <ng-container matColumnDef="percent">
                 <th mat-header-cell *matHeaderCellDef class="text-right"> %</th>
                 <td mat-cell *matCellDef="let element"
@@ -42,7 +42,7 @@
                 <td mat-footer-cell *matFooterCellDef class="text-right font-semibold" [ngClass]="{'text-red-600' : Math.round(totalPercent()) > 100}"> {{totalPercent() / 100 | percent:'1.0-2' }} </td>
             </ng-container>
 
-            <!-- Tip Column -->
+            <!-- Cost Column -->
             <ng-container matColumnDef="cost">
                 <th mat-header-cell *matHeaderCellDef class="text-right"> Цена</th>
                 <td mat-cell *matCellDef="let element"
