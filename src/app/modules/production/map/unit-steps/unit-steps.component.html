@@ -29,28 +29,38 @@
                         <mat-icon>save</mat-icon>
                     </button>
 
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                        <mat-icon>more_vert</mat-icon>
+                    <button mat-icon-button *ngIf="step.id === null" (click)="delete(step)" color="accent"
+                            aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>cancel</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item *ngIf="checkForChanged(step)" (click)="reset(step)" color="warn"
-                                aria-label="Example icon button with a vertical three dot icon">
-                            <mat-icon>undo</mat-icon>
-                            <span>Bekor qilish</span>
+
+                    <span *ngIf="step.id !== null">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
                         </button>
-                        <button mat-menu-item color="accent">
-                            <mat-icon>delete</mat-icon>
-                            <span>O'chirish</span>
-                        </button>
-                        <button mat-menu-item color="accent" [ngClass]="rowIndex !== 0 ? '' : 'hidden'">
-                            <mat-icon>arrow_upward</mat-icon>
-                            <span>Yuqoriga chiqarish</span>
-                        </button>
-                        <button mat-menu-item color="accent" [ngClass]="(rowIndex < steps.length-1) ? '' : 'hidden'">
-                            <mat-icon>arrow_downward</mat-icon>
-                            <span>Pastga tushirish</span>
-                        </button>
-                    </mat-menu>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item *ngIf="checkForChanged(step) && step.id !== null"
+                                    (click)="reset(step)" color="warn"
+                                    aria-label="Example icon button with a vertical three dot icon">
+                                <mat-icon>undo</mat-icon>
+                                <span>Bekor qilish</span>
+                            </button>
+                            <button mat-menu-item color="accent" (click)="delete(step)">
+                                <mat-icon>delete</mat-icon>
+                                <span>O'chirish</span>
+                            </button>
+                            <button mat-menu-item color="accent" [ngClass]="rowIndex !== 0 ? '' : 'hidden'">
+                                <mat-icon>arrow_upward</mat-icon>
+                                <span>Yuqoriga chiqarish</span>
+                            </button>
+                            <button mat-menu-item color="accent"
+                                    [ngClass]="(rowIndex < steps.length-1) ? '' : 'hidden'">
+                                <mat-icon>arrow_downward</mat-icon>
+                                <span>Pastga tushirish</span>
+                            </button>
+                        </mat-menu>
+                    </span>
+
                 </div>
             </td>
             <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">

@@ -3,7 +3,7 @@ import {IStep} from "../steps/step.type";
 import {ISeh} from "../../../seh/seh.types";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {addStep, resetStep, saveStep, setStep} from "../store/steps.actions";
+import {addStep, deleteStep, removeStep, resetStep, saveStep, setStep} from "../store/steps.actions";
 import {Table} from "primeng/table";
 import {MapState} from "../store/map.reducer";
 
@@ -74,8 +74,6 @@ export class UnitStepsComponent {
             field, data, index
         } = event
 
-        console.log('onEditComplete', {field, data, index})
-
         if (field) {
 
             const step = JSON.parse(JSON.stringify(this.getStepByIndex(index)))
@@ -83,8 +81,6 @@ export class UnitStepsComponent {
             const step_id = this.getStepIdByIndex(index)
 
             let value = this.getHandledFieldByIndex(index)
-
-            console.log({value})
 
             if (field === 'percent') {
                 if (value === undefined) {
@@ -145,8 +141,8 @@ export class UnitStepsComponent {
         return step._hash !== JSON.stringify(item)
     }
 
-    add(){
-        this.store.dispatch(addStep({unit_id: this.unit_id}))
+    add() {
+        this.store.dispatch(addStep({unit_id: this.unit_id, rowIndex: this.steps.length}))
     }
 
     save(step: IStep) {
@@ -158,4 +154,16 @@ export class UnitStepsComponent {
     }
 
     protected readonly length = length;
+
+    delete(step: IStep) {
+
+        if (step.id === null) {
+            this.store.dispatch(removeStep({step}))
+            return;
+        }
+
+        if (confirm('Вы уверены?')) {
+            this.store.dispatch(deleteStep({step}))
+        }
+    }
 }

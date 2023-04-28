@@ -77,6 +77,21 @@ export class StepService {
         );
     }
 
+    deleteStep(step: IStep): Observable<{ success: boolean, message: string }> {
+        return this._httpClient.delete<{
+            success: boolean,
+            message: string
+        }>(`@bu/api/production/unit-steps/${step.id}`).pipe(
+            map(response => {
+                console.log('service.deleteStep', response)
+                return {
+                    success: response.success,
+                    message: response.message
+                }
+            })
+        );
+    }
+
     private makeSearchString(params: SearchField[]) {
         if (params.length) {
             return params.map(item => `${item.field}:${item.value}`).join(';')
