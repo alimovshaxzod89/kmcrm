@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {TipService} from "./services/tip.service";
@@ -10,7 +10,7 @@ import {ISeh} from "../seh/seh.types";
 @Injectable({
     providedIn: 'root'
 })
-export class TipsResolver implements Resolve<any> {
+export class TipsResolver  {
 
     constructor(private _tipService: TipService) {
     }
@@ -23,7 +23,7 @@ export class TipsResolver implements Resolve<any> {
 @Injectable({
     providedIn: 'root'
 })
-export class SehsResolver implements Resolve<any> {
+export class SehsResolver  {
 
     constructor(private _tipService: SehService) {
     }
