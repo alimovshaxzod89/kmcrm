@@ -26,6 +26,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         link : '/production/map'
     },
     {
+        id   : 'report1',
+        title: 'Umumiy tayyorlik holati',
+        type : 'basic',
+        icon : 'heroicons_outline:view-list',
+        link : '/production/report/ready-in-summary'
+    },
+    {
         id   : 'salary',
         title: 'Kunlik ish haqqi',
         type : 'basic',

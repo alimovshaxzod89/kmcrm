@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class DailyComponent {
 
+  date = ''
+
   rows = [
     {
       person: 'Abduvaliyev Akmal',

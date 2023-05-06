@@ -32,6 +32,7 @@ import {DropdownModule} from "primeng/dropdown";
 
 import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
 import {MatMenuModule} from "@angular/material/menu";
+import { ReadyInSummaryComponent } from './reports/ready-in-summary/ready-in-summary.component';
 
 @NgModule({
     declarations: [
@@ -43,6 +44,7 @@ import {MatMenuModule} from "@angular/material/menu";
         FilterComponent,
 
         BlockLateralArrowNavigationDirective,
+        ReadyInSummaryComponent,
     ],
     imports: [
         CommonModule,

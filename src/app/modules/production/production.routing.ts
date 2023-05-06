@@ -3,6 +3,7 @@ import {MapComponent} from 'app/modules/production/map/map.component';
 import {CategoriesResolver} from "../furniture/furniture.resolvers";
 import {KomplektsResolver} from "../furniture/furniture.resolvers";
 import {SehsResolver, TipsResolver} from "./production.resolvers.js";
+import { ReadyInSummaryComponent } from './reports/ready-in-summary/ready-in-summary.component';
 
 export const productionRoutes: Route[] = [
     {
@@ -50,5 +51,9 @@ export const productionRoutes: Route[] = [
                 ]
             }
         ]*/
+    },
+    {
+        path: 'report/ready-in-summary',
+        component: ReadyInSummaryComponent,
     }
 ];
