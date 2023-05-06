@@ -59,7 +59,7 @@ const routerConfig: ExtraOptions = {
     ],
     providers: [
         {provide: MatPaginatorIntl, useValue: CustomPaginator()},
-        {provide: LOCALE_ID, useValue: 'uz-Cyrl'},
+        // {provide: LOCALE_ID, useValue: 'uz-Cyrl'},
         {provide: DEFAULT_CURRENCY_CODE, useValue: 'UZS'},
         {
             provide: "BASE_API_URL",
