@@ -25,6 +25,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:view-list',
         link : '/production/map'
     },
+    {
+        id   : 'salary',
+        title: 'Kunlik ish haqqi',
+        type : 'basic',
+        icon : 'heroicons_outline:view-list',
+        link : '/salary/daily'
+    },
     // {
     //     id   : 'example',
     //     title: 'Example',

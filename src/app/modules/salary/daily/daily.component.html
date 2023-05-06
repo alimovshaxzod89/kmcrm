@@ -1,0 +1,48 @@
+<div class="flex  flex-col flex-auto w-full">
+
+    <div class="flex flex-wrap w-full max-w-screen-2xl mx-auto p-6 md:p-8">
+
+        <!-- Title and action buttons -->
+        <div class="w-full">
+            <div>
+                <h2 class="text-3xl font-semibold tracking-tight leading-8">Kunlik ish haqqi</h2>
+                <div class="font-medium tracking-tight text-secondary">Цех: Сборка 2
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <p-calendar [showIcon]="true"></p-calendar>
+            </div>
+        </div>
+
+        
+
+        <div class="mt-5 w-full lg:max-w-5xl" >
+            <p-table [value]="rows" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th rowspan="2" class="text-center">N</th>
+                        <th rowspan="2" class="text-center">Xodim</th>
+                        <th rowspan="2" class="text-center">Kelgan kunlari</th>
+                        <th colspan="2" class="text-center">Summa</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Bugun</th>
+                        <th class="text-center">Oyni boshidan</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-row>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>{{ row.person }}</td>
+                        <td class="text-center">{{ row.come }}</td>
+                        <td class="text-center">{{ row.today }}</td>
+                        <td class="text-center">{{ row.month }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+    
+</div>
