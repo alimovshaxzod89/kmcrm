@@ -6,7 +6,7 @@ import { FuseCardFace } from '@fuse/components/card/card.types';
 @Component({
     selector     : 'fuse-card',
     templateUrl  : './card.component.html',
-    styleUrls    : ['./card.component.scss'],
+    styleUrls    : ['./card.component.css'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations,
     exportAs     : 'fuseCard'

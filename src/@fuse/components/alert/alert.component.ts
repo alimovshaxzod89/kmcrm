@@ -9,7 +9,7 @@ import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 @Component({
     selector       : 'fuse-alert',
     templateUrl    : './alert.component.html',
-    styleUrls      : ['./alert.component.scss'],
+    styleUrls      : ['./alert.component.css'],
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations     : fuseAnimations,
