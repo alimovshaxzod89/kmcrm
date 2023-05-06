@@ -14,7 +14,7 @@ import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 @Component({
     selector       : 'fuse-vertical-navigation',
     templateUrl    : './vertical.component.html',
-    styleUrls      : ['./vertical.component.scss'],
+    styleUrls      : ['./vertical.component.css'],
     animations     : fuseAnimations,
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,

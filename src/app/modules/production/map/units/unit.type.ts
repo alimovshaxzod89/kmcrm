@@ -5,5 +5,6 @@ export interface IUnit {
     amount: number,
     tip_id?: number | null,
     parent_id: number,
-    undefined?: boolean
+    undefined?: boolean,
+
 }

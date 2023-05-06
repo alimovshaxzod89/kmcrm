@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import { CategoryService } from 'app/modules/goods/category/category.service';
 import {InventoryPagination, Category, Unit} from 'app/modules/goods/category/category.types';
@@ -7,7 +7,7 @@ import {InventoryPagination, Category, Unit} from 'app/modules/goods/category/ca
 @Injectable({
     providedIn: 'root'
 })
-export class CategoryResolver implements Resolve<any>
+export class CategoryResolver 
 {
     /**
      * Constructor
@@ -55,7 +55,7 @@ export class CategoryResolver implements Resolve<any>
 @Injectable({
     providedIn: 'root'
 })
-export class CategoriesResolver implements Resolve<any>
+export class CategoriesResolver 
 {
     /**
      * Constructor
@@ -84,7 +84,7 @@ export class CategoriesResolver implements Resolve<any>
 @Injectable({
     providedIn: 'root'
 })
-export class UnitsResolver implements Resolve<any>
+export class UnitsResolver 
 {
     /**
      * Constructor

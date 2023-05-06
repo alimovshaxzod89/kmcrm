@@ -13,3 +13,15 @@ export interface IStep {
 
     _hash?: string
 }
+
+export const emptyStep: IStep = {
+    id: null,
+    unit_id: null,
+    category_seh_id: null,
+    seh_id: null,
+    percent: 0,
+    cost: 0,
+    description: '',
+    duration: null,
+    sorder: null,
+}

@@ -1,6 +1,6 @@
 import {createReducer, on} from "@ngrx/store";
-import {addStep, calcStepsCost, resetStep, savedStep, setStep, setSteps} from "./steps.actions";
-import {IStep} from "../steps/step.type";
+import {addStep, calcStepsCost, removeStep, resetStep, savedStep, setStep, setSteps} from "./steps.actions";
+import {emptyStep, IStep} from "../steps/step.type";
 
 export const initialState = []
 
@@ -15,10 +15,20 @@ export const stepsReducer = createReducer(
         return state
     }),
 
-    on(addStep, (state, {unit_id}) => {
+    on(addStep, (state, {unit_id, rowIndex}) => {
 
-        const step: IStep = {} as IStep
+        //check if not exists id=null already
+        const index = state.findIndex(step => step.id === null)
+        if (index > -1) {
+            alert('Oldiniga bundan oldingi yangi qatorni saqlang');
+            return state
+        }
+
+        const step: IStep = JSON.parse(JSON.stringify(emptyStep))
+        console.log('addStep', {step, emptyStep})
         step.unit_id = unit_id
+        step.sorder = rowIndex + 1
+        step._hash = JSON.stringify({})
 
         return [...state, step]
     }),
@@ -55,32 +65,12 @@ export const stepsReducer = createReducer(
         return state
     }),
 
-    on(calcStepsCost, (state, {cost}) => {
-        //change steps cost through percent
-
-        state = state.map(row => {
-            const item = JSON.parse(JSON.stringify(row))
-            item.cost = cost * item.percent / 100
-            return item
-        })
-
-        return state
-    }),
-
-    // on(savedSteps, (state, {unit_id, steps}) => {
-    //
-    //     state = steps
-    //
-    //     return state
-    // }),
-
     on(savedStep, (state, {step, step_id}) => {
-        console.log('savedStep', step)
 
         const rows = [];
 
         state.forEach(row => {
-            if (row.id === step.id) {
+            if (row.id === step_id) {
 
                 let item = {...step}
                 delete item._hash
@@ -94,5 +84,36 @@ export const stepsReducer = createReducer(
         state = rows
 
         return state
-    })
+    }),
+
+    on(removeStep, (state, {step}) => {
+        console.log('removeStep', {step})
+
+        if (step.id === null) {
+            state = state.filter((row, index) => row.id !== step.id)
+        } else {
+
+            const index = state.findIndex(item => item.id === step.id)
+
+            if (index > -1) {
+                state = state.filter((row) => row.id !== step.id)
+            } else {
+                console.log('step not found', {step})
+            }
+        }
+
+        return state
+    }),
+
+    on(calcStepsCost, (state, {cost}) => {
+        //change steps cost through percent
+
+        state = state.map(row => {
+            const item = JSON.parse(JSON.stringify(row))
+            item.cost = cost * item.percent / 100
+            return item
+        })
+
+        return state
+    }),
 );

@@ -8,7 +8,7 @@ import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 @Component({
     selector     : 'fuse-drawer',
     templateUrl  : './drawer.component.html',
-    styleUrls    : ['./drawer.component.scss'],
+    styleUrls    : ['./drawer.component.css'],
     encapsulation: ViewEncapsulation.None,
     exportAs     : 'fuseDrawer'
 })

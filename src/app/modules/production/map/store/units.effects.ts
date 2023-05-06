@@ -1,20 +1,20 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, EMPTY, map, mergeMap} from "rxjs";
 import {Injectable} from "@angular/core";
-import {StepService} from "../steps/step.service";
-import {savedStep, saveStep, deleteStep, removeStep} from "./steps.actions";
+import {savedUnit, saveUnit, deleteUnit, removeUnit} from "./units.actions";
+import {UnitService} from "../units/unit.service";
 
 @Injectable()
-export class StepsEffects {
+export class UnitsEffects {
 
-    saveStep = createEffect(() => this.actions$.pipe(
-        ofType(saveStep),
+    saveUnit = createEffect(() => this.actions$.pipe(
+        ofType(saveUnit),
         mergeMap(props => {
-                return this.stepsService.saveStep(props.step)
+                return this.unitsService.saveUnit(props.unit)
                     .pipe(
                         map(response => {
                             if (response.success) {
-                                return savedStep({step: response.data, step_id: props.step.id})
+                                return savedUnit({unit: response.data, unit_id: props.unit.id})
                             } else {
                                 alert(response.message)
                                 console.log(response.message)
@@ -31,14 +31,14 @@ export class StepsEffects {
         )
     ));
 
-    deleteStep = createEffect(() => this.actions$.pipe(
-        ofType(deleteStep),
+    deleteUnit = createEffect(() => this.actions$.pipe(
+        ofType(deleteUnit),
         mergeMap(props => {
-                return this.stepsService.deleteStep(props.step)
+                return this.unitsService.deleteUnit(props.unit)
                     .pipe(
                         map(response => {
                             if (response.success) {
-                                return removeStep({step: props.step})
+                                return removeUnit({unit: props.unit})
                             } else {
                                 alert(response.message)
                                 console.log(response.message)
@@ -56,6 +56,6 @@ export class StepsEffects {
     ));
 
     constructor(private actions$: Actions,
-                private stepsService: StepService) {
+                private unitsService: UnitService) {
     }
 }

@@ -172,6 +172,8 @@ export class AuthMockApi
      */
     private _base64url(source: any): string
     {
+        // return this.utf8_to_b64(source);
+
         // Encode in classical base64
         let encodedSource = Base64.stringify(source);
 
@@ -227,8 +229,17 @@ export class AuthMockApi
         signature = HmacSHA256(signature, this._secret);
         signature = this._base64url(signature);
 
+        console.log(encodedHeader + '.' + encodedPayload + '.' + signature)
         // Build and return the token
         return encodedHeader + '.' + encodedPayload + '.' + signature;
+    }
+
+    private utf8_to_b64(str) {
+        return window.btoa(unescape(encodeURIComponent(str)));
+    }
+
+    private b64_to_utf8(str) {
+        return decodeURIComponent(escape(window.atob(str)));
     }
 
     /**
@@ -239,6 +250,8 @@ export class AuthMockApi
      */
     private _verifyJWTToken(token: string): boolean
     {
+        // return true;
+
         // Split the token into parts
         const parts = token.split('.');
         const header = parts[0];

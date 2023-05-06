@@ -37,7 +37,60 @@ export class UnitService {
 
         return this._httpClient.get<{ data: IUnit[] }>(url).pipe(
             map(response => {
+                console.log('serviceUnits', response)
                 return response.data
+            })
+        );
+    }
+
+    saveUnit(unit: IUnit): Observable<{ success: boolean, message: string, data?: IUnit }> {
+        if (!unit.id) {
+            return this.addUnit(unit)
+        }
+        return this._httpClient.put<{
+            success: boolean,
+            message: string,
+            data?: IUnit
+        }>(`@bu/api/production/units/${unit.id}`, {...unit}).pipe(
+            map(response => {
+                console.log('serviceSavedUnit', response)
+                return {
+                    data: response?.data,
+                    success: response.success,
+                    message: response.message
+                }
+            })
+        );
+    }
+
+    addUnit(unit: IUnit): Observable<{ success: boolean, message: string, data?: IUnit }> {
+        return this._httpClient.post<{
+            success: boolean,
+            message: string,
+            data?: IUnit
+        }>('@bu/api/production/units', {...unit}).pipe(
+            map(response => {
+                console.log('serviceSavedUnit', response)
+                return {
+                    data: response?.data,
+                    success: response.success,
+                    message: response.message
+                }
+            })
+        );
+    }
+
+    deleteUnit(unit: IUnit): Observable<{ success: boolean, message: string }> {
+        return this._httpClient.delete<{
+            success: boolean,
+            message: string
+        }>(`@bu/api/production/units/${unit.id}`).pipe(
+            map(response => {
+                console.log('service.deleteUnit', response)
+                return {
+                    success: response.success,
+                    message: response.message
+                }
             })
         );
     }

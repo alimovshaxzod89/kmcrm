@@ -19,7 +19,7 @@
 
             <!--    <map-filter-mui></map-filter-mui>-->
 
-            <div class="flex mt-2 gap-6 ">
+            <div class="flex mt-2 gap-6">
 
                 <map-filter class="grow" (mapIdChange)="map_id$.next($event)"></map-filter>
 
@@ -60,11 +60,11 @@
             <div class="grid grid-cols-8 mt-6 gap-6">
 
                 <div class="lg:col-span-3 md:col-span-6 sm:col-span-8">
-                    <map-units></map-units>
+                    <map-units [tips]="tips"></map-units>
                 </div>
 
                 <div class="lg:col-span-5 col-span-8">
-                    <map-steps [sehs]="sehs$ | async"></map-steps>
+                    <map-steps [sehs]="sehs"></map-steps>
                 </div>
 
             </div>

@@ -8,7 +8,7 @@ import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 @Component({
     selector       : 'fuse-horizontal-navigation',
     templateUrl    : './horizontal.component.html',
-    styleUrls      : ['./horizontal.component.scss'],
+    styleUrls      : ['./horizontal.component.css'],
     animations     : fuseAnimations,
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,

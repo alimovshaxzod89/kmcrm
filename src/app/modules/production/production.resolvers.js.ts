@@ -1,22 +1,34 @@
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
-import {FurnitureService} from "../furniture/furniture.service";
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import {Observable} from "rxjs";
-import {Category} from "../furniture/furniture.types";
 import {Injectable} from "@angular/core";
-import {Komplekt} from "../furniture/furniture.types";
+import {TipService} from "./services/tip.service";
+import {ITip} from "./types/tip.type";
+import {SehService} from "../seh/seh.service";
+import {ISeh} from "../seh/seh.types";
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class CategoriesResolver implements Resolve<any> {
+export class TipsResolver  {
 
-    constructor(private _furnitureService: FurnitureService) {
+    constructor(private _tipService: TipService) {
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{
-        data: Category[]
-    }> {
-        return this._furnitureService.getCategories();
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITip[]> {
+        return this._tipService.getTips();
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class SehsResolver  {
+
+    constructor(private _tipService: SehService) {
+    }
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISeh[]> {
+        return this._tipService.getSehs();
     }
 }
