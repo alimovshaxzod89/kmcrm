@@ -52,6 +52,13 @@ export const compactNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'heroicons_outline:check-circle',
                 link : '/production/report/seh-yuklanma'
+            },
+            {
+                id   : 'seh-earn-month',
+                title: 'Sehlar ishlagan pullari',
+                type : 'basic',
+                icon : 'mat_outline:work',
+                link : '/production/report/seh-earn-month'
             }
         ]
     },

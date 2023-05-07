@@ -35,6 +35,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import { ReadyInSummaryComponent } from './reports/ready-in-summary/ready-in-summary.component';
 import { SehStatusComponent } from './reports/seh-status/seh-status.component';
 import { SehYuklanmaComponent } from './reports/seh-yuklanma/seh-yuklanma.component';
+import { SehEarnMonthComponent } from './reports/seh-earn-month/seh-earn-month.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { SehYuklanmaComponent } from './reports/seh-yuklanma/seh-yuklanma.compon
 
         BlockLateralArrowNavigationDirective,
          SehYuklanmaComponent,
+         SehEarnMonthComponent,
     ],
     imports: [
         CommonModule,

@@ -5,6 +5,7 @@ import {SehsResolver, TipsResolver} from "./production.resolvers.js";
 import {ReadyInSummaryComponent} from './reports/ready-in-summary/ready-in-summary.component';
 import {SehStatusComponent} from "./reports/seh-status/seh-status.component";
 import {SehYuklanmaComponent} from "./reports/seh-yuklanma/seh-yuklanma.component";
+import {SehEarnMonthComponent} from "./reports/seh-earn-month/seh-earn-month.component";
 
 export const productionRoutes: Route[] = [
     {
@@ -64,5 +65,9 @@ export const productionRoutes: Route[] = [
     {
         path: 'report/seh-yuklanma',
         component: SehYuklanmaComponent,
+    },
+    {
+        path: 'report/seh-earn-month',
+        component: SehEarnMonthComponent,
     }
 ];
