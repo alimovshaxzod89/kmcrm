@@ -33,7 +33,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
 import {MatMenuModule} from "@angular/material/menu";
 import { ReadyInSummaryComponent } from './reports/ready-in-summary/ready-in-summary.component';
-import { SehStatusComponent } from './report/seh-status/seh-status.component';
+import { SehStatusComponent } from './reports/seh-status/seh-status.component';
 
 @NgModule({
     declarations: [
