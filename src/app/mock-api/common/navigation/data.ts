@@ -15,28 +15,37 @@ export const compactNavigation: FuseNavigationItem[] = [
         id   : 'seh',
         title: 'Tablo',
         type : 'basic',
-        icon : 'heroicons_outline:view-list',
+        icon : 'heroicons_outline:desktop-computer',
         link : '/seh'
     },
     {
         id   : 'furniture-map',
         title: 'Harakat Xarita',
         type : 'basic',
-        icon : 'heroicons_outline:view-list',
+        icon : 'heroicons_outline:map',
         link : '/production/map'
     },
     {
-        id   : 'report1',
-        title: 'Umumiy tayyorlik holati',
-        type : 'basic',
-        icon : 'heroicons_outline:view-list',
-        link : '/production/report/ready-in-summary'
+        id   : 'reports',
+        title: 'Hisobotlar',
+        tooltip: 'Seh hisobotlari',
+        type : 'aside',
+        icon : 'heroicons_outline:chart-bar',
+        children: [
+            {
+                id   : 'ready-in-summary',
+                title: 'Tayyor mahsulotlar',
+                type : 'basic',
+                icon : 'heroicons_outline:badge-check',
+                link : '/production/report/ready-in-summary'
+            }
+        ]
     },
     {
         id   : 'salary',
         title: 'Kunlik ish haqqi',
         type : 'basic',
-        icon : 'heroicons_outline:view-list',
+        icon : 'heroicons_outline:currency-dollar',
         link : '/salary/daily'
     },
     // {
