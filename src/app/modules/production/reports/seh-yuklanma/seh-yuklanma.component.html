@@ -1,1 +1,45 @@
-<p>seh-yuklanma works!</p>
+<div class="flex flex-wrap w-full max-w-screen-2xl mx-auto p-6 md:p-8">
+    <div>
+        <h2 class="text-3xl font-semibold tracking-tight leading-8">Sehlar yuklanmasi</h2>
+    </div>
+
+    <div class="mt-5 w-full ">
+        <div>
+            <p-table [value]="rows" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header" class="w-full">
+                    <tr>
+                        <th rowspan="2" class="text-center">N</th>
+                        <th rowspan="2" class="text-center">Цех</th>
+                        <th colspan="2" class="text-center">Ayni vaqtda</th>
+                        <th colspan="2" class="text-center">Boshqa sehlardan yetib kelganda</th>
+                        <th colspan="2" class="text-center">Jami</th>
+                    </tr>
+                    <tr>
+                        <th class="text-end ">ishlar soni</th>
+                        <th class="text-center">jami vaqtlar yig'indisi</th>
+                        <th class="text-end">ishlar soni</th>
+                        <th class="text-center">jami vaqtlar yig'indisi</th>
+                        <th class="text-end" >ishlar soni</th>
+                        <th class="text-center">jami vaqtlar yig'indisi</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-row>
+                    <tr>
+                        <td class="text-end" >{{ row.abs1 }}</td>
+                        <td class="text-end" [ngClass]="row.color">{{ row.abs2 }}</td>
+                        <td class="text-end">{{ row.abs3 }}</td>
+                        <td class="text-end">{{ row.abs4 }}</td>
+                        <td class="text-end">{{ row.abs5 }}</td>
+                        <td class="text-end">{{ row.abs6 }}</td>
+                        <td class="text-end">{{ row.abs7 }}</td>
+                        <td class="text-end">{{ row.abs8 }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="mt-10" style="width: 85%;">
+            <p-chart type="line" [data]="data" [options]="options" ></p-chart>
+        </div>
+    </div>
+</div>

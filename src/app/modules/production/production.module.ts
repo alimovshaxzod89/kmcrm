@@ -14,6 +14,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {SharedModule} from 'app/shared/shared.module';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import {ChartModule} from 'primeng/chart';
 
 import {productionRoutes} from "./production.routing";
 import {MapComponent} from './map/map.component';
@@ -48,7 +49,7 @@ import { SehYuklanmaComponent } from './reports/seh-yuklanma/seh-yuklanma.compon
         SehStatusComponent,
 
         BlockLateralArrowNavigationDirective,
-         SehYuklanmaComponent,
+        SehYuklanmaComponent,
     ],
     imports: [
         CommonModule,
@@ -73,6 +74,7 @@ import { SehYuklanmaComponent } from './reports/seh-yuklanma/seh-yuklanma.compon
         InputNumberModule,
         DropdownModule,
         MatMenuModule,
+        ChartModule,
     ]
 })
 export class ProductionModule {
