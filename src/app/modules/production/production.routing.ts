@@ -4,7 +4,7 @@ import {CategoriesResolver, KomplektsResolver} from "../furniture/furniture.reso
 import {SehsResolver, TipsResolver} from "./production.resolvers.js";
 import {ReadyInSummaryComponent} from './reports/ready-in-summary/ready-in-summary.component';
 import {SehStatusComponent} from "./reports/seh-status/seh-status.component";
-import {SehYuklanmaComponent} from "./report/seh-yuklanma/seh-yuklanma.component";
+import {SehYuklanmaComponent} from "./reports/seh-yuklanma/seh-yuklanma.component";
 
 export const productionRoutes: Route[] = [
     {
