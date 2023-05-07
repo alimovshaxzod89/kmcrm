@@ -45,6 +45,13 @@ export const compactNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'heroicons_outline:check-circle',
                 link : '/production/report/seh-status'
+            },
+            {
+                id   : 'seh-yuklanma',
+                title: 'Sehlar yuklanmasi',
+                type : 'basic',
+                icon : 'heroicons_outline:check-circle',
+                link : '/production/report/seh-yuklanma'
             }
         ]
     },

@@ -34,6 +34,7 @@ import {BlockLateralArrowNavigationDirective} from "../../directives/block-later
 import {MatMenuModule} from "@angular/material/menu";
 import { ReadyInSummaryComponent } from './reports/ready-in-summary/ready-in-summary.component';
 import { SehStatusComponent } from './reports/seh-status/seh-status.component';
+import { SehYuklanmaComponent } from './report/seh-yuklanma/seh-yuklanma.component';
 
 @NgModule({
     declarations: [
@@ -47,6 +48,7 @@ import { SehStatusComponent } from './reports/seh-status/seh-status.component';
         SehStatusComponent,
 
         BlockLateralArrowNavigationDirective,
+         SehYuklanmaComponent,
     ],
     imports: [
         CommonModule,

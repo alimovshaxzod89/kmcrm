@@ -4,6 +4,7 @@ import {CategoriesResolver, KomplektsResolver} from "../furniture/furniture.reso
 import {SehsResolver, TipsResolver} from "./production.resolvers.js";
 import {ReadyInSummaryComponent} from './reports/ready-in-summary/ready-in-summary.component';
 import {SehStatusComponent} from "./reports/seh-status/seh-status.component";
+import {SehYuklanmaComponent} from "./report/seh-yuklanma/seh-yuklanma.component";
 
 export const productionRoutes: Route[] = [
     {
@@ -59,5 +60,9 @@ export const productionRoutes: Route[] = [
     {
         path: 'report/seh-status',
         component: SehStatusComponent,
+    },
+    {
+        path: 'report/seh-yuklanma',
+        component: SehYuklanmaComponent,
     }
 ];
