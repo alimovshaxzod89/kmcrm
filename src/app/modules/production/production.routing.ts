@@ -1,9 +1,9 @@
 import {Route} from '@angular/router';
 import {MapComponent} from 'app/modules/production/map/map.component';
-import {CategoriesResolver} from "../furniture/furniture.resolvers";
-import {KomplektsResolver} from "../furniture/furniture.resolvers";
+import {CategoriesResolver, KomplektsResolver} from "../furniture/furniture.resolvers";
 import {SehsResolver, TipsResolver} from "./production.resolvers.js";
-import { ReadyInSummaryComponent } from './reports/ready-in-summary/ready-in-summary.component';
+import {ReadyInSummaryComponent} from './reports/ready-in-summary/ready-in-summary.component';
+import {SehStatusComponent} from "./report/seh-status/seh-status.component";
 
 export const productionRoutes: Route[] = [
     {
@@ -55,5 +55,9 @@ export const productionRoutes: Route[] = [
     {
         path: 'report/ready-in-summary',
         component: ReadyInSummaryComponent,
+    },
+    {
+        path: 'report/seh-status',
+        component: SehStatusComponent,
     }
 ];
