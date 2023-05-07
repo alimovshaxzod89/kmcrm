@@ -30,6 +30,7 @@
     "@ngrx/store": "^16.0.0-rc.0",
     "acorn": "^8.8.2",
     "apexcharts": "3.40.0",
+    "chart.js": "^4.3.0",
     "crypto-js": "3.3.0",
     "highlight.js": "11.8.0",
     "lodash-es": "4.17.21",

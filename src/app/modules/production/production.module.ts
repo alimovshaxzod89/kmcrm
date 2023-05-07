@@ -29,13 +29,15 @@ import {TableModule} from 'primeng/table';
 import {InputTextModule} from "primeng/inputtext";
 import {InputNumberModule} from 'primeng/inputnumber';
 import {DropdownModule} from "primeng/dropdown";
+import {ChartModule} from 'primeng/chart';
 
 import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
 import {MatMenuModule} from "@angular/material/menu";
-import { ReadyInSummaryComponent } from './reports/ready-in-summary/ready-in-summary.component';
-import { SehStatusComponent } from './reports/seh-status/seh-status.component';
-import { SehYuklanmaComponent } from './reports/seh-yuklanma/seh-yuklanma.component';
-import { SehEarnMonthComponent } from './reports/seh-earn-month/seh-earn-month.component';
+
+import {ReadyInSummaryComponent} from './reports/ready-in-summary/ready-in-summary.component';
+import {SehStatusComponent} from './reports/seh-status/seh-status.component';
+import {SehYuklanmaComponent} from './reports/seh-yuklanma/seh-yuklanma.component';
+import {SehEarnMonthComponent} from './reports/seh-earn-month/seh-earn-month.component';
 
 @NgModule({
     declarations: [
@@ -49,8 +51,8 @@ import { SehEarnMonthComponent } from './reports/seh-earn-month/seh-earn-month.c
         SehStatusComponent,
 
         BlockLateralArrowNavigationDirective,
-         SehYuklanmaComponent,
-         SehEarnMonthComponent,
+        SehYuklanmaComponent,
+        SehEarnMonthComponent,
     ],
     imports: [
         CommonModule,
@@ -75,6 +77,7 @@ import { SehEarnMonthComponent } from './reports/seh-earn-month/seh-earn-month.c
         InputNumberModule,
         DropdownModule,
         MatMenuModule,
+        ChartModule,
     ]
 })
 export class ProductionModule {
