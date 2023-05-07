@@ -1,1 +1,25 @@
-<p>seh-status works!</p>
+<div class="flex flex-wrap w-full max-w-screen-2xl mx-auto p-6 md:p-8">
+    <div>
+        <h2 class="text-3xl font-semibold tracking-tight leading-8">Sehlar holati oylar kesimida</h2>
+        <div class="font-medium tracking-tight text-secondary">(vaqtiga ulguryabdimi , kechikyabdimi)</div>
+    </div>
+
+    <div class="mt-5 w-full ">
+        <p-table [columns]="cols" styleClass="p-datatable-gridlines" [value]="rows" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" class="text-center">
+                        {{ col.header }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td *ngFor="let col of columns" class="text-center" [ngClass]="rowData[col.field].color ? 'bg-'+rowData[col.field].color+'-300' : ''">
+                        {{ col.field == 'month' ? rowData[col.field] : '' }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

@@ -41,7 +41,7 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
             {
                 id   : 'seh-status',
-                title: 'Tayyor mahsulotlar',
+                title: 'Sehlar holati',
                 type : 'basic',
                 icon : 'heroicons_outline:check-circle',
                 link : '/production/report/seh-status'
