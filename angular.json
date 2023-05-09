@@ -5,7 +5,10 @@
     "projects": {
         "fuse": {
             "i18n": {
-                "sourceLocale": "uz-Cyrl"
+                "sourceLocale": {
+                    "code": "uz-Cyrl",
+                    "baseHref": ""
+                }
             },
             "projectType": "application",
             "schematics": {
