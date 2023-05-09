@@ -36,7 +36,7 @@ export class FurnitureService {
      * Get categories
      */
     getCategories(): Observable<Category[]> {
-        return this._httpClient.get<{ data: Category[] }>('@bu/api/furniture/categories').pipe(
+        return this._httpClient.get<{ data: Category[] }>('/api/furniture/categories').pipe(
             tap((response) => {
                 this._categories.next(response.data);
             }),
@@ -50,7 +50,7 @@ export class FurnitureService {
      * Get komplekts
      */
     getKomplekts(): Observable<Komplekt[]> {
-        return this._httpClient.get<{ data: Komplekt[] }>('@bu/api/furniture/komplekts').pipe(
+        return this._httpClient.get<{ data: Komplekt[] }>('/api/furniture/komplekts').pipe(
             tap((response) => {
                 this._komplekts.next(response.data);
             }),
@@ -65,7 +65,7 @@ export class FurnitureService {
      */
     getFurnitures(category_id: number = null, komplekt_id: number = null): Observable<Furniture[]> {
 
-        let url: string = '@bu/api/furniture/furnitures'
+        let url: string = '/api/furniture/furnitures'
 
         const searchArr = [];
 

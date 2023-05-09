@@ -22,10 +22,6 @@ import {APIInterceptor} from "../api/APIInterceptor";
             provide : HTTP_INTERCEPTORS,
             useClass: APIInterceptor,
             multi   : true
-        },
-        {
-            provide: "BASE_API_URL",
-            useValue: 'http://localhost:8092/'
         }
     ]
 })

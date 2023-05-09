@@ -1,10 +1,11 @@
-import {Inject, Injectable} from '@angular/core';
-import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
-    constructor(@Inject('BASE_API_URL') private baseUrl: string) {
+    constructor() {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -12,13 +13,14 @@ export class APIInterceptor implements HttpInterceptor {
         let requestUrl = req.url;
         // if the request URL have the string prefix,
         // then make the replace by the correct url
-        if (requestUrl.indexOf('@bu/') !== -1) {
-            requestUrl = requestUrl.replace('@bu/', this.baseUrl);
+
+        if (requestUrl.indexOf('/api') === 0) {
+            requestUrl = requestUrl.replace('/api', environment.apiUrl);
         }
 
-        console.log({requestUrl})
+        // console.log({requestUrl})
 
-        const apiReq = req.clone({ url: requestUrl });
+        const apiReq = req.clone({url: requestUrl});
         return next.handle(apiReq);
     }
 }

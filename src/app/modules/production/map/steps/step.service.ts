@@ -14,7 +14,7 @@ export class StepService {
 
     getSteps(unit_ids: number[]): Observable<IStep[]> {
 
-        let url: string = '@bu/api/production/unit-steps'
+        let url: string = '/api/production/unit-steps'
 
         const searchArr = [];
 
@@ -48,7 +48,7 @@ export class StepService {
             success: boolean,
             message: string,
             data?: IStep
-        }>(`@bu/api/production/unit-steps/${step.id}`, {...step}).pipe(
+        }>(`/api/production/unit-steps/${step.id}`, {...step}).pipe(
             map(response => {
                 console.log('serviceSavedStep', response)
                 return {
@@ -65,7 +65,7 @@ export class StepService {
             success: boolean,
             message: string,
             data?: IStep
-        }>('@bu/api/production/unit-steps', {...step}).pipe(
+        }>('/api/production/unit-steps', {...step}).pipe(
             map(response => {
                 console.log('serviceSavedStep', response)
                 return {
@@ -81,7 +81,7 @@ export class StepService {
         return this._httpClient.delete<{
             success: boolean,
             message: string
-        }>(`@bu/api/production/unit-steps/${step.id}`).pipe(
+        }>(`/api/production/unit-steps/${step.id}`).pipe(
             map(response => {
                 console.log('service.deleteStep', response)
                 return {

@@ -17,7 +17,7 @@ export class MapService {
      */
     getMaps(furniture_id: number = null): Observable<IMap[]> {
 
-        let url: string = '@bu/api/production/maps'
+        let url: string = '/api/production/maps'
 
         const searchArr = [];
 
@@ -42,7 +42,7 @@ export class MapService {
         return this._httpClient.put<{
             success: boolean,
             message: string
-        }>(`@bu/api/production/maps/${map_id}`, {cost}).pipe(
+        }>(`/api/production/maps/${map_id}`, {cost}).pipe(
             map(response => {
                 return {
                     success: response.success,

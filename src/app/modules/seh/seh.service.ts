@@ -21,7 +21,7 @@ export class SehService {
      * Get sehs
      */
     getSehs(): Observable<ISeh[]> {
-        return this._httpClient.get<{ data: ISeh[] }>('@bu/api/production/sehs').pipe(
+        return this._httpClient.get<{ data: ISeh[] }>('/api/production/sehs').pipe(
             tap((response) => {
                 this._sehs.next(response.data);
             }),

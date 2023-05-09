@@ -15,7 +15,7 @@ export class TipService {
      * Get tips
      */
     getTips(): Observable<ITip[]> {
-        return this._httpClient.get<{ data: ITip[] }>('@bu/api/production/tips').pipe(
+        return this._httpClient.get<{ data: ITip[] }>('/api/production/tips').pipe(
             map((response) => {
                 return response.data
             })

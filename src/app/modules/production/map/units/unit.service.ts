@@ -16,7 +16,7 @@ export class UnitService {
      */
     getUnits(map_id: number = null): Observable<IUnit[]> {
 
-        let url: string = '@bu/api/production/units'
+        let url: string = '/api/production/units'
 
         const searchArr = [];
 
@@ -51,7 +51,7 @@ export class UnitService {
             success: boolean,
             message: string,
             data?: IUnit
-        }>(`@bu/api/production/units/${unit.id}`, {...unit}).pipe(
+        }>(`/api/production/units/${unit.id}`, {...unit}).pipe(
             map(response => {
                 console.log('serviceSavedUnit', response)
                 return {
@@ -68,7 +68,7 @@ export class UnitService {
             success: boolean,
             message: string,
             data?: IUnit
-        }>('@bu/api/production/units', {...unit}).pipe(
+        }>('/api/production/units', {...unit}).pipe(
             map(response => {
                 console.log('serviceSavedUnit', response)
                 return {
@@ -84,7 +84,7 @@ export class UnitService {
         return this._httpClient.delete<{
             success: boolean,
             message: string
-        }>(`@bu/api/production/units/${unit.id}`).pipe(
+        }>(`/api/production/units/${unit.id}`).pipe(
             map(response => {
                 console.log('service.deleteUnit', response)
                 return {
