@@ -21,11 +21,11 @@
                     <!-- Action Column-->
                     <td class="text-center">
                         <div class="flex">
-                            <button mat-icon-button *ngIf="true" color="warn"
+                            <button mat-icon-button *ngIf="checkForChanged(unit)" (click)="save(unit)" color="warn"
                                     aria-label="Example icon button with a vertical three dot icon">
                                 <mat-icon>save</mat-icon>
                             </button>
-                            <button mat-icon-button *ngIf="true" color="accent"
+                            <button mat-icon-button *ngIf="true" color="accent" (click)="delete(unit)"
                                     aria-label="Example icon button with a vertical three dot icon">
                                 <mat-icon>delete</mat-icon>
                             </button>
@@ -45,7 +45,7 @@
                                 <p-dropdown
                                     [options]="tips"
                                     [ngModel]="unit.tip_id"
-                                    (ngModelChange)="handleFieldChange(unit.id, $event)"
+                                    (ngModelChange)="handleFieldChange(unit, $event)"
                                     BlockLateralArrowNavigation
                                     optionLabel="name"
                                     optionValue="id"

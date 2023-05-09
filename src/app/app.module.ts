@@ -16,12 +16,13 @@ import {CustomPaginator} from 'app/custom/CustomPaginatorConfiguration';
 import {FormsModule} from '@angular/forms';
 
 import {EffectsModule} from "@ngrx/effects";
-import {MapEffects} from "./modules/production/map/store/map.effects";
 import {StoreModule} from "@ngrx/store";
 import {mapReducer} from "./modules/production/map/store/map.reducer";
 import {stepsReducer} from "./modules/production/map/store/steps.reducer";
 import {unitsReducer} from "./modules/production/map/store/units.reducer";
+import {MapEffects} from "./modules/production/map/store/map.effects";
 import {StepsEffects} from "./modules/production/map/store/steps.effects";
+import {UnitsEffects} from "./modules/production/map/store/units.effects";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -51,7 +52,7 @@ const routerConfig: ExtraOptions = {
         FormsModule,
 
         StoreModule.forRoot({cost: mapReducer, steps: stepsReducer, units: unitsReducer}),
-        EffectsModule.forRoot(MapEffects, StepsEffects),
+        EffectsModule.forRoot(MapEffects, StepsEffects, UnitsEffects),
 
     ],
     bootstrap: [

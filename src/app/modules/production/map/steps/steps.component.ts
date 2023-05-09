@@ -14,6 +14,7 @@ import {Store} from "@ngrx/store";
 export class StepsComponent implements OnInit {
 
     @Input() sehs: ISeh[];
+    @Input() tips: { id: number, name: string }[];
 
     units$: Observable<IUnit[]>;
     units: IUnit[];
@@ -56,6 +57,17 @@ export class StepsComponent implements OnInit {
                 }
             })
         })
+    }
+
+    getTipName(tip_id: number): string {
+
+        if (typeof this.tips !== 'object' || !this.tips.length) {
+            console.log('no tips', this.tips)
+            return ''
+        }
+
+        const tip = this.tips.find(tip => tip.id === tip_id)
+        return tip?.name
     }
 
 }

@@ -5,6 +5,8 @@ import {UnitService} from "./unit.service";
 import {Store} from "@ngrx/store";
 import {IStep} from "../steps/step.type";
 import {MapState} from "../store/map.reducer";
+import {addUnit, deleteUnit, removeUnit, saveUnit, setUnit} from "../store/units.actions";
+import {addStep, deleteStep, removeStep, resetStep, saveStep} from "../store/steps.actions";
 
 @Component({
     selector: 'map-units',
@@ -17,6 +19,7 @@ export class UnitsComponent implements OnInit {
 
     units$: Observable<IUnit[]>;
     steps$: Observable<IStep[]>;
+    @Input() map_id: number;
     @Input() tips: { id: number, name: string }[];
 
     cost$: Observable<number>;
@@ -84,11 +87,6 @@ export class UnitsComponent implements OnInit {
         return percent
     }
 
-    add() {
-        //todo
-        this.store.dispatch({type: 'addUnit'})
-    }
-
     getTipName(tip_id: number): string {
 
         if (typeof this.tips !== 'object' || !this.tips.length) {
@@ -100,7 +98,38 @@ export class UnitsComponent implements OnInit {
         return tip?.name
     }
 
-    handleFieldChange(id, $event: any) {
-        //todo
+    checkForChanged(unit: IUnit): boolean {
+        const item = {...unit}
+        delete item._hash
+
+        return unit._hash !== JSON.stringify(item)
+    }
+
+    handleFieldChange(unit: IUnit, tip_id: number) {
+        this.store.dispatch(setUnit({unit_id: unit.id, unit: {...unit, tip_id: tip_id}}))
+    }
+
+    add() {
+        this.store.dispatch(addUnit({map_id: this.map_id}))
+    }
+
+    save(unit: IUnit) {
+        this.store.dispatch(saveUnit({unit}))
+    }
+
+    // reset(unit: IUnit) {
+    //     this.store.dispatch(resetUnit({step}))
+    // }
+
+    delete(unit: IUnit) {
+
+        if (unit.id === null) {
+            this.store.dispatch(removeUnit({unit}))
+            return;
+        }
+
+        if (confirm('Вы уверены?')) {
+            this.store.dispatch(deleteUnit({unit}))
+        }
     }
 }

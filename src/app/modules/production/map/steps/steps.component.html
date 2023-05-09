@@ -6,7 +6,7 @@
 
         <div *ngFor="let unit of units; let i = index" class="mb-3">
 
-            <h3 class="text-lg font-bold">{{unit.name}}</h3>
+            <h3 class="text-lg font-bold">{{getTipName(unit.tip_id)}}</h3>
 
             <map-unit-steps
                 [steps]="stepsByUnitId[unit.id] ?? []"
