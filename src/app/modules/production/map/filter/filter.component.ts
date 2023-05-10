@@ -9,6 +9,7 @@ import {MapService} from "../map.service";
 import {Store} from "@ngrx/store";
 import {setMap} from "../store/map.actions";
 import {MapState} from "../store/map.reducer";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
     selector: 'map-filter',
@@ -80,7 +81,7 @@ export class FilterComponent {
 
 
         //temporary
-        {
+        if (!environment.production) {
             setTimeout(() => {
                 this.category_id$.next(1);
             }, 500)
