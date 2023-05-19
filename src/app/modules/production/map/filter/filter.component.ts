@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, effect, EventEmitter, Output, signal, WritableSignal} from '@angular/core';
 import {BehaviorSubject, Observable, take} from "rxjs";
 import {Category, Furniture, Komplekt} from "../../../furniture/furniture.types";
 import {IMap} from "../map.types";
@@ -35,12 +35,20 @@ export class FilterComponent {
 
     //map is version
     maps$: Observable<IMap[]>;
-    map$: BehaviorSubject<IMap> = new BehaviorSubject<IMap>(null)
+
+    map: WritableSignal<IMap> = signal(null);
 
     constructor(private _furnitureService: FurnitureService,
                 private _mapService: MapService,
                 private store: Store<{ cost: MapState }>) {
 
+        effect(() => {
+            const map = this.map()
+            console.log({map})
+
+            this.store.dispatch(setMap(map))
+            this.mapIdChange.emit(map?.id)
+        }, { allowSignalWrites: true })
     }
 
     ngOnInit() {
@@ -68,17 +76,9 @@ export class FilterComponent {
         })
 
         this.furniture_id$.subscribe(() => {
-            this.map$.next(null);
+            this.map.set(null);
             this.loadMaps();
         })
-
-        this.map$.subscribe(map => {
-
-            this.store.dispatch(setMap(map))
-
-            this.mapIdChange.emit(map?.id)
-        })
-
 
         //temporary
         if (!environment.production) {
@@ -94,6 +94,10 @@ export class FilterComponent {
                 this.furniture_id$.next(12);
             }, 2000)
         }
+    }
+
+    log(value) {
+        console.log({value})
     }
 
     getKomplekts(category_id): Komplekt[] {
@@ -121,7 +125,7 @@ export class FilterComponent {
 
             this.maps$.subscribe((value: IMap[]) => {
                 if (value.length === 1) {
-                    this.map$.next(value[0])
+                    this.map.set(value[0])
                 }
             })
 

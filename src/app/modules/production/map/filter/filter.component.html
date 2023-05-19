@@ -58,15 +58,19 @@
         </div>
     </div>
 
-    
 
     <div class="flex-1">
         <div class="form-group">
-            <label for="filter-map_id">Versiya</label>
+            <label for="filter-map_id">
+                Versiya
+                <button mat-icon-button color="primary" class="version-add-btn">
+                    <mat-icon>add_box</mat-icon>
+                </button>
+            </label>
             <p-dropdown
                 [options]="maps$ | async"
-                [ngModel]="map$ | async"
-                (ngModelChange)="map$.next($event)"
+                [ngModel]="map()"
+                (ngModelChange)="map.set($event)"
                 optionLabel="version"
                 [style]="{'width':'100%'}"
                 inputId="filter-map_id"
