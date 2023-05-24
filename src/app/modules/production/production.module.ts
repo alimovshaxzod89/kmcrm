@@ -30,6 +30,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {InputNumberModule} from 'primeng/inputnumber';
 import {DropdownModule} from "primeng/dropdown";
 import {ChartModule} from 'primeng/chart';
+import {DialogModule} from "primeng/dialog";
 
 import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
 import {MatMenuModule} from "@angular/material/menu";
@@ -38,6 +39,9 @@ import {ReadyInSummaryComponent} from './reports/ready-in-summary/ready-in-summa
 import {SehStatusComponent} from './reports/seh-status/seh-status.component';
 import {SehYuklanmaComponent} from './reports/seh-yuklanma/seh-yuklanma.component';
 import {SehEarnMonthComponent} from './reports/seh-earn-month/seh-earn-month.component';
+import { CreateMapModalComponent } from './map/create-map-modal/create-map-modal.component';
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {InputSwitchModule} from "primeng/inputswitch";
 
 @NgModule({
     declarations: [
@@ -53,6 +57,7 @@ import {SehEarnMonthComponent} from './reports/seh-earn-month/seh-earn-month.com
         BlockLateralArrowNavigationDirective,
         SehYuklanmaComponent,
         SehEarnMonthComponent,
+        CreateMapModalComponent,
     ],
     imports: [
         CommonModule,
@@ -78,6 +83,9 @@ import {SehEarnMonthComponent} from './reports/seh-earn-month/seh-earn-month.com
         DropdownModule,
         MatMenuModule,
         ChartModule,
+        DialogModule,
+        InputTextareaModule,
+        InputSwitchModule,
     ]
 })
 export class ProductionModule {

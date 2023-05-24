@@ -27,3 +27,24 @@ export const selectStepsChanged = createSelector(
     }
 );
 
+export const selectTotalCost = createSelector(
+    selectSteps,
+    steps => {
+        let cost = 0;
+        steps.forEach(step => {
+            cost += step.cost
+        })
+        return cost
+    }
+)
+
+export const selectTotalPercent = createSelector(
+    selectSteps,
+    steps => {
+        let percent = 0;
+        steps.forEach(step => {
+            percent += step.percent
+        })
+        return percent
+    }
+)

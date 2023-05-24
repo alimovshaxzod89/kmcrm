@@ -10,6 +10,7 @@ import {Store} from "@ngrx/store";
 import {setMap} from "../store/map.actions";
 import {MapState} from "../store/map.reducer";
 import {environment} from "../../../../../environments/environment";
+import {getMaps} from "../store/maps.actions";
 
 @Component({
     selector: 'map-filter',
@@ -40,22 +41,25 @@ export class FilterComponent {
 
     constructor(private _furnitureService: FurnitureService,
                 private _mapService: MapService,
-                private store: Store<{ cost: MapState }>) {
+                private store: Store<{ cost: MapState, maps: IMap[] }>) {
 
+        //map o'zgarsa store ni ham o'zgartirish
         effect(() => {
             const map = this.map()
-            console.log({map})
 
             this.store.dispatch(setMap(map))
             this.mapIdChange.emit(map?.id)
-        }, { allowSignalWrites: true })
+        }, {allowSignalWrites: true})
+
+        this.maps$ = store.select('maps')
     }
 
     ngOnInit() {
 
         this.categories$ = this._furnitureService.categories$;
         this.komplekts$ = this._furnitureService.komplekts$;
-        this.maps$ = this._mapService.getMaps(this.furniture_id$.value);
+
+        this.store.dispatch(getMaps(this.furniture_id$.value))
 
         //for filteredKomplekts$
         this._furnitureService.komplekts$
@@ -75,9 +79,22 @@ export class FilterComponent {
             this.loadFurnitures()
         })
 
-        this.furniture_id$.subscribe(() => {
+        this.furniture_id$.subscribe(furniture_id => {
             this.map.set(null);
-            this.loadMaps();
+
+            this.store.dispatch(getMaps(furniture_id))
+        })
+
+        this.maps$.subscribe(maps => {
+            if (maps.length === 1) {
+                this.map.set(maps[0])
+            } else if (maps.length > 1) {
+                maps.forEach(map => {
+                    if (map.actual === true) {
+                        this.map.set(map)
+                    }
+                })
+            }
         })
 
         //temporary
@@ -119,17 +136,9 @@ export class FilterComponent {
             this.furnitures$ = new Observable<Furniture[]>()
     }
 
-    loadMaps(): void {
-        if (this.furniture_id$.value) {
-            this.maps$ = this._mapService.getMaps(this.furniture_id$.value);
+    createMapModalIsOpened: boolean = false;
 
-            this.maps$.subscribe((value: IMap[]) => {
-                if (value.length === 1) {
-                    this.map.set(value[0])
-                }
-            })
-
-        } else
-            this.maps$ = new Observable<IMap[]>()
+    openCreateMapModal() {
+        this.createMapModalIsOpened = true
     }
 }

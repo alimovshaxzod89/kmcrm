@@ -1,23 +1,23 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, EMPTY, exhaustMap, map, mergeMap, of} from "rxjs";
 import {Injectable} from "@angular/core";
-import {deleteUnit, getUnits, removeUnit, savedUnit, saveUnit, setUnits} from "./units.actions";
-import {UnitService} from "../units/unit.service";
+import {MapService} from "../map.service";
+import {addMap, deleteMap, getMaps, removeMap, savedMap, saveMap, selectMap, setMaps} from "./maps.actions";
 
 @Injectable()
-export class UnitsEffects {
+export class MapsEffects {
 
-    getUnits = createEffect(() => this.actions$.pipe(
-        ofType(getUnits),
+    getMaps = createEffect(() => this.actions$.pipe(
+        ofType(getMaps),
         exhaustMap(props => {
-                console.log('getUnits', {props})
-                if (props.map_id) {
-                    return this.unitsService.getUnits(props.map_id).pipe(
+            console.log('getMaps', {props})
+            if (props.furniture_id) {
+                return this.mapsService.getMaps(props.furniture_id)
+                    .pipe(
                         map(response => {
-                                const units = response.data
-                                return setUnits({units})
-                            }
-                        ),
+                            const maps = response.data
+                            return setMaps({maps})
+                        }),
                         catchError(err => {
                             console.log({err})
                             const errMsg = err?.error?.message
@@ -25,21 +25,20 @@ export class UnitsEffects {
                             return EMPTY
                         })
                     )
-                } else {
-                    return of(setUnits({units: []}))
-                }
+            } else {
+                return of(setMaps({maps: []}))
             }
-        )
-    ))
+        })
+    ));
 
-    saveUnit = createEffect(() => this.actions$.pipe(
-        ofType(saveUnit),
+    addMap = createEffect(() => this.actions$.pipe(
+        ofType(addMap),
         mergeMap(props => {
-                return this.unitsService.saveUnit(props.unit)
+                return this.mapsService.addMap(props.map)
                     .pipe(
                         map(response => {
                             if (response.success) {
-                                return savedUnit({unit: response.data, unit_id: props.unit.id})
+                                return getMaps(props.map.furniture_id)
                             } else {
                                 alert(response.message)
                                 console.log(response.message)
@@ -56,14 +55,38 @@ export class UnitsEffects {
         )
     ));
 
-    deleteUnit = createEffect(() => this.actions$.pipe(
-        ofType(deleteUnit),
+    saveMap = createEffect(() => this.actions$.pipe(
+        ofType(saveMap),
         mergeMap(props => {
-                return this.unitsService.deleteUnit(props.unit)
+                return this.mapsService.saveMap(props.map)
                     .pipe(
                         map(response => {
                             if (response.success) {
-                                return removeUnit({unit: props.unit})
+                                return savedMap({map: response.data, map_id: props.map.id})
+                            } else {
+                                alert(response.message)
+                                console.log(response.message)
+                            }
+                        }),
+                        catchError(err => {
+                            console.log({err})
+                            const errMsg = err?.error?.message
+                            alert('Ошибка сохранения: ' + errMsg)
+                            return EMPTY
+                        })
+                    )
+            }
+        )
+    ));
+
+    deleteMap = createEffect(() => this.actions$.pipe(
+        ofType(deleteMap),
+        mergeMap(props => {
+                return this.mapsService.deleteMap(props.map)
+                    .pipe(
+                        map(response => {
+                            if (response.success) {
+                                return removeMap({map: props.map})
                             } else {
                                 alert(response.message)
                                 console.log(response.message)
@@ -81,6 +104,6 @@ export class UnitsEffects {
     ));
 
     constructor(private actions$: Actions,
-                private unitsService: UnitService) {
+                private mapsService: MapService) {
     }
 }

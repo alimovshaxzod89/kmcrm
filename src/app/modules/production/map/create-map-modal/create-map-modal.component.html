@@ -1,0 +1,39 @@
+<p-dialog header="Versiya qo'shish" [visible]="opened" (visibleChange)="visibleChange($event)" [modal]="true"
+          [style]="{ width: '50vw' }" [draggable]="false"
+          [resizable]="false">
+
+    <form [formGroup]="form">
+
+        <div class="flex flex-col gap-2">
+            <label for="map-version">Versiya</label>
+            <input pInputText id="map-version" formControlName="version"/>
+        </div>
+
+        <div class="flex flex-col gap-2 mt-2">
+            <label for="map-cost">Summa</label>
+            <p-inputNumber
+                inputId="map-cost"
+                mode='decimal'
+                [minFractionDigits]="0" [maxFractionDigits]="0"
+                [min]="0"
+                locale="ru"
+                formControlName="cost"/>
+        </div>
+
+        <div class="flex flex-col gap-2 mt-2">
+            <label for="map-description">Izoh</label>
+            <textarea pInputTextarea rows="2" [autoResize]="true" id="map-description"
+                      formControlName="description"></textarea>
+        </div>
+
+        <div class="flex flex-col gap-2 mt-2">
+            <label for="map-description">Joriy</label>
+            <p-inputSwitch formControlName="actual"></p-inputSwitch>
+        </div>
+
+        <div class="mt-3 text-right">
+            <p-button label="Qo'shish" (click)="submit()"></p-button>
+        </div>
+    </form>
+
+</p-dialog>

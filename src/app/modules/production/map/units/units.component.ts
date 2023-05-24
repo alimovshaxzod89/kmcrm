@@ -6,7 +6,7 @@ import {Store} from "@ngrx/store";
 import {IStep} from "../steps/step.type";
 import {MapState} from "../store/map.reducer";
 import {addUnit, deleteUnit, removeUnit, saveUnit, setUnit} from "../store/units.actions";
-import {addStep, deleteStep, removeStep, resetStep, saveStep} from "../store/steps.actions";
+import * as stepSelects from "../store/steps.selectors";
 
 @Component({
     selector: 'map-units',
@@ -25,14 +25,15 @@ export class UnitsComponent implements OnInit {
     cost$: Observable<number>;
     cost: number;
 
-    displayedColumns: string[] = [
-        'del', 'tip', 'percent', 'cost',
-        // 'more'
-    ];
+    totalCost$: Observable<number>;
+    totalPercent$: Observable<number>;
 
     constructor(private _unitService: UnitService,
                 private store: Store<{ units: IUnit[], steps: IStep[], cost: MapState }>) {
         this.cost$ = this.store.select(store => store.cost.current);
+
+        this.totalCost$ = this.store.select(stepSelects.selectTotalCost);
+        this.totalPercent$ = this.store.select(stepSelects.selectTotalPercent);
     }
 
     ngOnInit(): void {
@@ -62,26 +63,6 @@ export class UnitsComponent implements OnInit {
                 if (step.unit_id === unit_id) {
                     percent += step.percent
                 }
-            })
-        })
-        return percent
-    }
-
-    totalCost(): number {
-        let cost = 0;
-        this.steps$.subscribe(steps => {
-            steps.forEach(step => {
-                cost += step.cost
-            })
-        })
-        return cost
-    }
-
-    totalPercent(): number {
-        let percent = 0;
-        this.steps$.subscribe(steps => {
-            steps.forEach(step => {
-                percent += step.percent
             })
         })
         return percent

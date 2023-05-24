@@ -18,12 +18,13 @@ import {FormsModule} from '@angular/forms';
 import {EffectsModule} from "@ngrx/effects";
 import {StoreModule} from "@ngrx/store";
 import {mapReducer} from "./modules/production/map/store/map.reducer";
+import {mapsReducer} from "./modules/production/map/store/maps.reducer";
 import {stepsReducer} from "./modules/production/map/store/steps.reducer";
 import {unitsReducer} from "./modules/production/map/store/units.reducer";
 import {MapEffects} from "./modules/production/map/store/map.effects";
+import {MapsEffects} from "./modules/production/map/store/maps.effects";
 import {StepsEffects} from "./modules/production/map/store/steps.effects";
 import {UnitsEffects} from "./modules/production/map/store/units.effects";
-import {environment} from "../environments/environment";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -52,8 +53,8 @@ const routerConfig: ExtraOptions = {
 
         FormsModule,
 
-        StoreModule.forRoot({cost: mapReducer, steps: stepsReducer, units: unitsReducer}),
-        EffectsModule.forRoot(MapEffects, StepsEffects, UnitsEffects),
+        StoreModule.forRoot({cost: mapReducer, maps: mapsReducer, steps: stepsReducer, units: unitsReducer}),
+        EffectsModule.forRoot(MapEffects, StepsEffects, UnitsEffects, MapsEffects),
 
     ],
     bootstrap: [

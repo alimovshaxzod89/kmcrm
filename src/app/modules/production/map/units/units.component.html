@@ -83,11 +83,12 @@
                     </td>
                     <td colspan=""></td>
                     <td class="text-right font-semibold"
-                        [ngClass]="{'text-red-600' : Math.round(totalPercent()) > 100}">
-                        {{totalPercent() / 100 | percent:'1.0-2' }}
+                        [ngClass]="{'text-red-600' : Math.round((totalPercent$ | async)) > 100}">
+                        {{(totalPercent$ | async) / 100 | percent:'1.0-2' }}
                     </td>
-                    <td class="text-right font-semibold" [ngClass]="{'text-red-600' : Math.round(totalCost()) > cost}">
-                        {{totalCost() | currency:'UZS':'':'1.0-0'}}
+                    <td class="text-right font-semibold"
+                        [ngClass]="{'text-red-600' : Math.round((totalCost$ | async)) > cost}">
+                        {{(totalCost$ | async) | currency:'UZS':'':'1.0-0'}}
                     </td>
                 </tr>
             </ng-template>

@@ -4,6 +4,7 @@ import {IUnit} from "../units/unit.type";
 export const setUnits = createAction("[Units] Set Units", props<{ units: IUnit[] }>());
 export const setUnit = createAction("[Units] Set Unit", props<{ unit_id: number, unit: IUnit }>());
 
+export const getUnits = createAction("[Units] Get Units", props<{ map_id: number }>());
 
 export const addUnit = createAction("[Units] Add Unit", props<{ map_id: number }>());
 export const saveUnit = createAction("[Units] Save Unit", props<{ unit: IUnit }>());

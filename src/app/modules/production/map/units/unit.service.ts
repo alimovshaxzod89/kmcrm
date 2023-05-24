@@ -14,7 +14,7 @@ export class UnitService {
     /**
      * Get furniture maps
      */
-    getUnits(map_id: number = null): Observable<IUnit[]> {
+    getUnits(map_id: number = null): Observable<{ success: boolean, message: string, data: IUnit[] }> {
 
         let url: string = '/api/production/units'
 
@@ -35,10 +35,10 @@ export class UnitService {
         if (search.length)
             url += `?search=${search}`
 
-        return this._httpClient.get<{ data: IUnit[] }>(url).pipe(
+        return this._httpClient.get<{ success: boolean, message: string, data: IUnit[] }>(url).pipe(
             map(response => {
                 console.log('serviceUnits', response)
-                return response.data
+                return response
             })
         );
     }

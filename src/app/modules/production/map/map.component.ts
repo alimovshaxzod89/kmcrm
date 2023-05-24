@@ -8,9 +8,9 @@ import {SehService} from "../../seh/seh.service";
 import {TipService} from "../services/tip.service";
 import {Store} from "@ngrx/store";
 import {IStep} from "./steps/step.type";
-import {setUnits} from "./store/units.actions";
+import {getUnits} from "./store/units.actions";
 import {StepService} from "./steps/step.service";
-import {calcStepsCost, saveStep, setSteps} from "./store/steps.actions";
+import {calcStepsCost, getSteps, saveStep} from "./store/steps.actions";
 import {MapService} from "./map.service";
 
 import {changeCost, saveCost} from "./store/map.actions";
@@ -76,33 +76,25 @@ export class MapComponent implements OnInit {
 
     private loadUnitsToStore() {
         this.map_id$.subscribe(map_id => {
-            if (map_id) {
-                this._unitService.getUnits(map_id).subscribe(units => {
-                    console.log('units', units)
-                    this.store.dispatch(setUnits({units: units}))
-                })
-            } else {
-                this.store.dispatch(setUnits({units: []}))
-            }
+            this.store.dispatch(getUnits({map_id}))
         })
     }
 
     private loadStepsToStore() {
         this.units$.subscribe(units => {
+
+            let unit_ids: number[] = []
+
             if (units.length) {
 
                 //make unit_ids array
-                let unit_ids = []
                 units.forEach(unit => {
-                    unit_ids.push(unit.id)
+                    if (unit.id)
+                        unit_ids.push(unit.id)
                 })
-
-                this._stepService.getSteps(unit_ids).subscribe(steps => {
-                    this.store.dispatch(setSteps({steps: steps}))
-                })
-            } else {
-                this.store.dispatch(setSteps({steps: []}))
             }
+
+            this.store.dispatch(getSteps(unit_ids))
         })
     }
 

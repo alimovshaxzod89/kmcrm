@@ -1,6 +1,6 @@
 import {createReducer, on} from '@ngrx/store';
 
-import {changeCost, saveCost, savedMapCost, setCost, setMap} from './map.actions';
+import {changeCost, savedMapCost, setCost, setMap} from './map.actions';
 
 export interface MapState {
     id: number;

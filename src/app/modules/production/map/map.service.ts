@@ -15,7 +15,7 @@ export class MapService {
     /**
      * Get furniture maps
      */
-    getMaps(furniture_id: number = null): Observable<IMap[]> {
+    getMaps(furniture_id: number = null): Observable<{success: boolean, message: string, data: IMap[]}> {
 
         let url: string = '/api/production/maps'
 
@@ -31,9 +31,9 @@ export class MapService {
         if (search.length)
             url += `?search=${search}`
 
-        return this._httpClient.get<{ data: IMap[] }>(url).pipe(
+        return this._httpClient.get<{success: boolean, message: string, data: IMap[]}>(url).pipe(
             map(response => {
-                return response.data
+                return response
             })
         );
     }
@@ -44,6 +44,47 @@ export class MapService {
             message: string
         }>(`/api/production/maps/${map_id}`, {cost}).pipe(
             map(response => {
+                return {
+                    success: response.success,
+                    message: response.message
+                }
+            })
+        );
+    }
+
+    saveMap(mapData: IMap): Observable<{ success: boolean, message: string, data?: IMap }> {
+        return this._httpClient.put<{
+            success: boolean,
+            message: string,
+            data?: IMap
+        }>(`/api/production/maps/${mapData.id}`, {...mapData}).pipe(
+            map(response => {
+                return response
+            })
+        );
+    }
+
+    addMap(mapData: IMap): Observable<{ success: boolean, message: string, data?: IMap }> {
+        console.log({mapData})
+        return this._httpClient.post<{
+            success: boolean,
+            message: string,
+            data?: IMap
+        }>(`/api/production/maps`, {...mapData}).pipe(
+            map(response => {
+                return response
+            })
+        );
+    }
+
+
+    deleteMap(mapData: IMap): Observable<{ success: boolean, message: string }> {
+        return this._httpClient.delete<{
+            success: boolean,
+            message: string
+        }>(`/api/production/maps/${mapData.id}`).pipe(
+            map(response => {
+                console.log('service.deleteMap', response)
                 return {
                     success: response.success,
                     message: response.message

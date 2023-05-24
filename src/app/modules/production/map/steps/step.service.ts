@@ -12,7 +12,7 @@ export class StepService {
     constructor(private _httpClient: HttpClient) {
     }
 
-    getSteps(unit_ids: number[]): Observable<IStep[]> {
+    getSteps(unit_ids: number[]): Observable<{ success: boolean, message: string, data: IStep[] }> {
 
         let url: string = '/api/production/unit-steps'
 
@@ -33,9 +33,9 @@ export class StepService {
         if (search.length)
             url += `?search=${search}`
 
-        return this._httpClient.get<{ data: IStep[] }>(url).pipe(
+        return this._httpClient.get<{ success: boolean, message: string, data: IStep[] }>(url).pipe(
             map(response => {
-                return response.data
+                return response
             })
         );
     }

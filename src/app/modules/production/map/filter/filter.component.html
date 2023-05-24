@@ -63,7 +63,7 @@
         <div class="form-group">
             <label for="filter-map_id">
                 Versiya
-                <button mat-icon-button color="primary" class="version-add-btn">
+                <button mat-icon-button color="primary" *ngIf="furniture_id$ | async" (click)="openCreateMapModal()" class="version-add-btn">
                     <mat-icon>add_box</mat-icon>
                 </button>
             </label>
@@ -79,5 +79,7 @@
             </p-dropdown>
         </div>
     </div>
+
+    <create-map-modal [(opened)]="createMapModalIsOpened" [furniture_id]="furniture_id$ | async" />
 
 </div>

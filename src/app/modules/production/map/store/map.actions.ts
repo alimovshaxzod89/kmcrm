@@ -1,6 +1,10 @@
-import { createAction, props } from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 import {IMap} from "../map.types";
 
+
+export const addMap = createAction('[Map Component] addMap', (map: IMap) => ({map}));
+
+export const savedMap = createAction('[Map Component] savedMap', (map: IMap) => ({map}))
 
 export const setMap = createAction('[Map Component] setMap', (map: IMap) => ({map}));
 
