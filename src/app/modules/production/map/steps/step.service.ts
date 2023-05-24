@@ -50,7 +50,6 @@ export class StepService {
             data?: IStep
         }>(`/api/production/unit-steps/${step.id}`, {...step}).pipe(
             map(response => {
-                console.log('serviceSavedStep', response)
                 return {
                     data: response?.data,
                     success: response.success,
@@ -67,7 +66,6 @@ export class StepService {
             data?: IStep
         }>('/api/production/unit-steps', {...step}).pipe(
             map(response => {
-                console.log('serviceSavedStep', response)
                 return {
                     data: response?.data,
                     success: response.success,
@@ -83,7 +81,6 @@ export class StepService {
             message: string
         }>(`/api/production/unit-steps/${step.id}`).pipe(
             map(response => {
-                console.log('service.deleteStep', response)
                 return {
                     success: response.success,
                     message: response.message

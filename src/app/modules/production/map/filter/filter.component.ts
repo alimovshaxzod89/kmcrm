@@ -11,7 +11,7 @@ import {setMap} from "../store/map.actions";
 import {MapState} from "../store/map.reducer";
 import {environment} from "../../../../../environments/environment";
 import {getMaps} from "../store/maps.actions";
-import {mapModalState} from "../create-map-modal/create-map-modal.component";
+import {mapModalState} from "../map-modal/map-modal.component";
 import * as mapsSelect from '../store/maps.selectors';
 
 @Component({

@@ -37,7 +37,6 @@ export class UnitService {
 
         return this._httpClient.get<{ success: boolean, message: string, data: IUnit[] }>(url).pipe(
             map(response => {
-                console.log('serviceUnits', response)
                 return response
             })
         );
@@ -53,7 +52,6 @@ export class UnitService {
             data?: IUnit
         }>(`/api/production/units/${unit.id}`, {...unit}).pipe(
             map(response => {
-                console.log('serviceSavedUnit', response)
                 return {
                     data: response?.data,
                     success: response.success,
@@ -70,7 +68,6 @@ export class UnitService {
             data?: IUnit
         }>('/api/production/units', {...unit}).pipe(
             map(response => {
-                console.log('serviceSavedUnit', response)
                 return {
                     data: response?.data,
                     success: response.success,
@@ -86,7 +83,6 @@ export class UnitService {
             message: string
         }>(`/api/production/units/${unit.id}`).pipe(
             map(response => {
-                console.log('service.deleteUnit', response)
                 return {
                     success: response.success,
                     message: response.message

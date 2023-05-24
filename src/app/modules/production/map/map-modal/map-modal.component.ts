@@ -19,11 +19,11 @@ import {take} from "rxjs";
 export type mapModalState = 'create' | 'update' | 'closed'
 
 @Component({
-    selector: 'create-map-modal',
-    templateUrl: './create-map-modal.component.html',
-    styleUrls: ['./create-map-modal.component.scss']
+    selector: 'map-modal',
+    templateUrl: './map-modal.component.html',
+    styleUrls: ['./map-modal.component.scss']
 })
-export class CreateMapModalComponent implements OnChanges {
+export class MapModalComponent implements OnChanges {
 
     @Input() state: mapModalState;
     @Output() stateChange = new EventEmitter<mapModalState>();
@@ -74,7 +74,6 @@ export class CreateMapModalComponent implements OnChanges {
         this.store.select('maps').pipe(
             take(1)
         ).subscribe(maps => {
-            console.log('setFromMap', maps)
             const map = maps.find(map => map.id === id)
             this.form.patchValue(map)
         })

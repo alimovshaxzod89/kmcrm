@@ -59,19 +59,35 @@
     </div>
 
 
-    <div class="flex-1">
+    <div class="min-w-[150px]">
         <div class="form-group">
-            <label for="filter-map_id">
-                Versiya
-                <button mat-icon-button color="primary" *ngIf="furniture_id$ | async" (click)="openCreateMapModal()" class="version-add-btn">
-                    <mat-icon>add_box</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" *ngIf="furniture_id$ | async" (click)="openEditMapModal()" class="version-add-btn">
-                    <mat-icon>
-                        edit
-                    </mat-icon>
-                </button>
-            </label>
+            <div class="flex">
+                <label for="filter-map_id">
+                    Versiya
+                </label>
+
+                <div class="flex">
+                    <button mat-icon-button color="primary" (click)="openCreateMapModal()" class="version-buttons">
+                        <mat-icon>add_box</mat-icon>
+                    </button>
+
+                    <button mat-button [matMenuTriggerFor]="menu" class="version-buttons">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openEditMapModal()">
+                            <mat-icon>edit</mat-icon>
+                            <span>O'zgartirish</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>delete</mat-icon>
+                            <span>O'chirish</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+
+
             <p-dropdown
                 [options]="mapOptions$ | async"
                 [ngModel]="map_id()"
@@ -86,6 +102,6 @@
         </div>
     </div>
 
-    <create-map-modal [(state)]="mapModalState" [furniture_id]="furniture_id$ | async" [map_id]="map_id()" />
+    <map-modal [(state)]="mapModalState" [furniture_id]="furniture_id$ | async" [map_id]="map_id()"/>
 
 </div>

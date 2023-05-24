@@ -1,8 +1,10 @@
-:host ::ng-deep .version-add-btn span {
+:host ::ng-deep .version-buttons span {
     padding: 0 !important;
 }
 
-.version-add-btn {
+.version-buttons {
     height: 8px !important;
     min-height: 8px;
+    padding: 0 !important;
+    min-width: auto !important;
 }
