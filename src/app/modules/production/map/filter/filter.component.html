@@ -66,12 +66,12 @@
                     Versiya
                 </label>
 
-                <div class="flex">
+                <div class="flex" *ngIf="furniture_id$ | async">
                     <button mat-icon-button color="primary" (click)="openCreateMapModal()" class="version-buttons">
                         <mat-icon>add_box</mat-icon>
                     </button>
 
-                    <button mat-button [matMenuTriggerFor]="menu" class="version-buttons">
+                    <button mat-button [matMenuTriggerFor]="menu" *ngIf="map_id()" class="version-buttons">
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
