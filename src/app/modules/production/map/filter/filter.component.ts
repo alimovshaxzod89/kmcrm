@@ -11,6 +11,8 @@ import {setMap} from "../store/map.actions";
 import {MapState} from "../store/map.reducer";
 import {environment} from "../../../../../environments/environment";
 import {getMaps} from "../store/maps.actions";
+import {mapModalState} from "../create-map-modal/create-map-modal.component";
+import * as mapsSelect from '../store/maps.selectors';
 
 @Component({
     selector: 'map-filter',
@@ -36,22 +38,29 @@ export class FilterComponent {
 
     //map is version
     maps$: Observable<IMap[]>;
+    mapOptions$: Observable<{ id: number, version: string }[]>;
 
-    map: WritableSignal<IMap> = signal(null);
+    map_id: WritableSignal<number> = signal(null);
 
     constructor(private _furnitureService: FurnitureService,
                 private _mapService: MapService,
                 private store: Store<{ cost: MapState, maps: IMap[] }>) {
 
-        //map o'zgarsa store ni ham o'zgartirish
-        effect(() => {
-            const map = this.map()
-
-            this.store.dispatch(setMap(map))
-            this.mapIdChange.emit(map?.id)
-        }, {allowSignalWrites: true})
 
         this.maps$ = store.select('maps')
+        this.mapOptions$ = store.select(mapsSelect.selectMapOptions)
+
+        //map_id o'zgarsa store ni ham o'zgartirish
+        effect(() => {
+            const map_id = this.map_id()
+
+            this.maps$.subscribe(maps => {
+                const map = maps.find(map => map.id === map_id)
+                this.store.dispatch(setMap(map))
+            })
+
+            this.mapIdChange.emit(map_id)
+        }, {allowSignalWrites: true})
     }
 
     ngOnInit() {
@@ -80,18 +89,18 @@ export class FilterComponent {
         })
 
         this.furniture_id$.subscribe(furniture_id => {
-            this.map.set(null);
+            this.map_id.set(null);
 
             this.store.dispatch(getMaps(furniture_id))
         })
 
         this.maps$.subscribe(maps => {
             if (maps.length === 1) {
-                this.map.set(maps[0])
+                this.map_id.set(maps[0].id)
             } else if (maps.length > 1) {
                 maps.forEach(map => {
                     if (map.actual === true) {
-                        this.map.set(map)
+                        this.map_id.set(map.id)
                     }
                 })
             }
@@ -136,9 +145,13 @@ export class FilterComponent {
             this.furnitures$ = new Observable<Furniture[]>()
     }
 
-    createMapModalIsOpened: boolean = false;
+    mapModalState: mapModalState = 'closed';
 
     openCreateMapModal() {
-        this.createMapModalIsOpened = true
+        this.mapModalState = 'create';
+    }
+
+    openEditMapModal() {
+        this.mapModalState = 'update';
     }
 }

@@ -10,7 +10,6 @@ export class UnitsEffects {
     getUnits = createEffect(() => this.actions$.pipe(
         ofType(getUnits),
         exhaustMap(props => {
-                console.log('getUnits', {props})
                 if (props.map_id) {
                     return this.unitsService.getUnits(props.map_id).pipe(
                         map(response => {

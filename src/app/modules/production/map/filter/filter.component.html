@@ -66,12 +66,18 @@
                 <button mat-icon-button color="primary" *ngIf="furniture_id$ | async" (click)="openCreateMapModal()" class="version-add-btn">
                     <mat-icon>add_box</mat-icon>
                 </button>
+                <button mat-icon-button color="primary" *ngIf="furniture_id$ | async" (click)="openEditMapModal()" class="version-add-btn">
+                    <mat-icon>
+                        edit
+                    </mat-icon>
+                </button>
             </label>
             <p-dropdown
-                [options]="maps$ | async"
-                [ngModel]="map()"
-                (ngModelChange)="map.set($event)"
+                [options]="mapOptions$ | async"
+                [ngModel]="map_id()"
+                (ngModelChange)="map_id.set($event)"
                 optionLabel="version"
+                optionValue="id"
                 [style]="{'width':'100%'}"
                 inputId="filter-map_id"
                 placeholder="Tanlang"
@@ -80,6 +86,6 @@
         </div>
     </div>
 
-    <create-map-modal [(opened)]="createMapModalIsOpened" [furniture_id]="furniture_id$ | async" />
+    <create-map-modal [(state)]="mapModalState" [furniture_id]="furniture_id$ | async" [map_id]="map_id()" />
 
 </div>

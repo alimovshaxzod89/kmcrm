@@ -110,7 +110,7 @@ export const stepsReducer = createReducer(
 
         state = state.map(row => {
             const item = JSON.parse(JSON.stringify(row))
-            item.cost = cost * item.percent / 100
+            item.cost = Math.round(cost * item.percent / 100)
             return item
         })
 

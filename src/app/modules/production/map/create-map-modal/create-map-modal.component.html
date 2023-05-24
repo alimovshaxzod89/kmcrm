@@ -1,4 +1,7 @@
-<p-dialog header="Versiya qo'shish" [visible]="opened" (visibleChange)="visibleChange($event)" [modal]="true"
+<p-dialog header="Versiya qo'shish"
+          [visible]="opened()"
+          (visibleChange)="opened.set($event)"
+          [modal]="true"
           [style]="{ width: '50vw' }" [draggable]="false"
           [resizable]="false">
 
@@ -22,7 +25,7 @@
 
         <div class="flex flex-col gap-2 mt-2">
             <label for="map-description">Izoh</label>
-            <textarea pInputTextarea rows="2" [autoResize]="true" id="map-description"
+            <textarea pInputTextarea rows="2" id="map-description"
                       formControlName="description"></textarea>
         </div>
 

@@ -11,7 +11,7 @@ export const setMap = createAction("[Maps] Set Map", props<{ map_id: number, map
 export const calcMapsCost = createAction("[Maps] Calc Maps Cost", props<{ cost: number }>());
 
 export const addMap = createAction("[Maps] Add Map", (map: IMap) => ({map}));
-export const saveMap = createAction("[Maps] Save Map", props<{ map: IMap }>());
+export const saveMap = createAction("[Maps] Save Map", (map: IMap) => ({map}));
 export const savedMap = createAction("[Maps] Saved Map", props<{ map: IMap, map_id: number }>());
 export const resetMap = createAction("[Maps] Reset Map", props<{ map: IMap }>());
 export const deleteMap = createAction("[Maps] Delete Map", props<{ map: IMap }>());

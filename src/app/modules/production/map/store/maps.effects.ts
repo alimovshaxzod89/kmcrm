@@ -10,7 +10,6 @@ export class MapsEffects {
     getMaps = createEffect(() => this.actions$.pipe(
         ofType(getMaps),
         exhaustMap(props => {
-            console.log('getMaps', {props})
             if (props.furniture_id) {
                 return this.mapsService.getMaps(props.furniture_id)
                     .pipe(

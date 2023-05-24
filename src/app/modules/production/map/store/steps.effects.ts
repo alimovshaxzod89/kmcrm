@@ -10,7 +10,6 @@ export class StepsEffects {
     getSteps = createEffect(() => this.actions$.pipe(
         ofType(getSteps),
         exhaustMap(props => {
-            console.log('getSteps', {props})
             if (props.unit_ids.length) {
                 return this.stepsService.getSteps(props.unit_ids).pipe(
                     map(response => {

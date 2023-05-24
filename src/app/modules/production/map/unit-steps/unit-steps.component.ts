@@ -138,6 +138,10 @@ export class UnitStepsComponent {
         const item = {...step}
         delete item._hash
 
+        if (step._hash !== JSON.stringify(item)) {
+            console.log('changed', step._hash, JSON.stringify(item))
+        }
+
         return step._hash !== JSON.stringify(item)
     }
 
