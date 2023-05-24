@@ -70,6 +70,7 @@ export class MapComponent implements OnInit {
         this.loadStepsToStore()
 
         this.cost$.subscribe(cost => {
+            console.log('cost', cost)
             this.store.dispatch(calcStepsCost({cost: cost}))
         })
     }

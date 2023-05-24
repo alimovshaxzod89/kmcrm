@@ -63,6 +63,11 @@ export class MapModalComponent implements OnChanges {
                 this.opened.set(false)
             }
 
+            if (state === 'create') {
+                //actual default to false
+                this.form.patchValue({actual: false, description: ' '})
+            }
+
             if (state === 'update') {
                 this.setFromMap(this.map_id)
             }
@@ -90,6 +95,8 @@ export class MapModalComponent implements OnChanges {
 
             const map: IMap = JSON.parse(JSON.stringify(this.form.value)) as IMap
             map.furniture_id = this.furniture_id
+
+            console.log({map}, this.form.value)
 
             this.store.dispatch(addMap(map))
 

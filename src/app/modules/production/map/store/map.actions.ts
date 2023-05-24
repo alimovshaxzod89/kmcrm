@@ -6,7 +6,7 @@ export const addMap = createAction('[Map Component] addMap', (map: IMap) => ({ma
 
 export const savedMap = createAction('[Map Component] savedMap', (map: IMap) => ({map}))
 
-export const setMap = createAction('[Map Component] setMap', (map: IMap) => ({map}));
+export const setMap = createAction('[Map Component] setMap', (map: IMap | null) => ({map}));
 
 export const setCost = createAction('[Map Component] SetCost', props<{ cost: number }>());
 export const changeCost = createAction('[Map Component] ChangeCost', (cost: number) => ({cost}));

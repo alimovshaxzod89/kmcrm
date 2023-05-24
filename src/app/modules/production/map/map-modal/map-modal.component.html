@@ -1,4 +1,4 @@
-<p-dialog header="Versiya qo'shish"
+<p-dialog [header]="state === 'create' ? 'Versiya qo\'shish' : 'Versiyani o\'zgartirish'"
           [visible]="opened()"
           (visibleChange)="opened.set($event)"
           [modal]="true"
@@ -31,11 +31,11 @@
 
         <div class="flex flex-col gap-2 mt-2">
             <label for="map-description">Joriy</label>
-            <p-inputSwitch formControlName="actual"></p-inputSwitch>
+            <p-inputSwitch formControlName="actual" [trueValue]="true" [falseValue]="false"></p-inputSwitch>
         </div>
 
         <div class="mt-3 text-right">
-            <p-button label="Qo'shish" (click)="submit()"></p-button>
+            <p-button [label]="state === 'create' ? 'Qo\'shish' : 'O\'zgartirish'" (click)="submit()"></p-button>
         </div>
     </form>
 

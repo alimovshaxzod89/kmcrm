@@ -78,11 +78,11 @@ export class MapService {
     }
 
 
-    deleteMap(mapData: IMap): Observable<{ success: boolean, message: string }> {
+    deleteMap(map_id: number): Observable<{ success: boolean, message: string }> {
         return this._httpClient.delete<{
             success: boolean,
             message: string
-        }>(`/api/production/maps/${mapData.id}`).pipe(
+        }>(`/api/production/maps/${map_id}`).pipe(
             map(response => {
                 console.log('service.deleteMap', response)
                 return {

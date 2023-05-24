@@ -18,9 +18,9 @@ export const mapReducer = createReducer(
     initialState,
     on(setMap, (state, {map}) => {
         state = {
-            id: map?.id,
-            saved: map?.cost,
-            current: map?.cost,
+            id: map?.id ?? null,
+            saved: map?.cost ?? null,
+            current: map?.cost ?? null,
         };
 
         return state

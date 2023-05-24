@@ -67,21 +67,10 @@ export const mapsReducer = createReducer(
         return state
     }),
 
-    on(removeMap, (state, {map}) => {
-        console.log('removeMap', {map})
+    on(removeMap, (state, {map_id}) => {
+        console.log('removeMap', {map_id})
 
-        if (map.id === null) {
-            state = state.filter((row, index) => row.id !== map.id)
-        } else {
-
-            const index = state.findIndex(item => item.id === map.id)
-
-            if (index > -1) {
-                state = state.filter((row) => row.id !== map.id)
-            } else {
-                console.log('map not found', {map})
-            }
-        }
+        state = state.filter((row, index) => row.id !== map_id)
 
         return state
     }),

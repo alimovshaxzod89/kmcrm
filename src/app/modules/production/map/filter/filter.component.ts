@@ -10,7 +10,7 @@ import {Store} from "@ngrx/store";
 import {setMap} from "../store/map.actions";
 import {MapState} from "../store/map.reducer";
 import {environment} from "../../../../../environments/environment";
-import {getMaps} from "../store/maps.actions";
+import {deleteMap, getMaps} from "../store/maps.actions";
 import {mapModalState} from "../map-modal/map-modal.component";
 import * as mapsSelect from '../store/maps.selectors';
 
@@ -54,10 +54,15 @@ export class FilterComponent {
         effect(() => {
             const map_id = this.map_id()
 
-            this.maps$.subscribe(maps => {
-                const map = maps.find(map => map.id === map_id)
-                this.store.dispatch(setMap(map))
-            })
+            if (map_id) {
+                this.maps$.subscribe(maps => {
+                    console.log('maps subscribe', maps)
+                    const map = maps.find(map => map.id === map_id)
+                    this.store.dispatch(setMap(map))
+                })
+            } else {
+                this.store.dispatch(setMap(null))
+            }
 
             this.mapIdChange.emit(map_id)
         }, {allowSignalWrites: true})
@@ -96,14 +101,24 @@ export class FilterComponent {
 
         this.maps$.subscribe(maps => {
             if (maps.length === 1) {
+
                 this.map_id.set(maps[0].id)
+
             } else if (maps.length > 1) {
-                maps.forEach(map => {
-                    if (map.actual === true) {
-                        this.map_id.set(map.id)
-                    }
-                })
+
+                const map = maps.find(map => map.actual === true)
+
+                if (map) {
+                    this.map_id.set(map.id)
+                } else {
+                    this.map_id.set(maps[0].id)
+                }
+
+            } else {
+                this.map_id.set(null)
             }
+
+            console.log(this.map_id())
         })
 
         //temporary
@@ -153,5 +168,12 @@ export class FilterComponent {
 
     openEditMapModal() {
         this.mapModalState = 'update';
+    }
+
+    deleteMap() {
+        const map_id = this.map_id()
+
+        this.map_id.set(null)
+        this.store.dispatch(deleteMap(map_id))
     }
 }

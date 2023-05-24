@@ -2,7 +2,7 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, EMPTY, exhaustMap, map, mergeMap, of} from "rxjs";
 import {Injectable} from "@angular/core";
 import {MapService} from "../map.service";
-import {addMap, deleteMap, getMaps, removeMap, savedMap, saveMap, selectMap, setMaps} from "./maps.actions";
+import {addMap, deleteMap, getMaps, removeMap, savedMap, saveMap, setMaps} from "./maps.actions";
 
 @Injectable()
 export class MapsEffects {
@@ -81,11 +81,11 @@ export class MapsEffects {
     deleteMap = createEffect(() => this.actions$.pipe(
         ofType(deleteMap),
         mergeMap(props => {
-                return this.mapsService.deleteMap(props.map)
+                return this.mapsService.deleteMap(props.map_id)
                     .pipe(
                         map(response => {
                             if (response.success) {
-                                return removeMap({map: props.map})
+                                return removeMap({map_id: props.map_id})
                             } else {
                                 alert(response.message)
                                 console.log(response.message)
