@@ -70,7 +70,6 @@ export class MapComponent implements OnInit {
         this.loadStepsToStore()
 
         this.cost$.subscribe(cost => {
-            console.log('cost', cost)
             this.store.dispatch(calcStepsCost({cost: cost}))
         })
     }
@@ -104,7 +103,7 @@ export class MapComponent implements OnInit {
     }
 
     save() {
-        console.log('saving')
+        console.info('saving')
 
         let map_id;
         this.map_id$.subscribe(value => map_id = value)
@@ -120,7 +119,6 @@ export class MapComponent implements OnInit {
             steps = value
         })
         steps.forEach(step => {
-            console.log('saveStep', step)
             this.store.dispatch(saveStep({step}))
         })
 

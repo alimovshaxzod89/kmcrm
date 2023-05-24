@@ -77,7 +77,6 @@ export class FilterMuiComponent implements OnInit {
 
         //category_id changes
         this.category_id$.subscribe(() => {
-            console.log('category_id changes')
             this.loadFurnitures()
         })
 

@@ -24,14 +24,13 @@ export const mapsReducer = createReducer(
                 return rowIndex === index ? {...map} : row
             })
         } else {
-            console.log('map not found', {map_id}, {map})
+            console.error('map not found', {map_id}, {map})
         }
         return state
     }),
 
     on(resetMap, (state, {map}) => {
 
-        console.log('resetMap', {map})
         const index = state.findIndex(item => item.id === map.id)
 
         if (index > -1) {
@@ -41,7 +40,7 @@ export const mapsReducer = createReducer(
                 return rowIndex === index ? item : row
             })
         } else {
-            console.log('map not found', {map})
+            console.error('map not found', {map})
         }
         return state
     }),
@@ -68,7 +67,6 @@ export const mapsReducer = createReducer(
     }),
 
     on(removeMap, (state, {map_id}) => {
-        console.log('removeMap', {map_id})
 
         state = state.filter((row, index) => row.id !== map_id)
 

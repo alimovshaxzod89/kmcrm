@@ -40,7 +40,7 @@ export class UnitStepsComponent {
             field, data, index
         } = event
 
-        console.log('onEditInit', {field, data, index})
+        console.info('onEditInit', {field, data, index})
 
         const step_id = this.getStepIdByIndex(index)
         if (field) {
@@ -56,7 +56,7 @@ export class UnitStepsComponent {
         let {
             field, data, index
         } = event
-        console.log('onEditCancel', {field, data, index})
+        console.info('onEditCancel', {field, data, index})
 
         const step = JSON.parse(JSON.stringify(this.getStepByIndex(index)))
 

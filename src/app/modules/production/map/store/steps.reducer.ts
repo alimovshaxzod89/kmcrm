@@ -25,7 +25,6 @@ export const stepsReducer = createReducer(
         }
 
         const step: IStep = JSON.parse(JSON.stringify(emptyStep))
-        console.log('addStep', {step, emptyStep})
         step.unit_id = unit_id
         step.sorder = rowIndex + 1
         step._hash = JSON.stringify({})
@@ -35,7 +34,6 @@ export const stepsReducer = createReducer(
 
     on(setStep, (state, {step_id, step}) => {
 
-        console.log('setStep', {step_id}, {step})
         const index = state.findIndex(step => step.id === step_id)
 
         if (index > -1) {
@@ -43,14 +41,13 @@ export const stepsReducer = createReducer(
                 return rowIndex === index ? {...step} : row
             })
         } else {
-            console.log('step not found', {step_id}, {step})
+            console.error('step not found', {step_id}, {step})
         }
         return state
     }),
 
     on(resetStep, (state, {step}) => {
 
-        console.log('resetStep', {step})
         const index = state.findIndex(item => item.id === step.id)
 
         if (index > -1) {
@@ -60,7 +57,7 @@ export const stepsReducer = createReducer(
                 return rowIndex === index ? item : row
             })
         } else {
-            console.log('step not found', {step})
+            console.error('step not found', {step})
         }
         return state
     }),
@@ -87,7 +84,6 @@ export const stepsReducer = createReducer(
     }),
 
     on(removeStep, (state, {step}) => {
-        console.log('removeStep', {step})
 
         if (step.id === null) {
             state = state.filter((row, index) => row.id !== step.id)
@@ -98,7 +94,7 @@ export const stepsReducer = createReducer(
             if (index > -1) {
                 state = state.filter((row) => row.id !== step.id)
             } else {
-                console.log('step not found', {step})
+                console.error('step not found', {step})
             }
         }
 

@@ -62,7 +62,7 @@ export class StepsComponent implements OnInit {
     getTipName(tip_id: number): string {
 
         if (typeof this.tips !== 'object' || !this.tips.length) {
-            console.log('no tips', this.tips)
+            console.error('no tips', this.tips)
             return ''
         }
 

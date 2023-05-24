@@ -26,7 +26,6 @@ export const unitsReducer = createReducer(
         }
 
         const unit: IUnit = JSON.parse(JSON.stringify(emptyUnit))
-        console.log('addUnit', {unit, emptyUnit})
         unit.map_id = map_id
         unit._hash = JSON.stringify({})
 
@@ -35,7 +34,6 @@ export const unitsReducer = createReducer(
 
     on(setUnit, (state, {unit_id, unit}) => {
 
-        console.log('setUnit', {unit_id}, {unit})
         const index = state.findIndex(unit => unit.id === unit_id)
 
         if (index > -1) {
@@ -43,7 +41,7 @@ export const unitsReducer = createReducer(
                 return rowIndex === index ? {...unit} : row
             })
         } else {
-            console.log('unit not found', {unit_id}, {unit})
+            console.error('unit not found', {unit_id}, {unit})
         }
         return state
     }),
@@ -69,7 +67,6 @@ export const unitsReducer = createReducer(
     }),
 
     on(removeUnit, (state, {unit}) => {
-        console.log('removeUnit', {unit})
 
         if (unit.id === null) {
             state = state.filter((row, index) => row.id !== unit.id)
@@ -80,7 +77,7 @@ export const unitsReducer = createReducer(
             if (index > -1) {
                 state = state.filter((row) => row.id !== unit.id)
             } else {
-                console.log('unit not found', {unit})
+                console.error('unit not found', {unit})
             }
         }
 

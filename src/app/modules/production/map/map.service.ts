@@ -84,7 +84,6 @@ export class MapService {
             message: string
         }>(`/api/production/maps/${map_id}`).pipe(
             map(response => {
-                console.log('service.deleteMap', response)
                 return {
                     success: response.success,
                     message: response.message

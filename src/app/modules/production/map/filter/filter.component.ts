@@ -56,7 +56,6 @@ export class FilterComponent {
 
             if (map_id) {
                 this.maps$.subscribe(maps => {
-                    console.log('maps subscribe', maps)
                     const map = maps.find(map => map.id === map_id)
                     this.store.dispatch(setMap(map))
                 })
@@ -117,8 +116,6 @@ export class FilterComponent {
             } else {
                 this.map_id.set(null)
             }
-
-            console.log(this.map_id())
         })
 
         //temporary
