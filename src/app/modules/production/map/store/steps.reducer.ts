@@ -1,5 +1,15 @@
 import {createReducer, on} from "@ngrx/store";
-import {addStep, calcStepsCost, removeStep, resetStep, savedStep, setStep, setSteps} from "./steps.actions";
+import {
+    addStep,
+    calcStepsCost,
+    upStep,
+    downStep,
+    removeStep,
+    resetStep,
+    savedStep,
+    setStep,
+    setSteps
+} from "./steps.actions";
 import {emptyStep, IStep} from "../steps/step.type";
 
 export const initialState = []
@@ -42,6 +52,48 @@ export const stepsReducer = createReducer(
             })
         } else {
             console.error('step not found', {step_id}, {step})
+        }
+        return state
+    }),
+
+    on(upStep, (state, {step}) => {
+
+        const index = state.findIndex(item => item.id === step.id)
+        const prevSorder = step.sorder - 1
+
+        if (index > -1) {
+            state = state.map((row, rowIndex) => {
+                const item = JSON.parse(JSON.stringify(row))
+                if (rowIndex === index) {
+                    item.sorder = prevSorder
+                } else if (row.sorder === prevSorder && row.unit_id == step.unit_id) {
+                    item.sorder = step.sorder
+                }
+                return item
+            })
+        } else {
+            console.error('step not found', {step})
+        }
+        return state
+    }),
+
+    on(downStep, (state, {step}) => {
+
+        const index = state.findIndex(item => item.id === step.id)
+        const nextSorder = step.sorder + 1
+
+        if (index > -1) {
+            state = state.map((row, rowIndex) => {
+                const item = JSON.parse(JSON.stringify(row))
+                if (rowIndex === index) {
+                    item.sorder = nextSorder
+                } else if (row.sorder === nextSorder && row.unit_id == step.unit_id) {
+                    item.sorder = step.sorder
+                }
+                return item
+            })
+        } else {
+            console.error('step not found', {step})
         }
         return state
     }),

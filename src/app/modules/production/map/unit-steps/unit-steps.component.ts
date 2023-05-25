@@ -3,7 +3,7 @@ import {IStep} from "../steps/step.type";
 import {ISeh} from "../../../seh/seh.types";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {addStep, deleteStep, removeStep, resetStep, saveStep, setStep} from "../store/steps.actions";
+import {addStep, deleteStep, downStep, removeStep, resetStep, saveStep, setStep, upStep} from "../store/steps.actions";
 import {Table} from "primeng/table";
 import {MapState} from "../store/map.reducer";
 
@@ -165,5 +165,13 @@ export class UnitStepsComponent {
         if (confirm('Вы уверены?')) {
             this.store.dispatch(deleteStep({step}))
         }
+    }
+
+    up(step: IStep) {
+        this.store.dispatch(upStep({step}))
+    }
+
+    down(step: IStep) {
+        this.store.dispatch(downStep({step}))
     }
 }

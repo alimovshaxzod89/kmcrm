@@ -7,6 +7,9 @@ export const setSteps = createAction("[Steps] Set Steps", props<{ steps: IStep[]
 export const setStep = createAction("[Steps] Set Step", props<{ step_id: number, step: IStep }>());
 export const calcStepsCost = createAction("[Steps] Calc Steps Cost", props<{ cost: number }>());
 
+export const upStep = createAction("[Steps] Up Step", props<{ step: IStep }>());
+export const downStep = createAction("[Steps] Down Step", props<{ step: IStep }>());
+
 export const addStep = createAction("[Steps] Add Step", props<{ unit_id: number, rowIndex: number }>());
 export const saveStep = createAction("[Steps] Save Step", props<{ step: IStep }>());
 export const savedStep = createAction("[Steps] Saved Step", props<{ step: IStep, step_id: number }>());
