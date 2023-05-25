@@ -58,7 +58,6 @@ export class FilterMuiComponent implements OnInit {
 
         this.komplekt_search.valueChanges.subscribe(
             value => {
-                console.log(value)
                 this.filterKomplekts()
             }
         )
@@ -123,7 +122,6 @@ export class FilterMuiComponent implements OnInit {
 
     loadFurnitures() {
         if (this.category_id$.value || this.komplekt_id$.value) {
-            console.log(this.category_id$.value, this.komplekt_id$.value)
             this.furnitures$ = this._furnitureService.getFurnitures(this.category_id$.value, this.komplekt_id$.value);
         } else
             this.furnitures$ = new Observable<Furniture[]>()

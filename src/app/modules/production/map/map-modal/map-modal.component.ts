@@ -96,8 +96,6 @@ export class MapModalComponent implements OnChanges {
             const map: IMap = JSON.parse(JSON.stringify(this.form.value)) as IMap
             map.furniture_id = this.furniture_id
 
-            console.log({map}, this.form.value)
-
             this.store.dispatch(addMap(map))
 
         } else if (this.state === 'update') {

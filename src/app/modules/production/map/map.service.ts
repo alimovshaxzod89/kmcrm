@@ -65,7 +65,6 @@ export class MapService {
     }
 
     addMap(mapData: IMap): Observable<{ success: boolean, message: string, data?: IMap }> {
-        console.log({mapData})
         return this._httpClient.post<{
             success: boolean,
             message: string,
