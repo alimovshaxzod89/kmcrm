@@ -25,6 +25,10 @@ import {MapEffects} from "./modules/production/map/store/map.effects";
 import {MapsEffects} from "./modules/production/map/store/maps.effects";
 import {StepsEffects} from "./modules/production/map/store/steps.effects";
 import {UnitsEffects} from "./modules/production/map/store/units.effects";
+import {todoReducer} from "./modules/production/tablo/store/todo.reducer";
+import {TodoEffects} from "./modules/production/tablo/store/todo.effects";
+import {doneReducer} from "./modules/production/tablo/store/doneReducer";
+import {DoneEffects} from "./modules/production/tablo/store/done.effects";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -53,8 +57,8 @@ const routerConfig: ExtraOptions = {
 
         FormsModule,
 
-        StoreModule.forRoot({cost: mapReducer, maps: mapsReducer, steps: stepsReducer, units: unitsReducer}),
-        EffectsModule.forRoot(MapEffects, StepsEffects, UnitsEffects, MapsEffects),
+        StoreModule.forRoot({cost: mapReducer, maps: mapsReducer, steps: stepsReducer, units: unitsReducer, todos: todoReducer, dones: doneReducer}),
+        EffectsModule.forRoot(MapEffects, StepsEffects, UnitsEffects, MapsEffects, TodoEffects, DoneEffects),
 
     ],
     bootstrap: [

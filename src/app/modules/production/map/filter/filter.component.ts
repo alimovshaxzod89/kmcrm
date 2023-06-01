@@ -1,6 +1,6 @@
-import {Component, effect, EventEmitter, Output, signal, WritableSignal} from '@angular/core';
-import {BehaviorSubject, Observable, take} from "rxjs";
-import {Category, Furniture, Komplekt} from "../../../furniture/furniture.types";
+import {Component, effect, EventEmitter, Input, OnChanges, Output, signal, WritableSignal} from '@angular/core';
+import {BehaviorSubject, map, Observable, take} from "rxjs";
+import {Category, IFurniture, Komplekt} from "../../../furniture/furniture.types";
 import {IMap} from "../map.types";
 
 import {FurnitureService} from "../../../furniture/furniture.service";
@@ -19,8 +19,9 @@ import * as mapsSelect from '../store/maps.selectors';
     templateUrl: './filter.component.html',
     styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent {
+export class FilterComponent implements OnChanges {
 
+    @Input() mapId: number;
     @Output() mapIdChange = new EventEmitter<number>();
 
     //category
@@ -33,7 +34,7 @@ export class FilterComponent {
     komplekt_id$: BehaviorSubject<number> = new BehaviorSubject(null);
 
     //furniture
-    furnitures$: Observable<Furniture[]>;
+    furnitures$: Observable<IFurniture[]>;
     furniture_id$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
 
     //map is version
@@ -41,6 +42,7 @@ export class FilterComponent {
     mapOptions$: Observable<{ id: number, version: string }[]>;
 
     map_id: WritableSignal<number> = signal(null);
+    map: WritableSignal<IMap> = signal(null);
 
     constructor(private _furnitureService: FurnitureService,
                 private _mapService: MapService,
@@ -63,7 +65,9 @@ export class FilterComponent {
                 this.store.dispatch(setMap(null))
             }
 
-            this.mapIdChange.emit(map_id)
+            if (map_id !== this.mapId)
+                this.mapIdChange.emit(map_id)
+
         }, {allowSignalWrites: true})
     }
 
@@ -118,20 +122,14 @@ export class FilterComponent {
             }
         })
 
-        //temporary
-        if (!environment.production) {
-            setTimeout(() => {
-                this.category_id$.next(1);
-            }, 500)
+        this.filterByDefault()
+    }
 
-            setTimeout(() => {
-                this.komplekt_id$.next(3);
-            }, 1500)
+    ngOnChanges() {
+        console.log('ngOnChanges', this.mapId)
 
-            setTimeout(() => {
-                this.furniture_id$.next(12);
-            }, 2000)
-        }
+        if (this.mapId !== this.map_id())
+            this.map_id.set(this.mapId)
     }
 
     log(value) {
@@ -154,7 +152,7 @@ export class FilterComponent {
         if (this.category_id$.value || this.komplekt_id$.value) {
             this.furnitures$ = this._furnitureService.getFurnitures(this.category_id$.value, this.komplekt_id$.value);
         } else
-            this.furnitures$ = new Observable<Furniture[]>()
+            this.furnitures$ = new Observable<IFurniture[]>()
     }
 
     mapModalState: mapModalState = 'closed';
@@ -172,5 +170,45 @@ export class FilterComponent {
 
         this.map_id.set(null)
         this.store.dispatch(deleteMap(map_id))
+    }
+
+    filterByDefault() {
+        if (this.mapId) {
+            console.log('this.mapId', this.mapId)
+
+            this._mapService.getMap(this.mapId).pipe(
+                take(1),
+                map(response => response.data),
+            ).subscribe((map: IMap) => {
+                console.log('map', map)
+
+                this.simulateFilter(map.furniture.category_id, map.furniture.komplekt_id, map.furniture_id, map.id);
+            })
+
+        } else {
+
+            //temporary
+            if (!environment.production) {
+                this.simulateFilter(1, 3, 12);
+            }
+        }
+    }
+
+    simulateFilter(category_id: number, komplekt_id: number, furniture_id: number, map_id?: number) {
+
+        this.category_id$.next(category_id);
+
+        setTimeout(() => {
+            this.komplekt_id$.next(komplekt_id);
+        }, 1000)
+
+        setTimeout(() => {
+            this.furniture_id$.next(furniture_id);
+        }, 2000)
+
+        if (map_id)
+            setTimeout(() => {
+                this.map_id.set(map_id)
+            }, 3000)
     }
 }

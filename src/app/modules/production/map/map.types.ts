@@ -1,3 +1,5 @@
+import {IFurniture} from "../../furniture/furniture.types";
+
 export interface IMap {
     id: number,
     furniture_id?: number,
@@ -9,6 +11,10 @@ export interface IMap {
     is_custom?: boolean,
 
     _hash?: string
+
+    map_id?: number,
+    doc_no?: string,
+    furniture?: IFurniture
 }
 
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, Observable, tap} from "rxjs";
-import {Category, Furniture, Komplekt} from "../../../furniture/furniture.types";
+import {Category, IFurniture, Komplekt} from "../../../furniture/furniture.types";
 import {FurnitureService} from "../../../furniture/furniture.service";
 import {FormControl} from "@angular/forms";
 
@@ -20,16 +20,16 @@ export class FilterMuiComponent implements OnInit {
     komplekt_id$: BehaviorSubject<number> = new BehaviorSubject(null);
 
     //furniture
-    furnitures$: Observable<Furniture[]>;
-    furniture_search = new FormControl<string | Furniture>('');
-    furnitureCtrl = new FormControl<Furniture>(null);
-    _filteredFurnitures: BehaviorSubject<Furniture[]> = new BehaviorSubject(null);
+    furnitures$: Observable<IFurniture[]>;
+    furniture_search = new FormControl<string | IFurniture>('');
+    furnitureCtrl = new FormControl<IFurniture>(null);
+    _filteredFurnitures: BehaviorSubject<IFurniture[]> = new BehaviorSubject(null);
 
     get filteredKomplekts$(): Observable<Komplekt[]> {
         return this._filteredKomplekts.asObservable()
     }
 
-    get filteredFurnitures$(): Observable<Furniture[]> {
+    get filteredFurnitures$(): Observable<IFurniture[]> {
         return this._filteredFurnitures.asObservable()
     }
 
@@ -124,7 +124,7 @@ export class FilterMuiComponent implements OnInit {
         if (this.category_id$.value || this.komplekt_id$.value) {
             this.furnitures$ = this._furnitureService.getFurnitures(this.category_id$.value, this.komplekt_id$.value);
         } else
-            this.furnitures$ = new Observable<Furniture[]>()
+            this.furnitures$ = new Observable<IFurniture[]>()
     }
 
     komplekt_search = new FormControl<string | Komplekt>('');

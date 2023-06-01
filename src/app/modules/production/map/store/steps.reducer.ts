@@ -12,7 +12,7 @@ import {
 } from "./steps.actions";
 import {emptyStep, IStep} from "../steps/step.type";
 
-export const initialState = []
+export const initialState: IStep[] = []
 
 export const stepsReducer = createReducer(
     initialState,

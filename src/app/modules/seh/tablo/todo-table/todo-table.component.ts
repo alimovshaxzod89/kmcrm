@@ -23,8 +23,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 @Component({
   selector: 'todo-table',
-  templateUrl: './todo-table.component.html',
-  styleUrls: ['./todo-table.component.scss']
+  templateUrl: './todo-table.component.html'
 })
 export class TodoTableComponent {
     displayedColumns: string[] = ['position', 'name', 'furniture', 'summa', 'action'];

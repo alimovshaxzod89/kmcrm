@@ -21,7 +21,7 @@
 
             <div class="grid min-[1200px]:grid-cols-3 mt-2 gap-6">
 
-                <map-filter class="grow" (mapIdChange)="map_id$.next($event)"></map-filter>
+                <map-filter class="grow" [mapId]="map_id()" (mapIdChange)="map_id.set($event)"></map-filter>
 
                 <div class="max-[1199px]:hidden"></div>
 
@@ -63,7 +63,7 @@
             <div class="grid grid-cols-8 mt-6 gap-6">
 
                 <div class="lg:col-span-3 md:col-span-6 sm:col-span-8">
-                    <map-units [tips]="tips" [map_id]="map_id$ | async"></map-units>
+                    <map-units [tips]="tips" [map_id]="map_id()"></map-units>
                 </div>
 
                 <div class="lg:col-span-5 col-span-8">

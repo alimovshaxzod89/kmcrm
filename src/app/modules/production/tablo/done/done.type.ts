@@ -1,0 +1,30 @@
+// "id": 96207,
+//     "production_id": 1616,
+//     "unit_step_id": 1303,
+//     "duration": 31122,
+//     "cost": 12843,
+//     "start": "2023-01-02T22:51:57.000000Z",
+//     "started": "2022-11-25T10:58:41.000000Z",
+//     "finish": "2023-05-13T07:01:44.000000Z",
+//     "finished": null,
+//     "sorder": 1,
+//     "amount": 3,
+//     "paid": false,
+//     "doc_no": "007TT"
+
+export interface IDone {
+    id: number,
+    production_id: number,
+    unit_step_id: number,
+    duration: number,
+    cost: number,
+    start: string,
+    started: string,
+    finish: string,
+    finished: string,
+    sorder: number,
+    amount: number,
+    paid: boolean,
+
+    doc_no: string,
+}

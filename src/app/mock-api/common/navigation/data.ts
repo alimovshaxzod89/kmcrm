@@ -12,11 +12,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
-        id   : 'seh',
+        id   : 'tablo',
         title: 'Tablo',
         type : 'basic',
         icon : 'heroicons_outline:desktop-computer',
-        link : '/seh'
+        link : '/production/tablo'
     },
     {
         id   : 'furniture-map',

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, map, Observable, tap} from "rxjs";
-import {Category, Furniture, Komplekt} from "./furniture.types";
+import {Category, IFurniture, Komplekt} from "./furniture.types";
 import {SearchField} from "../../api/query.types";
 import {HttpClient} from "@angular/common/http";
 
@@ -13,7 +13,7 @@ export class FurnitureService {
 
     private _komplekts: BehaviorSubject<Komplekt[] | null> = new BehaviorSubject(null);
 
-    private _furnitures: BehaviorSubject<Furniture[] | null> = new BehaviorSubject(null);
+    private _furnitures: BehaviorSubject<IFurniture[] | null> = new BehaviorSubject(null);
 
     constructor(
         private _httpClient: HttpClient
@@ -63,7 +63,7 @@ export class FurnitureService {
     /**
      * Get furnitures
      */
-    getFurnitures(category_id: number = null, komplekt_id: number = null): Observable<Furniture[]> {
+    getFurnitures(category_id: number = null, komplekt_id: number = null): Observable<IFurniture[]> {
 
         let url: string = '/api/furniture/furnitures'
 
@@ -85,7 +85,7 @@ export class FurnitureService {
         if (search.length)
             url += `?search=${search}`
 
-        return this._httpClient.get<{ data: Furniture[] }>(url).pipe(
+        return this._httpClient.get<{ data: IFurniture[] }>(url).pipe(
             map(response => {
                 return response.data
             })

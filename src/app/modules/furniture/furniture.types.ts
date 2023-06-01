@@ -9,8 +9,11 @@ export interface Komplekt {
     name: string;
 }
 
-export interface Furniture {
+export interface IFurniture {
     id: number;
     category_id: number;
     name: string;
+
+    fullName?: string;
+    komplekt_id?: number;
 }

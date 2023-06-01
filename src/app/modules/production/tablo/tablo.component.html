@@ -1,0 +1,28 @@
+<div class="flex flex-col flex-auto w-full">
+
+    <div class="flex flex-wrap w-full max-w-screen-2xl mx-auto lg:p-8 md:p-3">
+
+        <!-- Title and action buttons -->
+        <div class="flex items-center justify-between w-full">
+            <div>
+                <h2 class="text-2xl font-semibold tracking-tight leading-8">Цех: Сборка 2</h2>
+                <!--                <div class="font-medium tracking-tight text-secondary"></div>-->
+            </div>
+            <div class="flex items-center ml-6 text-2xl">
+                Bugungi summa:
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div class="w-full lg:mt-8 md:mt-3">
+
+            <div class="flex gap-4">
+
+                <tablo-todo class="flex-1" [seh_id]="seh_id" [date]="date" />
+
+                <tablo-done class="flex-1" [seh_id]="seh_id" [date]="date" />
+            </div>
+
+        </div>
+    </div>
+</div>

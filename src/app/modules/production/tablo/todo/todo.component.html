@@ -1,0 +1,40 @@
+<h1 class="text-xl">Bajarilishi kerak</h1>
+
+<p-table [value]="rows$ |async"
+         class="table-bordered table-small"
+         [styleClass]="'p-datatable-sm'">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>№</th>
+            <th class="text-center">Kod</th>
+            <th class="text-center">Mebel</th>
+            <th class="text-center">Soni</th>
+            <th class="text-right">Summa</th>
+            <th>Amal</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+        <tr>
+            <td>{{rowIndex + 1}}</td>
+
+            <td (click)="info(row)">
+                {{row.doc_no}}
+            </td>
+            <td class="text-center">
+                {{row.furniture}}
+            </td>
+            <td class="text-center">{{row.amount}}</td>
+            <td class="text-right">{{row.amount * row.cost | number }}</td>
+            <td>
+                <button mat-icon-button (click)="done(row)" color="primary" *ngIf="row.started !== null"
+                        aria-label="Example icon button with a vertical three dot icon">
+                    <mat-icon>done_outline</mat-icon>
+                </button>
+                <button mat-icon-button (click)="receive(row)" color="warn" *ngIf="row.started === null"
+                        aria-label="Example icon button with a vertical three dot icon">
+                    <mat-icon>add_task</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

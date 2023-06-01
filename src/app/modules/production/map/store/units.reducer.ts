@@ -1,9 +1,8 @@
 import {createReducer, on} from "@ngrx/store";
-import {removeUnit, savedUnit, setUnit, setUnits} from "./units.actions";
-import {addUnit} from "./units.actions";
+import {addUnit, removeUnit, savedUnit, setUnit, setUnits} from "./units.actions";
 import {emptyUnit, IUnit} from "../units/unit.type";
 
-export const initialState = []
+export const initialState: IUnit[] = []
 
 export const unitsReducer = createReducer(
     initialState,

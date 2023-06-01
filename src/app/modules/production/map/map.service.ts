@@ -15,7 +15,7 @@ export class MapService {
     /**
      * Get furniture maps
      */
-    getMaps(furniture_id: number = null): Observable<{success: boolean, message: string, data: IMap[]}> {
+    getMaps(furniture_id: number = null): Observable<{ success: boolean, message: string, data: IMap[] }> {
 
         let url: string = '/api/production/maps'
 
@@ -31,7 +31,23 @@ export class MapService {
         if (search.length)
             url += `?search=${search}`
 
-        return this._httpClient.get<{success: boolean, message: string, data: IMap[]}>(url).pipe(
+        return this._httpClient.get<{ success: boolean, message: string, data: IMap[] }>(url).pipe(
+            map(response => {
+                return response
+            })
+        );
+    }
+
+    /**
+     * Get furniture maps
+     */
+    getMap(id: number): Observable<{ success: boolean, message: string, data: IMap }> {
+
+        return this._httpClient.get<{
+            success: boolean,
+            message: string,
+            data: IMap
+        }>(`/api/production/maps/${id}`).pipe(
             map(response => {
                 return response
             })

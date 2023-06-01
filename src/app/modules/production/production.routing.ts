@@ -6,12 +6,20 @@ import {ReadyInSummaryComponent} from './reports/ready-in-summary/ready-in-summa
 import {SehStatusComponent} from "./reports/seh-status/seh-status.component";
 import {SehYuklanmaComponent} from "./reports/seh-yuklanma/seh-yuklanma.component";
 import {SehEarnMonthComponent} from "./reports/seh-earn-month/seh-earn-month.component";
+import {TabloComponent} from "./tablo/tablo.component";
 
 export const productionRoutes: Route[] = [
     {
         path: '',
         pathMatch: 'full',
         redirectTo: 'map'
+    },
+    {
+        path: 'tablo',
+        component: TabloComponent,
+        resolve: {
+
+        }
     },
     {
         path: 'map',
@@ -22,6 +30,32 @@ export const productionRoutes: Route[] = [
             tips: TipsResolver,
             sehs: SehsResolver,
         }
+    },
+    {
+        path: 'map/:id',
+        component: MapComponent,
+        resolve: {
+            categories: CategoriesResolver,
+            komplekts: KomplektsResolver,
+            tips: TipsResolver,
+            sehs: SehsResolver,
+        }
+    },
+    {
+        path: 'report/ready-in-summary',
+        component: ReadyInSummaryComponent,
+    },
+    {
+        path: 'report/seh-status',
+        component: SehStatusComponent,
+    },
+    {
+        path: 'report/seh-yuklanma',
+        component: SehYuklanmaComponent,
+    },
+    {
+        path: 'report/seh-earn-month',
+        component: SehEarnMonthComponent,
         // children : [
         //     {
         //         path     : '',
@@ -53,21 +87,5 @@ export const productionRoutes: Route[] = [
                 ]
             }
         ]*/
-    },
-    {
-        path: 'report/ready-in-summary',
-        component: ReadyInSummaryComponent,
-    },
-    {
-        path: 'report/seh-status',
-        component: SehStatusComponent,
-    },
-    {
-        path: 'report/seh-yuklanma',
-        component: SehYuklanmaComponent,
-    },
-    {
-        path: 'report/seh-earn-month',
-        component: SehEarnMonthComponent,
     }
 ];

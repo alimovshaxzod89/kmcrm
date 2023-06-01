@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, effect, OnInit, signal, WritableSignal} from '@angular/core';
 import {FurnitureService} from "../../furniture/furniture.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {IUnit} from "./units/unit.type";
 import {UnitService} from "./units/unit.service";
 import {ISeh} from "../../seh/seh.types";
@@ -26,8 +26,7 @@ import {ITip} from "../types/tip.type";
 })
 export class MapComponent implements OnInit {
 
-    isLoading: boolean = false;
-    map_id$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+    map_id: WritableSignal<number | null> = signal<number | null>(null);
     unit_id: number = null;
 
     sehs: ISeh[];
@@ -56,27 +55,26 @@ export class MapComponent implements OnInit {
         this.steps$ = store.select('steps');
 
         this.saved$ = store.select(mapSelects.selectSaved);
-    }
-
-    ngOnInit() {
 
         this.tips = this.route.snapshot.data.tips
         this.sehs = this.route.snapshot.data.sehs
+        const map_id = +this.route.snapshot.paramMap.get('id')
+        if (map_id) {
+            this.map_id.set(map_id)
+        }
 
-        // this.isLoading = true;
+        effect(() => {
+            const map_id = this.map_id();
+            this.store.dispatch(getUnits({map_id}))
+        }, {allowSignalWrites: true})
+    }
 
-        this.loadUnitsToStore()
+    ngOnInit() {
 
         this.loadStepsToStore()
 
         this.cost$.subscribe(cost => {
             this.store.dispatch(calcStepsCost({cost: cost}))
-        })
-    }
-
-    private loadUnitsToStore() {
-        this.map_id$.subscribe(map_id => {
-            this.store.dispatch(getUnits({map_id}))
         })
     }
 
@@ -105,13 +103,13 @@ export class MapComponent implements OnInit {
     save() {
         console.info('saving')
 
-        let map_id;
-        this.map_id$.subscribe(value => map_id = value)
+        const map_id = this.map_id();
+
         let cost;
         this.cost$.subscribe(value => cost = value)
 
         //save cost
-        this.store.dispatch(saveCost({map_id: map_id, cost: cost}))
+        this.store.dispatch(saveCost({map_id, cost}))
 
         //save steps
         let steps = [];
