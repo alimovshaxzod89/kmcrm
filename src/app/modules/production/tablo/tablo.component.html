@@ -9,7 +9,7 @@
                 <!--                <div class="font-medium tracking-tight text-secondary"></div>-->
             </div>
             <div class="flex items-center ml-6 text-2xl">
-                Bugungi summa:
+                Бугунги сумма: {{ earning$ | async | currency:'UZS':'symbol':'1.0-0' }}
             </div>
         </div>
 
@@ -18,9 +18,9 @@
 
             <div class="flex gap-4">
 
-                <tablo-todo class="flex-1" [seh_id]="seh_id" [date]="date" />
+                <tablo-todo class="flex-1" [seh_id]="seh_id" [date]="date"/>
 
-                <tablo-done class="flex-1" [seh_id]="seh_id" [date]="date" />
+                <tablo-done class="flex-1" [seh_id]="seh_id" [date]="date"/>
             </div>
 
         </div>

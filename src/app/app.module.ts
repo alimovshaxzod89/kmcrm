@@ -27,8 +27,10 @@ import {StepsEffects} from "./modules/production/map/store/steps.effects";
 import {UnitsEffects} from "./modules/production/map/store/units.effects";
 import {todoReducer} from "./modules/production/tablo/store/todo.reducer";
 import {TodoEffects} from "./modules/production/tablo/store/todo.effects";
-import {doneReducer} from "./modules/production/tablo/store/doneReducer";
+import {doneReducer} from "./modules/production/tablo/store/done.reducer";
 import {DoneEffects} from "./modules/production/tablo/store/done.effects";
+import {earningReducer} from "./modules/production/tablo/store/earning.reducer";
+import {EarningEffects} from "./modules/production/tablo/store/earning.effects";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -57,8 +59,8 @@ const routerConfig: ExtraOptions = {
 
         FormsModule,
 
-        StoreModule.forRoot({cost: mapReducer, maps: mapsReducer, steps: stepsReducer, units: unitsReducer, todos: todoReducer, dones: doneReducer}),
-        EffectsModule.forRoot(MapEffects, StepsEffects, UnitsEffects, MapsEffects, TodoEffects, DoneEffects),
+        StoreModule.forRoot({cost: mapReducer, maps: mapsReducer, steps: stepsReducer, units: unitsReducer, todos: todoReducer, dones: doneReducer, earning: earningReducer}),
+        EffectsModule.forRoot(MapEffects, StepsEffects, UnitsEffects, MapsEffects, TodoEffects, DoneEffects, EarningEffects),
 
     ],
     bootstrap: [

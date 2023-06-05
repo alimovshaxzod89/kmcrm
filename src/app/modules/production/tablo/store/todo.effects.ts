@@ -56,6 +56,7 @@ export class TodoEffects {
     doneTodo = createEffect(() => this.actions$.pipe(
         ofType(doneTodo),
         mergeMap(props => {
+            console.log('doneTodo', props)
             return this.todoService.done(props.id, props.seh_id).pipe(
                 switchMap(response => {
                         if (response.success) {

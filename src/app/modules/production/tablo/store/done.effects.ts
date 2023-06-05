@@ -30,6 +30,7 @@ export class DoneEffects {
     undone = createEffect(() => this.actions$.pipe(
         ofType(unDone),
         mergeMap(props => {
+            console.log('undone', props)
             return this._doneService.undone(props.id, props.seh_id).pipe(
                 switchMap(response => {
                         if (response.success) {
