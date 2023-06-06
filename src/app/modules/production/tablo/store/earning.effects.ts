@@ -18,9 +18,11 @@ export class EarningEffects {
                         }
                     ),
                     catchError(err => {
-                        console.error({err})
                         const errMsg = err?.error?.message
-                        alert('Ошибка: ' + errMsg)
+
+                        if (err.status !== 401)
+                            alert('Ошибка: ' + errMsg)
+
                         return EMPTY
                     })
                 )
