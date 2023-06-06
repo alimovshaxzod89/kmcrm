@@ -33,7 +33,7 @@ export class UserComponent implements OnInit, OnDestroy
     )
     {
         this._userService.get().subscribe(user => {
-            // console.log('user', user)
+            // console.log({user})
         })
     }
 

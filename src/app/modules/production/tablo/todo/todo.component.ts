@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ITodo} from "./todo.type";
 import {Observable} from "rxjs";
 import {TodoService} from "./todo.service";
@@ -11,7 +11,7 @@ import {IDone} from "../done/done.type";
     templateUrl: './todo.component.html',
     styleUrls: ['./todo.component.scss']
 })
-export class TodoComponent implements OnInit {
+export class TodoComponent implements OnInit, OnChanges {
 
     @Input() seh_id: number;
     @Input() date: string;
@@ -25,7 +25,15 @@ export class TodoComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.store.dispatch(getAllTodo({seh_id: this.seh_id}));
+        if (this.seh_id)
+            this.store.dispatch(getAllTodo({seh_id: this.seh_id}));
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.seh_id) {
+            if (this.seh_id)
+                this.store.dispatch(getAllTodo({seh_id: this.seh_id}));
+        }
     }
 
     done(row: ITodo) {

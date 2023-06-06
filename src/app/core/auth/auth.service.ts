@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, Observable, of, switchMap, throwError} from 'rxjs';
 import {AuthUtils} from 'app/core/auth/auth.utils';
 import {UserService} from 'app/core/user/user.service';
+import {Role, User} from "../user/user.types";
+import {ISeh} from "../../modules/seh/seh.types";
 
 @Injectable()
 export class AuthService {
@@ -66,8 +68,15 @@ export class AuthService {
         }
 
         return this._httpClient.post('/api/auth/login', credentials).pipe(
-            switchMap((response: any) => {
-
+            switchMap((response: {
+                code: number,
+                data: {
+                    accessToken: string,
+                    user: User,
+                    role: Role,
+                    seh?: ISeh
+                }
+            }) => {
 
                 if (response.code === 200) {
                     // Store the access token in the local storage
@@ -78,6 +87,18 @@ export class AuthService {
 
                     // Store the user on the user service
                     this._userService.user = response.data.user;
+
+                    // Store the role on the user service
+                    const role = response.data.role
+                    this._userService.role = role;
+
+                    // Store the seh on the user service if role is seh
+                    if (role.name === 'seh') {
+                        if (!response.data.seh) {
+                            throw new Error('serverdan seh kelishi kerak');
+                        }
+                        this._userService.seh = response.data.seh;
+                    }
 
                     // Return a new observable with the response
                     return of(response);

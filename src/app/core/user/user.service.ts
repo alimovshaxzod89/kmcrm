@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
-import { User } from 'app/core/user/user.types';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {map, Observable, ReplaySubject, tap} from 'rxjs';
+import {Role, User} from 'app/core/user/user.types';
+import {ISeh} from "../../modules/seh/seh.types";
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserService
-{
+export class UserService {
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
+    private _role: ReplaySubject<Role> = new ReplaySubject<Role>(1);
+    private _seh: ReplaySubject<ISeh> = new ReplaySubject<ISeh>(1);
 
     /**
      * Constructor
      */
-    constructor(private _httpClient: HttpClient)
-    {
+    constructor(private _httpClient: HttpClient) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -26,15 +27,41 @@ export class UserService
      *
      * @param value
      */
-    set user(value: User)
-    {
+    set user(value: User) {
         // Store the value
         this._user.next(value);
     }
 
-    get user$(): Observable<User>
-    {
+    get user$(): Observable<User> {
         return this._user.asObservable();
+    }
+
+    /**
+     * Setter & getter for role
+     *
+     * @param value
+     */
+    set role(value: Role) {
+        // Store the value
+        this._role.next(value);
+    }
+
+    get role$(): Observable<Role> {
+        return this._role.asObservable();
+    }
+
+    /**
+     * Setter & getter for role
+     *
+     * @param value
+     */
+    set seh(value: ISeh) {
+        // Store the value
+        this._seh.next(value);
+    }
+
+    get seh$(): Observable<ISeh> {
+        return this._seh.asObservable();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -42,15 +69,43 @@ export class UserService
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Get the current logged in user data
+     * Get the current logged in user all data
      */
-    get(): Observable<User>
-    {
-        return this._httpClient.get<User>('api/common/user').pipe(
-            tap((user) => {
-                this._user.next(user);
+    getAllData(): Observable<{
+        user: User,
+        role: Role,
+        seh?: ISeh
+    }> {
+        return this._httpClient.get<{
+            data: {
+                user: User,
+                role: Role,
+                seh?: ISeh
+            },
+            message: string,
+            code: number,
+        }>('/api/auth/all-data').pipe(
+            map((response: any) => {
+                return response.data;
+            }),
+            tap((data) => {
+                this._user.next(data.user);
+                this._role.next(data.role);
+                this._seh.next(data.seh);
             })
         );
+    }
+
+
+    /**
+     * Get the current logged in user data
+     */
+    get(): Observable<User> {
+        return this.getAllData().pipe(
+            map((data) => {
+                return data.user;
+            }
+        ));
     }
 
     /**
@@ -58,8 +113,7 @@ export class UserService
      *
      * @param user
      */
-    update(user: User): Observable<any>
-    {
+    update(user: User): Observable<any> {
         return this._httpClient.patch<User>('api/common/user', {user}).pipe(
             map((response) => {
                 this._user.next(response);

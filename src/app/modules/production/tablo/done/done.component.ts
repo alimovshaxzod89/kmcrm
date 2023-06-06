@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Observable} from "rxjs";
 import {IDone} from "./done.type";
 import {DoneService} from "./done.service";
@@ -10,7 +10,7 @@ import {getAllDone, unDone} from "../store/done.actions";
     templateUrl: './done.component.html',
     styleUrls: ['./done.component.scss']
 })
-export class DoneComponent implements OnInit {
+export class DoneComponent implements OnInit, OnChanges {
 
     @Input() seh_id: number;
     @Input() date: string;
@@ -24,8 +24,15 @@ export class DoneComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.seh_id)
+            this.store.dispatch(getAllDone({seh_id: this.seh_id, date: this.date}));
+    }
 
-        this.store.dispatch(getAllDone({seh_id: this.seh_id, date: this.date}));
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.seh_id) {
+            if (this.seh_id)
+                this.store.dispatch(getAllDone({seh_id: this.seh_id, date: this.date}));
+        }
     }
 
     cancel(row: IDone) {

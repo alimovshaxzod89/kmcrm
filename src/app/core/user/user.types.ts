@@ -6,3 +6,9 @@ export interface User
     avatar?: string;
     status?: string;
 }
+
+export interface Role
+{
+    id: string;
+    name: string;
+}
