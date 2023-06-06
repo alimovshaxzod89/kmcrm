@@ -41,6 +41,7 @@ export class AuthInterceptor implements HttpInterceptor {
         // catch and delete the access token from the local storage while logging
         // the user out from the app.
         if (this._authService.accessToken && !AuthUtils.isTokenExpired(this._authService.accessToken)) {
+            req.headers.set('Accept', 'application/json');
             newReq = req.clone({
                 url: requestUrl,
                 headers: req.headers.set('Authorization', 'Bearer ' + this._authService.accessToken)
