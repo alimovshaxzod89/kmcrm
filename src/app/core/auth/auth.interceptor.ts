@@ -3,6 +3,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from 'app/core/auth/auth.service';
 import { AuthUtils } from 'app/core/auth/auth.utils';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor
@@ -22,8 +23,18 @@ export class AuthInterceptor implements HttpInterceptor
      */
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
+        let requestUrl = req.url;
+
+        // if the request URL have the string prefix,
+        // then make the replace by the correct url
+
+        if (requestUrl.indexOf('/api') === 0) {
+            requestUrl = requestUrl.replace('/api', environment.apiUrl);
+        }
+        // console.log({requestUrl})
+
         // Clone the request object
-        let newReq = req.clone();
+        let newReq = req.clone({url: requestUrl});
 
         // Request
         //

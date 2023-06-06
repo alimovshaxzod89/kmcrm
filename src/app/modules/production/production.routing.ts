@@ -12,7 +12,7 @@ export const productionRoutes: Route[] = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'map'
+        redirectTo: 'tablo'
     },
     {
         path: 'tablo',
