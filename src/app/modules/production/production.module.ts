@@ -33,6 +33,7 @@ import {ChartModule} from 'primeng/chart';
 import {DialogModule} from "primeng/dialog";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {InputSwitchModule} from "primeng/inputswitch";
+import {AutoFocusModule} from "primeng/autofocus";
 
 import {BlockLateralArrowNavigationDirective} from "../../directives/block-lateral-arrow-navigation.directive";
 import {MatMenuModule} from "@angular/material/menu";
@@ -42,9 +43,9 @@ import {SehStatusComponent} from './reports/seh-status/seh-status.component';
 import {SehYuklanmaComponent} from './reports/seh-yuklanma/seh-yuklanma.component';
 import {SehEarnMonthComponent} from './reports/seh-earn-month/seh-earn-month.component';
 import {MapModalComponent} from './map/map-modal/map-modal.component';
-import { TabloComponent } from './tablo/tablo.component';
-import { TodoComponent } from './tablo/todo/todo.component';
-import { DoneComponent } from './tablo/done/done.component';
+import {TabloComponent} from './tablo/tablo.component';
+import {TodoComponent} from './tablo/todo/todo.component';
+import {DoneComponent} from './tablo/done/done.component';
 
 @NgModule({
     declarations: [
@@ -92,6 +93,7 @@ import { DoneComponent } from './tablo/done/done.component';
         DialogModule,
         InputTextareaModule,
         InputSwitchModule,
+        AutoFocusModule,
     ]
 })
 export class ProductionModule {

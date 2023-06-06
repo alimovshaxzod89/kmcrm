@@ -68,7 +68,7 @@
                 </div>
             </td>
             <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
-                <p-cellEditor>
+                <p-cellEditor [id]="'ce_u'+unit_id+'_ri'+rowIndex">
                     <ng-template pTemplate="input">
                         <!--                        <select [(ngModel)]="step.seh_id" matNativeControl>-->
                         <!--                            <option *ngFor="let seh of sehs" [value]="seh.id">-->
@@ -89,7 +89,7 @@
                         />
                     </ng-template>
                     <ng-template pTemplate="output">
-                        <div style="cursor: pointer;">
+                        <div style="cursor: pointer;" >
                             {{getSehName(step.seh_id)}}
                         </div>
                     </ng-template>

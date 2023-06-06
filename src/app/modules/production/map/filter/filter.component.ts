@@ -126,7 +126,6 @@ export class FilterComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        console.log('ngOnChanges', this.mapId)
 
         if (this.mapId !== this.map_id())
             this.map_id.set(this.mapId)

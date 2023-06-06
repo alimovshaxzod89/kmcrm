@@ -141,12 +141,76 @@ export class UnitStepsComponent {
         return step._hash !== JSON.stringify(item)
     }
 
+    private lastStepIsSaved(): boolean {
+        //get last step
+        const lastStep = this.steps[this.steps.length - 1]
+        //save last step if not saved
+        return !this.checkForChanged(lastStep);
+    }
+
+    private saveLastStep(): boolean {
+        //close editing
+        this.table.saveState()
+
+        //get last step
+        const lastStep = this.steps[this.steps.length - 1]
+        //save last step if not saved
+        return this.save(lastStep)
+    }
+
+    private saveLastStepAndRunAdd(attempt: number = 0) {
+
+        let valid = true;
+
+        if (attempt === 0) {
+            //save last step in first attempt, because it is not saved yet
+            valid = this.saveLastStep()
+        }
+        console.log('attempt', attempt)
+
+        if (valid) {
+            if (this.lastStepIsSaved()) {
+                this.add()
+            } else if (attempt < 5) {
+                setTimeout(() => {
+                    this.saveLastStepAndRunAdd(attempt + 1)
+                }, 400)
+            } else {
+                alert('Oldingi qadamni saqlab bo\'lmadi!')
+            }
+        }
+    }
+
+    private validateStep(step: IStep): boolean {
+        return step.seh_id !== null && step.percent !== null && step.cost !== null
+    }
+
     add() {
-        this.store.dispatch(addStep({unit_id: this.unit_id, rowIndex: this.steps.length}))
+        setTimeout(() => {
+            if (this.lastStepIsSaved()) {
+                this.store.dispatch(addStep({unit_id: this.unit_id, rowIndex: this.steps.length}))
+                this.openLastStepEditor()
+            } else {
+                this.saveLastStepAndRunAdd()
+            }
+        }, 400)
+    }
+
+    private openLastStepEditor() {
+        setTimeout(() => {
+            const elementId = `ce_u${this.unit_id}_ri${this.steps.length - 1}`
+            document.getElementById(elementId).click()
+        }, 600)
     }
 
     save(step: IStep) {
-        this.store.dispatch(saveStep({step}))
+        if (this.validateStep(step)) {
+            this.store.dispatch(saveStep({step}))
+            return true;
+        } else {
+            alert('Ma\'lumotlar to\'liq emas!')
+            return false;
+        }
     }
 
     reset(step: IStep) {

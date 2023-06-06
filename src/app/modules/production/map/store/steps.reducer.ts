@@ -28,11 +28,11 @@ export const stepsReducer = createReducer(
     on(addStep, (state, {unit_id, rowIndex}) => {
 
         //check if not exists id=null already
-        const index = state.findIndex(step => step.id === null)
-        if (index > -1) {
-            alert('Oldiniga bundan oldingi yangi qatorni saqlang');
-            return state
-        }
+        // const index = state.findIndex(step => step.id === null)
+        // if (index > -1) {
+        //     alert('Oldiniga bundan oldingi yangi qatorni saqlang');
+        //     return state
+        // }
 
         const step: IStep = JSON.parse(JSON.stringify(emptyStep))
         step.unit_id = unit_id
