@@ -26,11 +26,13 @@
             <td class="text-center">{{row.amount}}</td>
             <td class="text-right">{{row.amount * row.cost | number }}</td>
             <td>
-                <button mat-icon-button (click)="done(row)" color="primary" *ngIf="row.started !== null"
+                <button mat-icon-button (click)="done(row)" color="primary" *ngIf="row.started_at !== null"
+                        title="Ish bajarildi"
                         aria-label="Example icon button with a vertical three dot icon">
                     <mat-icon>done_outline</mat-icon>
                 </button>
-                <button mat-icon-button (click)="receive(row)" color="warn" *ngIf="row.started === null"
+                <button mat-icon-button (click)="receive(row)" color="warn" *ngIf="row.started_at === null"
+                        title="Qabul qilib olish"
                         aria-label="Example icon button with a vertical three dot icon">
                     <mat-icon>add_task</mat-icon>
                 </button>
