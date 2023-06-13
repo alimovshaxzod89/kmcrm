@@ -1,0 +1,20 @@
+<b (click)="showDialog()">{{ (seh$|async)?.name }}</b>
+
+
+<p-dialog header="Boshqa sehga o'tish" [(visible)]="visible" [style]="{ width: '50vw' }">
+    <div class="flex py-2 justify-content-center">
+        <p-dropdown
+            appendTo="body"
+            [options]="sehUsers$()"
+            [ngModel]="selectedUser$()"
+            (ngModelChange)="selectedUser$.set($event)"
+            optionLabel="email"
+            [filter]="true"
+            filterBy="name"
+            [style]="{'width':'100%'}"
+            inputId="filter-category_id"
+            placeholder="Tanlang"
+        >
+        </p-dropdown>
+    </div>
+</p-dialog>

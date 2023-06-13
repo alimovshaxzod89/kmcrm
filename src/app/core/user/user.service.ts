@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map, Observable, ReplaySubject, tap} from 'rxjs';
 import {Role, User} from 'app/core/user/user.types';
 import {ISeh} from "../../modules/seh/seh.types";
+import {SearchField} from "../../api/query.types";
 
 @Injectable({
     providedIn: 'root'
@@ -119,5 +120,41 @@ export class UserService {
                 this._user.next(response);
             })
         );
+    }
+
+    getAllUsers(role = null): Observable<{
+        data: User[],
+        message: string,
+        success: boolean,
+    }> {
+
+        let url: string = '/api/production/users'
+
+        const searchArr = [];
+
+        if (role)
+            searchArr.push({
+                field: 'role',
+                value: role
+            })
+
+        const search: string = this.makeSearchString(searchArr);
+        if (search.length)
+            url += `?search=${search}`
+
+        return this._httpClient.get<{
+            data: User[],
+            message: string,
+            success: boolean,
+        }>(url);
+    }
+
+
+    private makeSearchString(params: SearchField[]) {
+        if (params.length) {
+            return params.map(item => `${item.field}:${item.value}`).join(';')
+        } else {
+            return ''
+        }
     }
 }

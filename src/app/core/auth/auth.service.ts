@@ -60,10 +60,11 @@ export class AuthService {
      * Sign in
      *
      * @param credentials
+     * @param force optional, if true, sign in even if the user is already logged in
      */
-    signIn(credentials: { email: string; password: string }): Observable<any> {
+    signIn(credentials: { email: string; password: string }, force: boolean = false): Observable<any> {
         // Throw error, if the user is already logged in
-        if (this._authenticated) {
+        if (this._authenticated && !force) {
             return throwError('User is already logged in.');
         }
 
