@@ -12,14 +12,12 @@ export const productionRoutes: Route[] = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'tablo'
+        redirectTo: 'tablo',
     },
     {
         path: 'tablo',
         component: TabloComponent,
-        resolve: {
-
-        }
+        resolve: {}
     },
     {
         path: 'map',
@@ -42,50 +40,63 @@ export const productionRoutes: Route[] = [
         }
     },
     {
-        path: 'report/ready-in-summary',
-        component: ReadyInSummaryComponent,
-    },
-    {
-        path: 'report/seh-status',
-        component: SehStatusComponent,
-    },
-    {
-        path: 'report/seh-yuklanma',
-        component: SehYuklanmaComponent,
-    },
-    {
-        path: 'report/seh-earn-month',
-        component: SehEarnMonthComponent,
-        // children : [
-        //     {
-        //         path     : '',
-        //         component: CategoryListComponent,
-        //         resolve  : {
-        //             categories  : CategoriesResolver,
-        //             units: UnitsResolver
-        //         }
-        //     }
-        // ]
-        /*children : [
+        path: 'report',
+        children: [
             {
-                path     : '',
-                component: ContactsListComponent,
-                resolve  : {
-                    tasks    : ContactsResolver,
-                    countries: ContactsCountriesResolver
-                },
-                children : [
-                    {
-                        path         : ':id',
-                        component    : ContactsDetailsComponent,
-                        resolve      : {
-                            task     : ContactsContactResolver,
-                            countries: ContactsCountriesResolver
-                        },
-                        canDeactivate: [CanDeactivateContactsDetails]
-                    }
-                ]
+                path: 'readiness',
+                loadChildren: () => import('app/modules/production/reports/readiness/readiness.module').then(m => m.ReadinessModule)
+            },
+            {
+                path: 'ready-in-summary',
+                component: ReadyInSummaryComponent,
+            },
+            {
+                path: 'seh-status',
+                component: SehStatusComponent,
+            },
+            {
+                path: 'seh-yuklanma',
+                component: SehYuklanmaComponent,
+            },
+            {
+                path: 'seh-earn-month',
+                component: SehEarnMonthComponent,
             }
-        ]*/
-    }
+        ]
+    },
+    // {
+    //     path: 'report/seh-earn-month',
+    //     component: SehEarnMonthComponent,
+    //     // children : [
+    //     //     {
+    //     //         path     : '',
+    //     //         component: CategoryListComponent,
+    //     //         resolve  : {
+    //     //             categories  : CategoriesResolver,
+    //     //             units: UnitsResolver
+    //     //         }
+    //     //     }
+    //     // ]
+    //     /*children : [
+    //         {
+    //             path     : '',
+    //             component: ContactsListComponent,
+    //             resolve  : {
+    //                 tasks    : ContactsResolver,
+    //                 countries: ContactsCountriesResolver
+    //             },
+    //             children : [
+    //                 {
+    //                     path         : ':id',
+    //                     component    : ContactsDetailsComponent,
+    //                     resolve      : {
+    //                         task     : ContactsContactResolver,
+    //                         countries: ContactsCountriesResolver
+    //                     },
+    //                     canDeactivate: [CanDeactivateContactsDetails]
+    //                 }
+    //             ]
+    //         }
+    //     ]*/
+    // }
 ];

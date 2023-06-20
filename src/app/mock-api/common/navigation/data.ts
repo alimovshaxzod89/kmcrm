@@ -33,6 +33,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:chart-bar',
         children: [
             {
+                id   : 'readiness',
+                title: 'Buyurtmalar holati',
+                type : 'basic',
+                icon : 'heroicons_outline:badge-check',
+                link : '/production/report/readiness'
+            },
+            {
                 id   : 'ready-in-summary',
                 title: 'Tayyor mahsulotlar',
                 type : 'basic',
