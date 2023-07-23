@@ -26,6 +26,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         link : '/production/map'
     },
     {
+        id   : 'production',
+        title: 'Ishlab chiqarish',
+        type : 'basic',
+        icon : 'heroicons_outline:map',
+        link : '/production/production'
+    },
+    {
         id   : 'reports',
         title: 'Hisobotlar',
         tooltip: 'Seh hisobotlari',

@@ -40,6 +40,10 @@ export const productionRoutes: Route[] = [
         }
     },
     {
+        path: 'production',
+        loadChildren: () => import('app/modules/production/production/production.module').then(m => m.ProductionModule)
+    },
+    {
         path: 'report',
         children: [
             {
