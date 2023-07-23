@@ -1,1 +1,65 @@
-<p-button label="Qo'shish"></p-button>
+<div class="flex justify-end">
+    <!--    <div class=""></div>-->
+    <p-button (click)="showDialog()" icon="pi pi-external-link" label="Qo'shish"></p-button>
+</div>
+
+<!--Modal-->
+<p-dialog header="Mebellar qo'shish" [(visible)]="visible" [modal]="true" [style]="{ width: '70vw' , height:'40vw' }"
+          [draggable]="false" [resizable]="false">
+
+    <!--  Filter  -->
+    <label class="block"> Doc-no</label>
+    <div class="card flex justify-content-center">
+        <p-autoComplete [(ngModel)]="doc_no" [suggestions]="suggestions" (completeMethod)="search($event)"></p-autoComplete>
+    </div>
+
+    <!--Calendar-->
+    <div class="flex mt-2">
+        <label>
+            Start
+            <div class="card ">
+                <p-calendar [(ngModel)]="Start_at" [showIcon]="true" ></p-calendar>
+            </div>
+        </label>
+        <label class="ml-2">
+            Finish
+            <div class="card mb-2">
+                <p-calendar [(ngModel)]="Finish_at" [showIcon]="true"></p-calendar>
+            </div>
+        </label>
+    </div>
+
+
+    <!--  Table  -->
+    <div class="mt-2">
+        <p-table [columns]="cols" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns">
+                        {{ col.header }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td *ngFor="let col of columns">
+                        {{ rowData[col.field] }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="mt-4 ">
+        <p-button (click)="addElements()" icon="pi pi-external-link" label="Qo'shish"></p-button>
+    </div>
+
+</p-dialog>
+
+
+
+
+
+
+
+
