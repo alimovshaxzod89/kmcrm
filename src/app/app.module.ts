@@ -31,6 +31,8 @@ import {doneReducer} from "./modules/production/tablo/store/done.reducer";
 import {DoneEffects} from "./modules/production/tablo/store/done.effects";
 import {earningReducer} from "./modules/production/tablo/store/earning.reducer";
 import {EarningEffects} from "./modules/production/tablo/store/earning.effects";
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -61,6 +63,8 @@ const routerConfig: ExtraOptions = {
 
         StoreModule.forRoot({cost: mapReducer, maps: mapsReducer, steps: stepsReducer, units: unitsReducer, todos: todoReducer, dones: doneReducer, earning: earningReducer}),
         EffectsModule.forRoot(MapEffects, StepsEffects, UnitsEffects, MapsEffects, TodoEffects, DoneEffects, EarningEffects),
+        GraphQLModule,
+        HttpClientModule,
 
     ],
     bootstrap: [
