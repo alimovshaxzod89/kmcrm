@@ -12,10 +12,12 @@
 //     "paid": false,
 //     "doc_no": "007TT"
 
+import {ISeh} from "../../../seh/seh.types";
+
 export interface IDone {
     id: number,
-    production_id: number,
-    unit_step_id: number,
+    production_unit_id: number,
+    seh_id: number,
     duration: number,
     cost: number,
     start_at: string,
@@ -28,4 +30,9 @@ export interface IDone {
     paid: boolean,
 
     doc_no: string,
+
+    seh: ISeh
+
+    prev?: IDone,
+    next?: IDone,
 }
