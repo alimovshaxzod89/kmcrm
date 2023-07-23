@@ -43,9 +43,6 @@ import {SehStatusComponent} from './reports/seh-status/seh-status.component';
 import {SehYuklanmaComponent} from './reports/seh-yuklanma/seh-yuklanma.component';
 import {SehEarnMonthComponent} from './reports/seh-earn-month/seh-earn-month.component';
 import {MapModalComponent} from './map/map-modal/map-modal.component';
-import {TabloComponent} from './tablo/tablo.component';
-import {TodoComponent} from './tablo/todo/todo.component';
-import {DoneComponent} from './tablo/done/done.component';
 
 @NgModule({
     declarations: [
@@ -62,9 +59,6 @@ import {DoneComponent} from './tablo/done/done.component';
         SehYuklanmaComponent,
         SehEarnMonthComponent,
         MapModalComponent,
-        TabloComponent,
-        TodoComponent,
-        DoneComponent,
     ],
     imports: [
         CommonModule,

@@ -16,8 +16,7 @@ export const productionRoutes: Route[] = [
     },
     {
         path: 'tablo',
-        component: TabloComponent,
-        resolve: {}
+        loadChildren: () => import('app/modules/production/tablo/tablo.module').then(m => m.TabloModule)
     },
     {
         path: 'map',

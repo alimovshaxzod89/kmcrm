@@ -10,6 +10,7 @@
             <th class="text-center">Mebel</th>
             <th class="text-center">Soni</th>
             <th class="text-right">Summa</th>
+            <th class="text-center">Qabul qiladi</th>
             <th>Amal</th>
         </tr>
     </ng-template>
@@ -24,6 +25,7 @@
             </td>
             <td class="text-center">{{row.amount}}</td>
             <td class="text-right">{{row.amount * row.cost | number }}</td>
+            <td class="text-center">{{row?.next?.seh.name }}</td>
             <td>
                 <button mat-icon-button (click)="cancel(row)" color="warn"
                         aria-label="Example icon button with a vertical three dot icon">
