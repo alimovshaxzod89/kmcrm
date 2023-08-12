@@ -1,109 +1,137 @@
-import { Component, OnInit} from '@angular/core';
-
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
+import {SearchDemandService} from "./search-demand.service";
+import {Apollo, gql} from "apollo-angular";
+import {IDemandFurniture, IProduction} from "../production.types";
+import {formatDate} from '@angular/common';
 
 interface AutoCompleteCompleteEvent {
     originalEvent: Event;
     query: string;
 }
+
+interface IProductionForm extends IDemandFurniture {
+    productionAmount?: number | null,
+    productionDescription?: string | null,
+}
+
 @Component({
-  selector: 'production-add-modal',
-  templateUrl: './add-modal.component.html',
-  styleUrls: ['./add-modal.component.scss'],
+    selector: 'production-add-modal',
+    templateUrl: './add-modal.component.html',
+    styleUrls: ['./add-modal.component.scss'],
 })
-
-
-export class AddModalComponent implements OnInit{
+export class AddModalComponent implements OnInit {
 
     // Modal
-    visible: boolean = false;
+    visible: boolean = true;
+
     showDialog() {
         this.visible = true;
     }
 
-    //Filter
-    countries: any[] | undefined;
+    doc_no: WritableSignal<string> = signal('');
 
-    filteredCountries: any[] | undefined;
-
-    doc_no: any;
-
-    suggestions: any[] | undefined;
+    suggestions: string[] = [];
 
     search(event: AutoCompleteCompleteEvent) {
-        this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
+
+        if (event.query.length < 3) return;
+
+        this.getDemands(event.query);
     };
 
-
-
     // Calendar
-    Start_at: Date | undefined;
-    Finish_at:Date | undefined;
+    start_at: Date | undefined;
+    finish_at: Date | undefined;
 
     // Table's variables
-    products: object[] = [];
-    cols:object[] = [];
+    demandFurnitures: IProductionForm[] = [];
+
+    constructor(private _service: SearchDemandService, private apollo: Apollo) {
+
+    }
 
     ngOnInit() {
-
-        this.countries = [
-            {
-                "name": "Afghanistan",
-                "code": "AF"
-            },
-            {
-                "name":'Uzbekistan',
-                "code":"UZB",
-            }
-        ]
-
-        this.products = [
-            {
-                id: '1000',
-                code: 'f230fh0g3',
-                name: 'Bamboo Watch',
-                description: 'Product Description',
-                image: 'bamboo-watch.jpg',
-                price: 65,
-                category: 'Accessories',
-                quantity: 24,
-                inventoryStatus: 'INSTOCK',
-                rating: 5
-            },
-        ]
-        this.cols = [
-            { field: 'mebel', header: 'Mebel' },
-            { field: 'buyurtma', header: 'Buyurtmaning Izohi' },
-            { field: 'rang', header: 'Rang,Derevo' },
-            { field: 'soni', header: 'Soni' },
-            { field: 'nechta', header: 'Nechta chiqaramiz' },
-            { field: 'message', header: 'izoh' },
-        ]
-
-
-
+        this.start_at = new Date('2023-08-03')
+        this.finish_at = new Date('2023-08-20')
     }
 
-    // Button - Qo'shish
-    addElements() {
-        this.visible = true;
+    getDemands(search: string) {
+
+        this._service.getDemands(search)
+            .subscribe((data: { getDemands: { id: number | string, doc_no: string }[] }) => {
+                this.suggestions = data.getDemands.map(item => item.doc_no);
+            })
     }
 
 
-    filterCountry(event: AutoCompleteCompleteEvent) {
-        let filtered: any[] = [];
-        let query = event.query;
+    selectDemand(doc_no: string) {
+        this._service.getDemandFurnitures(doc_no).subscribe((data) => {
 
-        for (let i = 0; i < (this.countries as any[]).length; i++) {
-            let country = (this.countries as any[])[i];
-            if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                filtered.push(country);
-            }
+            this.demandFurnitures = data.map(item => {
+                return {
+                    ...item,
+                    productionAmount: null,
+                    productionDescription: null,
+                }
+            })
+        })
+    }
+
+    submit() {
+
+        if (!this.start_at || !this.finish_at) {
+            alert('oldin muddatlarni to\'ldiring');
+            return
         }
 
-        this.filteredCountries = filtered;
+        const productions: IProduction[] = this.demandFurnitures.filter(item => item.productionAmount > 0)
+            .map(item => {
+                return {
+                    map_id: item.map.id,
+                    demand_furniture_id: item.id,
+                    amount: item.productionAmount,
+                    description: item.productionDescription,
+                    start_at: formatDate(this.start_at, 'yyyy-MM-dd HH:mm:ss', 'en-US'),
+                    finish_at: formatDate(this.finish_at, 'yyyy-MM-dd HH:mm:ss', 'en-US'),
+                }
+            });
+
+        this.createProductions(productions);
     }
 
+    createProductions(productions: IProduction[]): void {
+        const mutationPromises = productions.map((production) => {
+            return this.apollo.mutate({
+                mutation: gql`
+          mutation CreateProduction($input: CreateProductionInput!) {
+            createProduction(input: $input) {
+              id
+              map_id
+              amount
+              start_at
+              finish_at
+            }
+          }
+        `,
+                variables: {
+                    input: production,
+                },
+            }).toPromise();
+        });
 
+        Promise.all(mutationPromises)
+            .then((results) => {
+                // Handle success
+                console.log('Multiple productions created:', results);
+
+                this.visible = false;
+            })
+            .catch((error) => {
+                // Handle error
+                console.error('Error creating productions:', error);
+                alert('Xatolik');
+            });
+    }
 }
 
 

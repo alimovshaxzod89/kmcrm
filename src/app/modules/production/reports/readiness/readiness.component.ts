@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Apollo, gql} from "apollo-angular";
 
 @Component({
-  selector: 'report-readiness',
-  templateUrl: './readiness.component.html',
-  styleUrls: ['./readiness.component.scss']
+    selector: 'report-readiness',
+    templateUrl: './readiness.component.html',
+    styleUrls: ['./readiness.component.scss']
 })
 export class ReadinessComponent {
 
@@ -15,8 +15,8 @@ export class ReadinessComponent {
 
     ngOnInit() {
         this.apollo
-        .watchQuery({
-            query: gql`
+            .watchQuery({
+                query: gql`
                 {
                     customer(id: 4) {
                         name
@@ -24,8 +24,8 @@ export class ReadinessComponent {
                     }
                 }
             `,
-        })
-        .valueChanges.subscribe((result: any) => {
+            })
+            .valueChanges.subscribe((result: any) => {
             console.log(result.data.customer);
         });
     }

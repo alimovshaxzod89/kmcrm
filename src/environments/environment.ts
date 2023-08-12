@@ -1,4 +1,7 @@
+const baseUrl = 'https://back.kmapp.uz';
+
 export const environment = {
-    production: true,
-    apiUrl: 'https://back.kmapp.uz/api',
+    production: false,
+    apiUrl: `${baseUrl}/api`,
+    graphqlUrl: `${baseUrl}/graphql`,
 };

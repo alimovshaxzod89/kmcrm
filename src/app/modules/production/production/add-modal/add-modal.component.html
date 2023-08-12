@@ -1,30 +1,35 @@
 <div class="flex justify-end">
     <!--    <div class=""></div>-->
-    <p-button (click)="showDialog()"  label="+Qo'shish"></p-button>
+    <p-button (click)="showDialog()" label="Qo'shish"></p-button>
 </div>
 
 <!--Modal-->
-<p-dialog header="Mebellar qo'shish" [(visible)]="visible" [modal]="true" [style]="{ width: '70vw' , height:'40vw' }"
+<p-dialog header="Ishlab chiqarish qo'shish" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw', height:'80vh' }"
           [draggable]="false" [resizable]="false">
 
     <!--  Filter  -->
-    <label class="block"> Doc-no</label>
+    <label class="block"> Un. Nomer</label>
     <div class="card flex justify-content-center">
-        <p-autoComplete [(ngModel)]="doc_no" [suggestions]="suggestions" (completeMethod)="search($event)"></p-autoComplete>
+        <p-autoComplete [ngModel]="doc_no()"
+                        (ngModelChange)="doc_no.set($event)"
+                        [suggestions]="suggestions"
+                        (completeMethod)="search($event)"
+                        (onSelect)="selectDemand($event)">
+        </p-autoComplete>
     </div>
 
     <!--Calendar-->
     <div class="flex mt-2">
         <label>
-            Start
+            Boshlanadi
             <div class="card ">
-                <p-calendar [(ngModel)]="Start_at" [showIcon]="true" ></p-calendar>
+                <p-calendar [(ngModel)]="start_at" [showIcon]="true"></p-calendar>
             </div>
         </label>
         <label class="ml-2">
-            Finish
+            Tugallanadi
             <div class="card mb-2">
-                <p-calendar [(ngModel)]="Finish_at" [showIcon]="true"></p-calendar>
+                <p-calendar [(ngModel)]="finish_at" [showIcon]="true"></p-calendar>
             </div>
         </label>
     </div>
@@ -32,26 +37,41 @@
 
     <!--  Table  -->
     <div class="mt-2">
-        <p-table [columns]="cols" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+        <p-table [value]="demandFurnitures" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th *ngFor="let col of columns">
-                        {{ col.header }}
-                    </th>
+                    <th>Mebel</th>
+                    <th>Buyurtmaning Izohi</th>
+                    <th>Rang,Derevo</th>
+                    <th>Soni</th>
+                    <th>Nechta chiqaramiz</th>
+                    <th>izoh</th>
+                    <th>xarita</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <ng-template pTemplate="body" let-row>
                 <tr>
-                    <td *ngFor="let col of columns">
-                        {{ rowData[col.field] }}
+                    <td>{{row.furniture}}</td>
+                    <td>{{row.description}}</td>
+                    <td>{{row.color}}, {{row.tree_id}}</td>
+                    <td>{{row.amount}}</td>
+                    <td>
+                        <p-inputNumber [(ngModel)]="row.productionAmount" [disabled]="!row.map?.id"></p-inputNumber>
                     </td>
+                    <td>
+                        <textarea rows="1" pInputTextarea
+                                  [(ngModel)]="row.productionDescription"
+                                  [disabled]="!row.map?.id"
+                        ></textarea>
+                    </td>
+                    <td>{{row.map?.id ? 'Versiya: ' + row.map.version : 'mavjud emas'}}</td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
 
     <div class="mt-4 ">
-        <p-button (click)="addElements()"  label="Qo'shish"></p-button>
+        <p-button (click)="submit()" label="Qo'shish"></p-button>
     </div>
 
 </p-dialog>

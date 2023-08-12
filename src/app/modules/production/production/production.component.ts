@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-production',
+  selector: 'production',
   templateUrl: './production.component.html',
   styleUrls: ['./production.component.scss']
 })
