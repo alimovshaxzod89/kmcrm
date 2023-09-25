@@ -10,8 +10,8 @@ export class StepsEffects {
     getSteps = createEffect(() => this.actions$.pipe(
         ofType(getSteps),
         exhaustMap(props => {
-            if (props.unit_ids.length) {
-                return this.stepsService.getSteps(props.unit_ids).pipe(
+            if (props.map_unit_ids.length) {
+                return this.stepsService.getSteps(props.map_unit_ids).pipe(
                     map(response => {
                             const steps = response.data
                             return setSteps({steps})

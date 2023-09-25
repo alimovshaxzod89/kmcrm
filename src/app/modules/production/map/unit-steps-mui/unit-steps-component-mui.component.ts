@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {IStep} from "../steps/step.type";
+import {IMapUnitStep} from "../steps/step.type";
 import {ISeh} from "../../../seh/seh.types";
 
 @Component({
@@ -8,8 +8,8 @@ import {ISeh} from "../../../seh/seh.types";
     styleUrls: ['./unit-steps-component-mui.component.scss']
 })
 export class UnitStepsComponentMui {
-    // @Input unit_id: number;
-    @Input() steps: IStep[];
+    // @Input map_unit_id: number;
+    @Input() steps: IMapUnitStep[];
     @Input() sehs: ISeh[];
 
     displayedColumns: string[] = [

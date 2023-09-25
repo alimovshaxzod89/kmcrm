@@ -1,6 +1,6 @@
-export interface IStep {
+export interface IMapUnitStep {
     id?: number,
-    unit_id: number,
+    map_unit_id: number,
     category_seh_id: number,
 
     seh_id: number,
@@ -14,9 +14,9 @@ export interface IStep {
     _hash?: string
 }
 
-export const emptyStep: IStep = {
+export const emptyMapUnitStep: IMapUnitStep = {
     id: null,
-    unit_id: null,
+    map_unit_id: null,
     category_seh_id: null,
     seh_id: null,
     percent: 0,

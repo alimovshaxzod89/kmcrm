@@ -10,9 +10,9 @@ import {
     setStep,
     setSteps
 } from "./steps.actions";
-import {emptyStep, IStep} from "../steps/step.type";
+import {emptyMapUnitStep, IMapUnitStep} from "../steps/step.type";
 
-export const initialState: IStep[] = []
+export const initialState: IMapUnitStep[] = []
 
 export const stepsReducer = createReducer(
     initialState,
@@ -25,7 +25,7 @@ export const stepsReducer = createReducer(
         return state
     }),
 
-    on(addStep, (state, {unit_id, rowIndex}) => {
+    on(addStep, (state, {map_unit_id, rowIndex}) => {
 
         //check if not exists id=null already
         // const index = state.findIndex(step => step.id === null)
@@ -34,8 +34,8 @@ export const stepsReducer = createReducer(
         //     return state
         // }
 
-        const step: IStep = JSON.parse(JSON.stringify(emptyStep))
-        step.unit_id = unit_id
+        const step: IMapUnitStep = JSON.parse(JSON.stringify(emptyMapUnitStep))
+        step.map_unit_id = map_unit_id
         step.sorder = rowIndex + 1
         step._hash = JSON.stringify({})
 
@@ -66,7 +66,7 @@ export const stepsReducer = createReducer(
                 const item = JSON.parse(JSON.stringify(row))
                 if (rowIndex === index) {
                     item.sorder = prevSorder
-                } else if (row.sorder === prevSorder && row.unit_id == step.unit_id) {
+                } else if (row.sorder === prevSorder && row.map_unit_id == step.map_unit_id) {
                     item.sorder = step.sorder
                 }
                 return item
@@ -87,7 +87,7 @@ export const stepsReducer = createReducer(
                 const item = JSON.parse(JSON.stringify(row))
                 if (rowIndex === index) {
                     item.sorder = nextSorder
-                } else if (row.sorder === nextSorder && row.unit_id == step.unit_id) {
+                } else if (row.sorder === nextSorder && row.map_unit_id == step.map_unit_id) {
                     item.sorder = step.sorder
                 }
                 return item

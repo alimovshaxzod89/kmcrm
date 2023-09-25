@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IUnit} from "../units/unit.type";
+import {IMapUnit} from "../units/unit.type";
 import {Observable} from "rxjs";
-import {IStep} from "./step.type";
+import {IMapUnitStep} from "./step.type";
 import {StepService} from "./step.service";
 import {ISeh} from "../../../seh/seh.types";
 import {Store} from "@ngrx/store";
@@ -16,16 +16,16 @@ export class StepsComponent implements OnInit {
     @Input() sehs: ISeh[];
     @Input() tips: { id: number, name: string }[];
 
-    units$: Observable<IUnit[]>;
-    units: IUnit[];
+    units$: Observable<IMapUnit[]>;
+    units: IMapUnit[];
 
-    steps$: Observable<IStep[]>
-    steps: IStep[]
+    steps$: Observable<IMapUnitStep[]>
+    steps: IMapUnitStep[]
 
     stepsByUnitId: Object
 
     constructor(private _stepService: StepService,
-                private store: Store<{ units: IUnit[], steps: IStep[] }>) {
+                private store: Store<{ units: IMapUnit[], steps: IMapUnitStep[] }>) {
 
         this.units$ = this.store.select('units');
         this.steps$ = this.store.select('steps');
@@ -52,7 +52,7 @@ export class StepsComponent implements OnInit {
             this.stepsByUnitId[unit.id] = []
 
             this.steps.forEach(step => {
-                if (step.unit_id == unit.id) {
+                if (step.map_unit_id == unit.id) {
                     this.stepsByUnitId[unit.id].push(step)
                 }
             })

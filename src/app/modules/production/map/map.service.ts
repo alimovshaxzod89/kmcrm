@@ -17,7 +17,7 @@ export class MapService {
      */
     getMaps(furniture_id: number = null): Observable<{ success: boolean, message: string, data: IMap[] }> {
 
-        let url: string = '/api/production/maps'
+        let url: string = '/api/maps'
 
         const searchArr = [];
 
@@ -47,7 +47,7 @@ export class MapService {
             success: boolean,
             message: string,
             data: IMap
-        }>(`/api/production/maps/${id}`).pipe(
+        }>(`/api/maps/${id}`).pipe(
             map(response => {
                 return response
             })
@@ -58,7 +58,7 @@ export class MapService {
         return this._httpClient.put<{
             success: boolean,
             message: string
-        }>(`/api/production/maps/${map_id}`, {cost}).pipe(
+        }>(`/api/maps/${map_id}`, {cost}).pipe(
             map(response => {
                 return {
                     success: response.success,
@@ -73,7 +73,7 @@ export class MapService {
             success: boolean,
             message: string,
             data?: IMap
-        }>(`/api/production/maps/${mapData.id}`, {...mapData}).pipe(
+        }>(`/api/maps/${mapData.id}`, {...mapData}).pipe(
             map(response => {
                 return response
             })
@@ -85,7 +85,7 @@ export class MapService {
             success: boolean,
             message: string,
             data?: IMap
-        }>(`/api/production/maps`, {...mapData}).pipe(
+        }>(`/api/maps`, {...mapData}).pipe(
             map(response => {
                 return response
             })
@@ -97,7 +97,7 @@ export class MapService {
         return this._httpClient.delete<{
             success: boolean,
             message: string
-        }>(`/api/production/maps/${map_id}`).pipe(
+        }>(`/api/maps/${map_id}`).pipe(
             map(response => {
                 return {
                     success: response.success,

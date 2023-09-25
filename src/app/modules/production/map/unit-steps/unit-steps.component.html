@@ -25,7 +25,7 @@
             <td class="text-center">
                 {{step.sorder}}
             </td>
-            <td class="text-center">
+            <td class="text-right">
                 <div class="flex">
                     <button mat-icon-button *ngIf="checkForChanged(step)" (click)="save(step)" color="warn"
                             aria-label="Example icon button with a vertical three dot icon">
@@ -35,6 +35,9 @@
                     <button mat-icon-button *ngIf="step.id === null" (click)="delete(step)" color="accent"
                             aria-label="Example icon button with a vertical three dot icon">
                         <mat-icon>cancel</mat-icon>
+                    </button>
+                    <button mat-icon-button color="accent" *ngIf="step.id !== null" (click)="delete(step)">
+                        <mat-icon>delete</mat-icon>
                     </button>
 
                     <span *ngIf="step.id !== null">
@@ -68,7 +71,7 @@
                 </div>
             </td>
             <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
-                <p-cellEditor [id]="'ce_u'+unit_id+'_ri'+rowIndex">
+                <p-cellEditor [id]="'ce_u'+map_unit_id+'_ri'+rowIndex">
                     <ng-template pTemplate="input">
                         <!--                        <select [(ngModel)]="step.seh_id" matNativeControl>-->
                         <!--                            <option *ngFor="let seh of sehs" [value]="seh.id">-->

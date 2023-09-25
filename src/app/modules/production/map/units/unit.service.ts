@@ -2,7 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {SearchField} from "../../../../api/query.types";
 import {map, Observable} from "rxjs";
-import {IUnit} from "./unit.type";
+import {IMapUnit} from "./unit.type";
 
 @Injectable({
     providedIn: 'root'
@@ -14,9 +14,9 @@ export class UnitService {
     /**
      * Get furniture maps
      */
-    getUnits(map_id: number = null): Observable<{ success: boolean, message: string, data: IUnit[] }> {
+    getUnits(map_id: number = null): Observable<{ success: boolean, message: string, data: IMapUnit[] }> {
 
-        let url: string = '/api/production/units'
+        let url: string = '/api/map-units'
 
         const searchArr = [];
 
@@ -35,22 +35,22 @@ export class UnitService {
         if (search.length)
             url += `?search=${search}`
 
-        return this._httpClient.get<{ success: boolean, message: string, data: IUnit[] }>(url).pipe(
+        return this._httpClient.get<{ success: boolean, message: string, data: IMapUnit[] }>(url).pipe(
             map(response => {
                 return response
             })
         );
     }
 
-    saveUnit(unit: IUnit): Observable<{ success: boolean, message: string, data?: IUnit }> {
+    saveUnit(unit: IMapUnit): Observable<{ success: boolean, message: string, data?: IMapUnit }> {
         if (!unit.id) {
             return this.addUnit(unit)
         }
         return this._httpClient.put<{
             success: boolean,
             message: string,
-            data?: IUnit
-        }>(`/api/production/units/${unit.id}`, {...unit}).pipe(
+            data?: IMapUnit
+        }>(`/api/map-units/${unit.id}`, {...unit}).pipe(
             map(response => {
                 return {
                     data: response?.data,
@@ -61,12 +61,12 @@ export class UnitService {
         );
     }
 
-    addUnit(unit: IUnit): Observable<{ success: boolean, message: string, data?: IUnit }> {
+    addUnit(unit: IMapUnit): Observable<{ success: boolean, message: string, data?: IMapUnit }> {
         return this._httpClient.post<{
             success: boolean,
             message: string,
-            data?: IUnit
-        }>('/api/production/units', {...unit}).pipe(
+            data?: IMapUnit
+        }>('/api/map-units', {...unit}).pipe(
             map(response => {
                 return {
                     data: response?.data,
@@ -77,11 +77,11 @@ export class UnitService {
         );
     }
 
-    deleteUnit(unit: IUnit): Observable<{ success: boolean, message: string }> {
+    deleteUnit(unit: IMapUnit): Observable<{ success: boolean, message: string }> {
         return this._httpClient.delete<{
             success: boolean,
             message: string
-        }>(`/api/production/units/${unit.id}`).pipe(
+        }>(`/api/map-units/${unit.id}`).pipe(
             map(response => {
                 return {
                     success: response.success,

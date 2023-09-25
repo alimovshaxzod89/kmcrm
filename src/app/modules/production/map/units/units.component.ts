@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {IUnit} from "./unit.type";
+import {IMapUnit} from "./unit.type";
 import {UnitService} from "./unit.service";
 import {Store} from "@ngrx/store";
-import {IStep} from "../steps/step.type";
+import {IMapUnitStep} from "../steps/step.type";
 import {MapState} from "../store/map.reducer";
 import {addUnit, deleteUnit, removeUnit, saveUnit, setUnit} from "../store/units.actions";
 import * as stepSelects from "../store/steps.selectors";
@@ -17,8 +17,8 @@ export class UnitsComponent implements OnInit {
 
     protected readonly Math = Math;
 
-    units$: Observable<IUnit[]>;
-    steps$: Observable<IStep[]>;
+    units$: Observable<IMapUnit[]>;
+    steps$: Observable<IMapUnitStep[]>;
     @Input() map_id: number;
     @Input() tips: { id: number, name: string }[];
 
@@ -29,7 +29,7 @@ export class UnitsComponent implements OnInit {
     totalPercent$: Observable<number>;
 
     constructor(private _unitService: UnitService,
-                private store: Store<{ units: IUnit[], steps: IStep[], cost: MapState }>) {
+                private store: Store<{ units: IMapUnit[], steps: IMapUnitStep[], cost: MapState }>) {
         this.cost$ = this.store.select(store => store.cost.current);
 
         this.totalCost$ = this.store.select(stepSelects.selectTotalCost);
@@ -44,11 +44,11 @@ export class UnitsComponent implements OnInit {
         this.steps$ = this.store.select('steps');
     }
 
-    calcRowCost(unit_id: number): number {
+    calcRowCost(map_unit_id: number): number {
         let cost = 0;
         this.steps$.subscribe(steps => {
             steps.forEach(step => {
-                if (step.unit_id === unit_id) {
+                if (step.map_unit_id === map_unit_id) {
                     cost += step.cost
                 }
             })
@@ -56,11 +56,11 @@ export class UnitsComponent implements OnInit {
         return cost
     }
 
-    calcRowPercent(unit_id: number): number {
+    calcRowPercent(map_unit_id: number): number {
         let percent = 0;
         this.steps$.subscribe(steps => {
             steps.forEach(step => {
-                if (step.unit_id === unit_id) {
+                if (step.map_unit_id === map_unit_id) {
                     percent += step.percent
                 }
             })
@@ -79,22 +79,22 @@ export class UnitsComponent implements OnInit {
         return tip?.name
     }
 
-    checkForChanged(unit: IUnit): boolean {
+    checkForChanged(unit: IMapUnit): boolean {
         const item = {...unit}
         delete item._hash
 
         return unit._hash !== JSON.stringify(item)
     }
 
-    handleFieldChange(unit: IUnit, tip_id: number) {
-        this.store.dispatch(setUnit({unit_id: unit.id, unit: {...unit, tip_id: tip_id}}))
+    handleFieldChange(unit: IMapUnit, tip_id: number) {
+        this.store.dispatch(setUnit({map_unit_id: unit.id, unit: {...unit, tip_id: tip_id}}))
     }
 
     add() {
         this.store.dispatch(addUnit({map_id: this.map_id}))
     }
 
-    save(unit: IUnit) {
+    save(unit: IMapUnit) {
         this.store.dispatch(saveUnit({unit}))
     }
 
@@ -102,7 +102,7 @@ export class UnitsComponent implements OnInit {
     //     this.store.dispatch(resetUnit({step}))
     // }
 
-    delete(unit: IUnit) {
+    delete(unit: IMapUnit) {
 
         if (unit.id === null) {
             this.store.dispatch(removeUnit({unit}))

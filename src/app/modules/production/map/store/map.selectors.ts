@@ -1,10 +1,10 @@
 import {createSelector} from '@ngrx/store';
 import {MapState} from "./map.reducer";
-import {IStep} from "../steps/step.type";
+import {IMapUnitStep} from "../steps/step.type";
 
 export interface AppState {
     cost: MapState;
-    steps: IStep[];
+    steps: IMapUnitStep[];
 }
 
 //map self

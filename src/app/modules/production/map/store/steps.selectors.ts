@@ -1,8 +1,8 @@
 import {createSelector} from '@ngrx/store';
-import {IStep} from "../steps/step.type";
+import {IMapUnitStep} from "../steps/step.type";
 
 export interface AppState {
-    steps: IStep[];
+    steps: IMapUnitStep[];
 }
 
 export const selectSteps = (state: AppState) => state.steps;

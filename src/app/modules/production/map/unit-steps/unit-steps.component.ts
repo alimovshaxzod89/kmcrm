@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {IStep} from "../steps/step.type";
+import {IMapUnitStep} from "../steps/step.type";
 import {ISeh} from "../../../seh/seh.types";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
@@ -14,8 +14,8 @@ import {MapState} from "../store/map.reducer";
 })
 export class UnitStepsComponent {
 
-    @Input() unit_id: number;
-    @Input() steps: IStep[];
+    @Input() map_unit_id: number;
+    @Input() steps: IMapUnitStep[];
     @Input() sehs: ISeh[];
 
     @ViewChild('dt') table: Table;
@@ -126,7 +126,7 @@ export class UnitStepsComponent {
         return this.steps[index].id
     }
 
-    private getStepByIndex(index: number): IStep {
+    private getStepByIndex(index: number): IMapUnitStep {
         return this.steps[index]
     }
 
@@ -134,7 +134,7 @@ export class UnitStepsComponent {
         this.handledFieldById[step_id] = value
     }
 
-    checkForChanged(step: IStep): boolean {
+    checkForChanged(step: IMapUnitStep): boolean {
         const item = {...step}
         delete item._hash
 
@@ -181,14 +181,14 @@ export class UnitStepsComponent {
         }
     }
 
-    private validateStep(step: IStep): boolean {
+    private validateStep(step: IMapUnitStep): boolean {
         return step.seh_id !== null && step.percent !== null && step.cost !== null
     }
 
     add() {
         setTimeout(() => {
             if (this.lastStepIsSaved()) {
-                this.store.dispatch(addStep({unit_id: this.unit_id, rowIndex: this.steps.length}))
+                this.store.dispatch(addStep({map_unit_id: this.map_unit_id, rowIndex: this.steps.length}))
                 this.openLastStepEditor()
             } else {
                 this.saveLastStepAndRunAdd()
@@ -198,12 +198,12 @@ export class UnitStepsComponent {
 
     private openLastStepEditor() {
         setTimeout(() => {
-            const elementId = `ce_u${this.unit_id}_ri${this.steps.length - 1}`
+            const elementId = `ce_u${this.map_unit_id}_ri${this.steps.length - 1}`
             document.getElementById(elementId).click()
         }, 600)
     }
 
-    save(step: IStep) {
+    save(step: IMapUnitStep) {
         if (this.validateStep(step)) {
             this.store.dispatch(saveStep({step}))
             return true;
@@ -213,13 +213,13 @@ export class UnitStepsComponent {
         }
     }
 
-    reset(step: IStep) {
+    reset(step: IMapUnitStep) {
         this.store.dispatch(resetStep({step}))
     }
 
     protected readonly length = length;
 
-    delete(step: IStep) {
+    delete(step: IMapUnitStep) {
 
         if (step.id === null) {
             this.store.dispatch(removeStep({step}))
@@ -231,11 +231,11 @@ export class UnitStepsComponent {
         }
     }
 
-    up(step: IStep) {
+    up(step: IMapUnitStep) {
         this.store.dispatch(upStep({step}))
     }
 
-    down(step: IStep) {
+    down(step: IMapUnitStep) {
         this.store.dispatch(downStep({step}))
     }
 }

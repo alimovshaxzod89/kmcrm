@@ -1,8 +1,8 @@
 import {createReducer, on} from "@ngrx/store";
 import {addUnit, removeUnit, savedUnit, setUnit, setUnits} from "./units.actions";
-import {emptyUnit, IUnit} from "../units/unit.type";
+import {emptyMapUnit, IMapUnit} from "../units/unit.type";
 
-export const initialState: IUnit[] = []
+export const initialState: IMapUnit[] = []
 
 export const unitsReducer = createReducer(
     initialState,
@@ -24,33 +24,33 @@ export const unitsReducer = createReducer(
             return state
         }
 
-        const unit: IUnit = JSON.parse(JSON.stringify(emptyUnit))
+        const unit: IMapUnit = JSON.parse(JSON.stringify(emptyMapUnit))
         unit.map_id = map_id
         unit._hash = JSON.stringify({})
 
         return [...state, unit]
     }),
 
-    on(setUnit, (state, {unit_id, unit}) => {
+    on(setUnit, (state, {map_unit_id, unit}) => {
 
-        const index = state.findIndex(unit => unit.id === unit_id)
+        const index = state.findIndex(unit => unit.id === map_unit_id)
 
         if (index > -1) {
             state = state.map((row, rowIndex) => {
                 return rowIndex === index ? {...unit} : row
             })
         } else {
-            console.error('unit not found', {unit_id}, {unit})
+            console.error('unit not found', {map_unit_id}, {unit})
         }
         return state
     }),
 
-    on(savedUnit, (state, {unit, unit_id}) => {
+    on(savedUnit, (state, {unit, map_unit_id}) => {
 
         const rows = [];
 
         state.forEach(row => {
-            if (row.id === unit_id) {
+            if (row.id === map_unit_id) {
 
                 let item = {...unit}
 

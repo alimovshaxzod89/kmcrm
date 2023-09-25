@@ -38,7 +38,7 @@ export class UnitsEffects {
                     .pipe(
                         map(response => {
                             if (response.success) {
-                                return savedUnit({unit: response.data, unit_id: props.unit.id})
+                                return savedUnit({unit: response.data, map_unit_id: props.unit.id})
                             } else {
                                 alert(response.message)
                                 console.log(response.message)

@@ -1,13 +1,13 @@
 import {Component, effect, OnInit, signal, WritableSignal} from '@angular/core';
 import {FurnitureService} from "../../furniture/furniture.service";
 import {Observable} from "rxjs";
-import {IUnit} from "./units/unit.type";
+import {IMapUnit} from "./units/unit.type";
 import {UnitService} from "./units/unit.service";
 import {ISeh} from "../../seh/seh.types";
 import {SehService} from "../../seh/seh.service";
 import {TipService} from "../services/tip.service";
 import {Store} from "@ngrx/store";
-import {IStep} from "./steps/step.type";
+import {IMapUnitStep} from "./steps/step.type";
 import {getUnits} from "./store/units.actions";
 import {StepService} from "./steps/step.service";
 import {calcStepsCost, getSteps, saveStep} from "./store/steps.actions";
@@ -27,13 +27,13 @@ import {ITip} from "../types/tip.type";
 export class MapComponent implements OnInit {
 
     map_id: WritableSignal<number | null> = signal<number | null>(null);
-    unit_id: number = null;
+    map_unit_id: number = null;
 
     sehs: ISeh[];
     tips: ITip[];
 
-    units$: Observable<IUnit[]>;
-    steps$: Observable<IStep[]>;
+    units$: Observable<IMapUnit[]>;
+    steps$: Observable<IMapUnitStep[]>;
 
     cost$: Observable<number>;
 
@@ -48,7 +48,7 @@ export class MapComponent implements OnInit {
                 private _sehService: SehService,
                 private _tipService: TipService,
                 private _mapService: MapService,
-                private store: Store<{ cost: MapState, units: IUnit[], steps: IStep[] }>,
+                private store: Store<{ cost: MapState, units: IMapUnit[], steps: IMapUnitStep[] }>,
                 private route: ActivatedRoute) {
         this.cost$ = store.select(store => store.cost.current);
         this.units$ = store.select('units');
@@ -81,18 +81,18 @@ export class MapComponent implements OnInit {
     private loadStepsToStore() {
         this.units$.subscribe(units => {
 
-            let unit_ids: number[] = []
+            let map_unit_ids: number[] = []
 
             if (units.length) {
 
-                //make unit_ids array
+                //make map_unit_ids array
                 units.forEach(unit => {
                     if (unit.id)
-                        unit_ids.push(unit.id)
+                        map_unit_ids.push(unit.id)
                 })
             }
 
-            this.store.dispatch(getSteps(unit_ids))
+            this.store.dispatch(getSteps(map_unit_ids))
         })
     }
 
