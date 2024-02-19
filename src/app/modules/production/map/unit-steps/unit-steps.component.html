@@ -100,8 +100,7 @@
             </td>
             <td [pEditableColumn]="step.percent"
                 pEditableColumnField="percent"
-                class="text-right w-24"
-                [pEditableColumnRowIndex]="rowIndex">
+                class="text-right w-24">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-inputNumber
@@ -120,8 +119,10 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.cost" pEditableColumnField="cost" class="text-right"
-                [pEditableColumnRowIndex]="rowIndex">
+            <td 
+                [pEditableColumn]="step.cost" 
+                pEditableColumnField="cost" 
+                class="text-right">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-inputNumber
@@ -140,8 +141,10 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.duration" pEditableColumnField="duration" class="text-right"
-                [pEditableColumnRowIndex]="rowIndex">
+            <td 
+                [pEditableColumn]="step.duration" 
+                pEditableColumnField="duration" 
+                class="text-right">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <input pInputText type="text"
@@ -154,8 +157,9 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td [pEditableColumn]="step.description" pEditableColumnField="description"
-                [pEditableColumnRowIndex]="rowIndex">
+            <td 
+                [pEditableColumn]="step.description" 
+                pEditableColumnField="description">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <input pInputText type="text"
