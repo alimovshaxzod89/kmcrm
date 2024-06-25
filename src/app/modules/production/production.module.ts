@@ -14,6 +14,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {SharedModule} from 'app/shared/shared.module';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import { TreeSelectModule } from 'primeng/treeselect';
 
 import {productionRoutes} from "./production.routing";
 import {MapComponent} from './map/map.component';
@@ -76,6 +77,7 @@ import {MapModalComponent} from './map/map-modal/map-modal.component';
         SharedModule,
         MatAutocompleteModule,
         NgxMatSelectSearchModule,
+        TreeSelectModule,
 
         ButtonModule,
         TableModule,

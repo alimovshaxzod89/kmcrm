@@ -70,15 +70,15 @@
 
                 </div>
             </td>
-            <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
+            <!-- <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
                 <p-cellEditor [id]="'ce_u'+map_unit_id+'_ri'+rowIndex">
-                    <ng-template pTemplate="input">
+                    <ng-template pTemplate="input"> -->
                         <!--                        <select [(ngModel)]="step.seh_id" matNativeControl>-->
                         <!--                            <option *ngFor="let seh of sehs" [value]="seh.id">-->
                         <!--                                {{seh.name}}-->
                         <!--                            </option>-->
                         <!--                        </select>-->
-                        <p-dropdown
+                        <!-- <p-dropdown
                             [options]="sehs"
                             [ngModel]="step.seh_id"
                             (ngModelChange)="handleFieldChange(step.id, $event)"
@@ -97,6 +97,15 @@
                         </div>
                     </ng-template>
                 </p-cellEditor>
+            </td> -->
+            <td>
+                <p-treeSelect
+                [options]="nodes"
+                [(ngModel)]="selectedNodes"
+                placeholder="Select Items"
+                (onNodeSelect)="selectNode($event)"
+                (onNodeUnselect)="unselectNode($event)"
+            ></p-treeSelect>
             </td>
             <td [pEditableColumn]="step.percent"
                 pEditableColumnField="percent"
