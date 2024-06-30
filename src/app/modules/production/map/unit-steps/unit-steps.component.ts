@@ -28,24 +28,11 @@ export class UnitStepsComponent {
     handledFieldById: Object = {}
     unTouchedHandledFieldById: Object = {}
 
-    selectedNodes: any;
-
-    // Methods for node selection/unselection
-    selectNode(event: any) {
-        console.log('Selected Node:', event.node);
-    }
-
-    unselectNode(event: any) {
-        console.log('Unselected Node:', event.node);
-    }
-
     constructor(private store: Store<{ cost: MapState }>,
                 private route: ActivatedRoute) {
         this.cost$ = store.select(store => store.cost.current);
 
         this.sehCategoryTree = this.route.snapshot.data.sehCategoryTree
-
-        console.log('sehCategoryTree', this.sehCategoryTree)
     }
 
     getSehName(seh_id: number): string {
@@ -157,24 +144,23 @@ export class UnitStepsComponent {
             }
 
             if (field === 'seh_id') {
+                if (typeof value === 'object') {
+                    const type = this.getTreeNodeType(value.key);
+                    if (type === 'category') {
+                        //remove cs from key
+                        step.category_seh_id = value.key.replace('cs', '');
 
-                const type = this.getTreeNodeType(value.key);
-                if (type === 'category') {
-                    //remove cs from key
-                    step.category_seh_id = value.key.replace('cs', '');
-
-                    value = null;
-                } else {
-                    const parent = value.parent;
-                    step.category_seh_id = parent.key.replace('cs', '');
-                    //remove s from key
-                    value = value.key.replace('s', '');
+                        value = null;
+                    } else {
+                        const parent = value.parent;
+                        step.category_seh_id = parent.key.replace('cs', '');
+                        //remove s from key
+                        value = value.key.replace('s', '');
+                    }
                 }
             }
 
             step[field] = value
-
-            console.log('onEditComplete', {step})
 
             this.store.dispatch(setStep({step_id, step}))
         }
