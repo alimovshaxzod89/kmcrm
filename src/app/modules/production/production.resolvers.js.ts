@@ -5,6 +5,7 @@ import {TipService} from "./services/tip.service";
 import {ITip} from "./types/tip.type";
 import {SehService} from "../seh/seh.service";
 import {ISeh} from "../seh/seh.types";
+import {SehCategoryTreeService} from "../seh/seh-category-tree.service";
 
 
 @Injectable({
@@ -30,5 +31,18 @@ export class SehsResolver  {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISeh[]> {
         return this._tipService.getSehs();
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class sehCategoryTreeResolver {
+
+    constructor(private _service: SehCategoryTreeService) {
+    }
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISeh[]> {
+        return this._service.getOptions();
     }
 }

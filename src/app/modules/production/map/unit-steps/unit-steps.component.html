@@ -23,7 +23,7 @@
     <ng-template pTemplate="body" let-step let-editing="editing" let-rowIndex="rowIndex">
         <tr>
             <td class="text-center">
-                {{step.sorder}}
+                {{ step.sorder }}
             </td>
             <td class="text-right">
                 <div class="flex">
@@ -70,43 +70,37 @@
 
                 </div>
             </td>
-            <!-- <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
+
+            <td [pEditableColumn]="step.name" pEditableColumnField="seh_id" [pEditableColumnRowIndex]="rowIndex">
+
                 <p-cellEditor [id]="'ce_u'+map_unit_id+'_ri'+rowIndex">
-                    <ng-template pTemplate="input"> -->
-                        <!--                        <select [(ngModel)]="step.seh_id" matNativeControl>-->
-                        <!--                            <option *ngFor="let seh of sehs" [value]="seh.id">-->
-                        <!--                                {{seh.name}}-->
-                        <!--                            </option>-->
-                        <!--                        </select>-->
-                        <!-- <p-dropdown
-                            [options]="sehs"
-                            [ngModel]="step.seh_id"
+                    <ng-template pTemplate="input">
+                        <p-treeSelect
+                            [options]="sehCategoryTree"
+                            [ngModel]="sehCategoryTreeValue(step.seh_id ? 's' + step.seh_id : 'cs' + step.category_seh_id)"
                             (ngModelChange)="handleFieldChange(step.id, $event)"
-                            BlockLateralArrowNavigation
-                            optionLabel="name"
-                            optionValue="id"
-                            [style]="{'width':'100%'}"
-                            class="small-input"
-                            scrollHeight="300px"
+                            placeholder="Tanlang"
                             [appendTo]="'body'"
-                        />
+                            [filter]="true" [filterInputAutoFocus]="true"
+                            BlockLateralArrowNavigation
+                        >
+                            <ng-template let-node pTemplate="category">
+                                {{ node.label }}
+                            </ng-template>
+                            <ng-template let-node pTemplate="seh">
+                                {{ node.label }}
+                            </ng-template>
+                        </p-treeSelect>
+
                     </ng-template>
                     <ng-template pTemplate="output">
-                        <div style="cursor: pointer;" >
-                            {{getSehName(step.seh_id)}}
+                        <div style="cursor: pointer;">
+                            {{ sehCategoryTreeLabel(step.seh_id ? 's' + step.seh_id : 'cs' + step.category_seh_id) }}
                         </div>
                     </ng-template>
                 </p-cellEditor>
-            </td> -->
-            <td>
-                <p-treeSelect
-                [options]="nodes"
-                [(ngModel)]="selectedNodes"
-                placeholder="Select Items"
-                (onNodeSelect)="selectNode($event)"
-                (onNodeUnselect)="unselectNode($event)"
-            ></p-treeSelect>
             </td>
+
             <td [pEditableColumn]="step.percent"
                 pEditableColumnField="percent"
                 class="text-right w-24">
@@ -124,13 +118,13 @@
                         />
                     </ng-template>
                     <ng-template pTemplate="output">
-                        {{step.percent / 100 | percent:'1.0-2'}}
+                        {{ step.percent / 100 | percent:'1.0-2' }}
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td 
-                [pEditableColumn]="step.cost" 
-                pEditableColumnField="cost" 
+            <td
+                [pEditableColumn]="step.cost"
+                pEditableColumnField="cost"
                 class="text-right">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
@@ -146,13 +140,13 @@
                         />
                     </ng-template>
                     <ng-template pTemplate="output">
-                        {{step.cost | currency:'UZS':'':'1.0-0'}}
+                        {{ step.cost | currency:'UZS':'':'1.0-0' }}
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td 
-                [pEditableColumn]="step.duration" 
-                pEditableColumnField="duration" 
+            <td
+                [pEditableColumn]="step.duration"
+                pEditableColumnField="duration"
                 class="text-right">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
@@ -162,12 +156,12 @@
                                BlockLateralArrowNavigation/>
                     </ng-template>
                     <ng-template pTemplate="output">
-                        {{step.duration}}
+                        {{ step.duration }}
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td 
-                [pEditableColumn]="step.description" 
+            <td
+                [pEditableColumn]="step.description"
                 pEditableColumnField="description">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
@@ -177,7 +171,7 @@
                                BlockLateralArrowNavigation/>
                     </ng-template>
                     <ng-template pTemplate="output">
-                        {{step.description}}
+                        {{ step.description }}
                     </ng-template>
                 </p-cellEditor>
             </td>

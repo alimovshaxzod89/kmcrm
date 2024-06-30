@@ -1,7 +1,7 @@
 import {Route} from '@angular/router';
 import {MapComponent} from 'app/modules/production/map/map.component';
 import {CategoriesResolver, KomplektsResolver} from "../furniture/furniture.resolvers";
-import {SehsResolver, TipsResolver} from "./production.resolvers.js";
+import {sehCategoryTreeResolver, SehsResolver, TipsResolver} from "./production.resolvers.js";
 import {ReadyInSummaryComponent} from './reports/ready-in-summary/ready-in-summary.component';
 import {SehStatusComponent} from "./reports/seh-status/seh-status.component";
 import {SehYuklanmaComponent} from "./reports/seh-yuklanma/seh-yuklanma.component";
@@ -26,6 +26,7 @@ export const productionRoutes: Route[] = [
             komplekts: KomplektsResolver,
             tips: TipsResolver,
             sehs: SehsResolver,
+            sehCategoryTree: sehCategoryTreeResolver,
         }
     },
     {
@@ -36,37 +37,38 @@ export const productionRoutes: Route[] = [
             komplekts: KomplektsResolver,
             tips: TipsResolver,
             sehs: SehsResolver,
+            sehCategoryTree: sehCategoryTreeResolver,
         }
     },
-    {
-        path: 'production',
-        loadChildren: () => import('app/modules/production/production/production.module').then(m => m.ProductionModule)
-    },
-    {
-        path: 'report',
-        children: [
-            {
-                path: 'readiness',
-                loadChildren: () => import('app/modules/production/reports/readiness/readiness.module').then(m => m.ReadinessModule)
-            },
-            {
-                path: 'ready-in-summary',
-                component: ReadyInSummaryComponent,
-            },
-            {
-                path: 'seh-status',
-                component: SehStatusComponent,
-            },
-            {
-                path: 'seh-yuklanma',
-                component: SehYuklanmaComponent,
-            },
-            {
-                path: 'seh-earn-month',
-                component: SehEarnMonthComponent,
-            }
-        ]
-    },
+    // {
+    //     path: 'production',
+    //     loadChildren: () => import('app/modules/production/production/production.module').then(m => m.ProductionModule)
+    // },
+    // {
+    //     path: 'report',
+    //     children: [
+    //         {
+    //             path: 'readiness',
+    //             loadChildren: () => import('app/modules/production/reports/readiness/readiness.module').then(m => m.ReadinessModule)
+    //         },
+    //         {
+    //             path: 'ready-in-summary',
+    //             component: ReadyInSummaryComponent,
+    //         },
+    //         {
+    //             path: 'seh-status',
+    //             component: SehStatusComponent,
+    //         },
+    //         {
+    //             path: 'seh-yuklanma',
+    //             component: SehYuklanmaComponent,
+    //         },
+    //         {
+    //             path: 'seh-earn-month',
+    //             component: SehEarnMonthComponent,
+    //         }
+    //     ]
+    // },
     // {
     //     path: 'report/seh-earn-month',
     //     component: SehEarnMonthComponent,

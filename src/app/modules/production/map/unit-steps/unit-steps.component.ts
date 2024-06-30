@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {addStep, deleteStep, downStep, removeStep, resetStep, saveStep, setStep, upStep} from "../store/steps.actions";
 import {Table} from "primeng/table";
 import {MapState} from "../store/map.reducer";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'map-unit-steps',
@@ -22,95 +23,76 @@ export class UnitStepsComponent {
 
     cost$: Observable<number>;
 
+    sehCategoryTree: any[];
 
     handledFieldById: Object = {}
     unTouchedHandledFieldById: Object = {}
 
-    nodes = [
-        {
-          key: '0',
-          label: 'Documents',
-          data: 'Documents Folder',
-          icon: 'pi pi-fw pi-inbox',
-          children: [
-            {
-              key: '0-0',
-              label: 'Work',
-              data: 'Work Folder',
-              icon: 'pi pi-fw pi-cog',
-              children: [
-                { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-fw pi-file', data: 'Expenses Document' },
-                { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-fw pi-file', data: 'Resume Document' }
-              ]
-            },
-            {
-              key: '0-1',
-              label: 'Home',
-              data: 'Home Folder',
-              icon: 'pi pi-fw pi-home',
-              children: [{ key: '0-1-0', label: 'Invoices.txt', icon: 'pi pi-fw pi-file', data: 'Invoices for this month' }]
-            }
-          ]
-        },
-        {
-          key: '1',
-          label: 'Events',
-          data: 'Events Folder',
-          icon: 'pi pi-fw pi-calendar',
-          children: [
-            { key: '1-0', label: 'Meeting', icon: 'pi pi-fw pi-calendar-plus', data: 'Meeting' },
-            { key: '1-1', label: 'Product Launch', icon: 'pi pi-fw pi-calendar-plus', data: 'Product Launch' },
-            { key: '1-2', label: 'Report Review', icon: 'pi pi-fw pi-calendar-plus', data: 'Report Review' }
-          ]
-        },
-        {
-          key: '2',
-          label: 'Movies',
-          data: 'Movies Folder',
-          icon: 'pi pi-fw pi-star-fill',
-          children: [
-            {
-              key: '2-0',
-              icon: 'pi pi-fw pi-star-fill',
-              label: 'Al Pacino',
-              data: 'Pacino Movies',
-              children: [
-                { key: '2-0-0', label: 'Scarface', icon: 'pi pi-fw pi-video', data: 'Scarface Movie' },
-                { key: '2-0-1', label: 'Serpico', icon: 'pi pi-fw pi-video', data: 'Serpico Movie' }
-              ]
-            },
-            {
-              key: '2-1',
-              label: 'Robert De Niro',
-              icon: 'pi pi-fw pi-star-fill',
-              data: 'De Niro Movies',
-              children: [
-                { key: '2-1-0', label: 'Goodfellas', icon: 'pi pi-fw pi-video', data: 'Goodfellas Movie' },
-                { key: '2-1-1', label: 'Untouchables', icon: 'pi pi-fw pi-video', data: 'Untouchables Movie' }
-              ]
-            }
-          ]
-        }
-      ];
-    
-      selectedNodes: any;
+    selectedNodes: any;
 
-        // Methods for node selection/unselection
-        selectNode(event: any) {
+    // Methods for node selection/unselection
+    selectNode(event: any) {
         console.log('Selected Node:', event.node);
-        }
+    }
 
-        unselectNode(event: any) {
+    unselectNode(event: any) {
         console.log('Unselected Node:', event.node);
-        }
+    }
 
-    constructor(private store: Store<{ cost: MapState }>) {
+    constructor(private store: Store<{ cost: MapState }>,
+                private route: ActivatedRoute) {
         this.cost$ = store.select(store => store.cost.current);
+
+        this.sehCategoryTree = this.route.snapshot.data.sehCategoryTree
+
+        console.log('sehCategoryTree', this.sehCategoryTree)
     }
 
     getSehName(seh_id: number): string {
         const seh = this.sehs.find(seh => seh.id === seh_id)
         return seh?.name
+    }
+
+    private getTreeNodeType(key: string): string {
+        return key.startsWith('cs') ? 'category' : 'seh';
+    }
+
+    sehCategoryTreeLabel(key: string): string | null {
+
+        const type = this.getTreeNodeType(key);
+
+        if (type === 'category') {
+            const found = this.sehCategoryTree.find(node => node.key === key)
+            return found && found.label || null;
+        } else {
+            for (const node of this.sehCategoryTree) {
+                const found = node.children.find(child => child.key === key)
+                if (found) {
+                    return found.label;
+                }
+            }
+            return null;
+        }
+    }
+
+    sehCategoryTreeValue(key: string): string | null {
+
+        const type = this.getTreeNodeType(key);
+
+        let found = null;
+
+        if (type === 'category') {
+            found = this.sehCategoryTree.find(node => node.key === key)
+        } else {
+            for (const node of this.sehCategoryTree) {
+                const foundI = node.children.find(child => child.key === key)
+                if (foundI) {
+                    found = foundI
+                    break;
+                }
+            }
+        }
+        return found || null
     }
 
     onEditInit(event) {
@@ -174,7 +156,25 @@ export class UnitStepsComponent {
                 step.percent = this.calcPercent(value);
             }
 
+            if (field === 'seh_id') {
+
+                const type = this.getTreeNodeType(value.key);
+                if (type === 'category') {
+                    //remove cs from key
+                    step.category_seh_id = value.key.replace('cs', '');
+
+                    value = null;
+                } else {
+                    const parent = value.parent;
+                    step.category_seh_id = parent.key.replace('cs', '');
+                    //remove s from key
+                    value = value.key.replace('s', '');
+                }
+            }
+
             step[field] = value
+
+            console.log('onEditComplete', {step})
 
             this.store.dispatch(setStep({step_id, step}))
         }
@@ -195,7 +195,7 @@ export class UnitStepsComponent {
         return percent;
     }
 
-    private getHandledFieldByIndex(index: number): number {
+    private getHandledFieldByIndex(index: number): any {
         const step_id = this.getStepIdByIndex(index)
         return this.handledFieldById[step_id]
     }
@@ -208,7 +208,7 @@ export class UnitStepsComponent {
         return this.steps[index]
     }
 
-    handleFieldChange(step_id: number, value: number,) {
+    handleFieldChange(step_id: number, value: number) {
         this.handledFieldById[step_id] = value
     }
 
