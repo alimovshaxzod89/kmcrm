@@ -144,7 +144,7 @@ export class UnitStepsComponent {
             }
 
             if (field === 'seh_id') {
-                if (typeof value === 'object') {
+                if (typeof value === 'object' && value !== null) {
                     const type = this.getTreeNodeType(value.key);
                     if (type === 'category') {
                         //remove cs from key
